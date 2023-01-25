@@ -1,0 +1,24 @@
+#searchinput {
+    float: right;
+    text-align: right;
+}
+#searchbar  {
+    color: black;
+}
+#contact    {
+    color: white;
+}
+.dropdown-toggle-split  {
+    border: none;
+    text-align: right;
+}
+.dropdown-toggle-split:hover    {
+    background-color: grey;
+}
+.main-content   {
+    border: none;
+    text-align: right;
+}
+.main-content:hover {
+    background-color: grey;
+}
