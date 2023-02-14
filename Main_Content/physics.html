@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="physics.css" />
+    <script src="physics.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Physics Calculator</title>
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <!-- homepage button -->
+                    <li>
+                        <button class="btn btn-danger container-fluid homebtn">
+                            <a href="index.html">Logo Placeholder</a>
+                        </button>
+                    </li>
+                    <!-- Normal scientific calculator button -->
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Calculate
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-danger">
+                        <!-- Dropdown for physics -->
+                        <li>
+                            <button class="btn btn-danger topic container-fluid">
+                            <a href="#">Physics</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for Chemistry -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="chemistry.html">Chemistry</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for mathematics -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="mathematics.html">Mathematics</a>
+                            </button>
+                        </li>
+                        </ul>
+                    </li>
+                    <!-- ML calculator button -->
+                    <li>
+                        <button class="btn btn-danger mlcalculator">
+                        <a href="#">Scan/Type Question</a>
+                        </button>
+                    </li>
+                    <!-- Searchbar -->
+                    <li>
+                        <form class="d-flex sbar" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                        </form>        
+                    </li>
+                    <!-- Login/Register button -->
+                    <li>
+                        <button id="signin" class="btn btn-danger">
+                        <a href="login.php">Login/Register</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 id="mainpart">Welcome to the physics side of our calculator</h1>
+    <!-- sidebar contents -->
+    <div class="sidebar bg-danger" id="physidebar"> 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#mainpart">Main</a>
+        <a href="#kinematics">Kinematics</a>
+        <a href="#nlm">Newton's Laws of Motion</a>
+        <a href="#circmot">Circular Motion</a>
+        <a href="#sop">System of Particles</a>
+        <a href="#rotmot">Rotational Motion</a>
+        <a href="#phythermo">Heat and Thermodynamics</a>
+        <a href="#elasticity">Elasticity</a>
+        <a href="#flumech">Fluid Mechanics</a>
+        <a href="#viscosity">Viscosity</a>
+        <a href="#surften">Surface Tension</a>
+        <a href="#shm">Simple Harmonic Motion</a>
+        <a href="#grav">Gravitation</a>
+        <a href="#soundwav">Sound Waves</a>
+        <a href="#rayopt">Ray Optics</a>
+        <a href="#wavopts">Wave Optics</a>
+        <a href="#elecstats">Electrostatics</a>
+        <a href="#capacitor">Capacitors</a>
+        <a href="#currele">Current Electricity</a>
+        <a href="#magnet">Magnetism</a>
+        <a href="#emi">Electromagnetic Induction</a>
+        <a href="#acdc">Alternating Current</a>
+        <a href="#modphy">Modern Physics</a>
+        <a href="#semicon">Semi-conductors</a>
+        <a href="#errors">Errors and Experiments</a>
+        <a href="#opts">Optical Instruments and Diffraction</a>
+    </div>
+    <!-- sidebar button -->
+    <div id="main">
+        <button class="openbtn btn btn-danger" onclick="openNav()">&#9776; Topics</button>
+        <!-- calculator content -->
+        <div id="kinematics" class="contents">
+           
+        </div>
+    </div>
+</body>
+</html>

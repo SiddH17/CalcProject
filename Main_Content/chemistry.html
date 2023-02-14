@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"
+  ></script>
+    <script src="chemistry.js"></script>
+    <link rel="stylesheet" href="chemistry.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Calculator</title>
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <!-- homepage button -->
+                    <li>
+                        <button class="btn btn-danger container-fluid">
+                            <a href="index.html">Logo Placeholder</a>
+                        </button>
+                    </li>
+                    <!-- Normal scientific calculator button -->
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Calculate
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-danger">
+                        <!-- Dropdown for physics -->
+                        <li>
+                            <button class="btn btn-danger topic container-fluid">
+                            <a href="physics.html">Physics</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for Chemistry -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="#">Chemistry</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for mathematics -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="mathematics.html">Mathematics</a>
+                            </button>
+                        </li>
+                        </ul>
+                    </li>
+                    <!-- ML calculator button -->
+                    <li>
+                        <button class="btn btn-danger mlcalculator">
+                        <a href="#">Scan/Type Question</a>
+                        </button>
+                    </li>
+                    <!-- Searchbar -->
+                    <li>
+                        <form class="d-flex sbar" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                        </form>        
+                    </li>
+                    <!-- Login/Register button -->
+                    <li>
+                        <button id="signin" class="btn btn-danger">
+                        <a href="login.php">Login/Register</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 id="mainpart">Welcome to the Chemistry side of our calculator</h1>
+    <!-- sidebar contents -->
+    <div class="sidebar bg-danger" id="chemsidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#mainpart">Main</a>
+        <a href="#molecon">Mole Concept</a>
+        <a href="#atomstruct">Atomic Structure</a>
+        <a href="#gasstate">Gaseous State</a>
+        <a href="#chemthermo">Chemical Thermodynamics</a>
+        <a href="#chemequi">Chemical Equilibrium</a>
+        <a href="#ionequi">Ionic Equilibrium</a>
+        <a href="#chemkin">Chemical Kinetics</a>
+        <a href="#nukechem">Nuclear Chemistry</a>
+        <a href="#elecchem">Electrochemistry</a>
+        <a href="#sols">Solutions and Colligative Properties</a>
+        <a href="#solid">Solid State</a>
+        <a href="#surfchem">Surface Chemistry</a>
+        <a href="#perprop">Periodic Properties</a>
+        <a href="#chembond">Chemical Bonding</a>
+        <a href="#h">Hydrogen and it's Compounds</a>
+        <a href="#coord">Co-ordination Compounds</a>
+        <a href="#dfb">D & F-block</a>
+        <a href="#goc">General Organic Chemistry</a>
+    </div>
+    <!-- sidebar button -->
+    <div id="main">
+        <button class="openbtn btn btn-danger" onclick="openNav()">&#9776; Topics</button>
+        
+    </div>
+</body>
+</html>

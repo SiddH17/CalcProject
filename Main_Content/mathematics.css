@@ -1,0 +1,117 @@
+/* tags */
+body    {
+    color: white;
+    font-family: sans-serif;
+}
+h1  {
+    text-align: center;
+}
+a   {
+    font-size: 16px;
+}
+a:link  {
+    text-decoration: none;
+    color: white;
+}
+a:visited   {
+    color: white;
+    text-decoration: none;
+}
+form   {
+    float: right;
+    text-align: right;
+    margin-left: 55em;   
+}
+
+/* classes */
+.topic    {
+    text-align: center;
+}
+.topic:hover    {
+    transform: scale(1.2) perspective(20px);
+    background-color: black;
+}
+.btn  {
+    font-size: 18px;
+    border: 10px;
+    border-color: white;
+}
+.dropdown-menu-danger   {
+    background-color:crimson;
+}
+.mlcalculator   {
+    margin-left: 3em;
+}
+.mlcalculator:hover {
+    transform: scale(1.1) perspective(50px);
+    background-color: black;
+}
+.nav-item   {
+    margin-left: 0.5em;
+    font-size: 30px;
+}
+.sidebar    {
+    height: 100px;
+    width: 0px;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+.sidebar a  {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover    {
+    color: gray;
+    transform: scale(1.1) perspective(20px);
+}
+.sidebar .closebtn  {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    font-size: 30px;
+    margin-left: 40px;
+}
+.openbtn    {
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+.openbtn:hover  {
+    background-color: black;
+    transform: scale(1.2) perspective(20px);
+}  
+.homebtn:hover    {
+    background-color: black;
+    transform: scale(1.1) perspective(20px);
+}
+
+/* IDs */
+#signin {
+    box-shadow: inset;
+}
+#signin:hover   {
+    transform: scale(1.1) perspective(100px);
+    background-color: black;
+}
+#main   {
+    transition: margin-left .4s;
+    padding: 20px;
+}
+
+/* others */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
