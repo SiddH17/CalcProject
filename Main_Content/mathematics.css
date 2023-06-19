@@ -28,13 +28,10 @@ form   {
     text-align: center;
 }
 .topic:hover    {
-    transform: scale(1.2) perspective(20px);
     background-color: black;
 }
 .btn  {
-    font-size: 18px;
-    border: 10px;
-    border-color: white;
+    font-size: 15px;
 }
 .dropdown-menu-danger   {
     background-color:crimson;
@@ -43,8 +40,10 @@ form   {
     margin-left: 3em;
 }
 .mlcalculator:hover {
-    transform: scale(1.1) perspective(50px);
     background-color: black;
+}
+.frame  {
+    border: 5px solid white;
 }
 .nav-item   {
     margin-left: 0.5em;
@@ -72,7 +71,6 @@ form   {
 }
 .sidebar a:hover    {
     color: gray;
-    transform: scale(1.1) perspective(20px);
 }
 .sidebar .closebtn  {
     position: absolute;
@@ -90,11 +88,9 @@ form   {
 }
 .openbtn:hover  {
     background-color: black;
-    transform: scale(1.2) perspective(20px);
 }  
 .homebtn:hover    {
     background-color: black;
-    transform: scale(1.1) perspective(20px);
 }
 
 /* IDs */
@@ -102,12 +98,10 @@ form   {
     box-shadow: inset;
 }
 #signin:hover   {
-    transform: scale(1.1) perspective(100px);
     background-color: black;
 }
 #main   {
     transition: margin-left .4s;
-    padding: 20px;
 }
 
 /* others */
