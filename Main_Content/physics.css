@@ -88,7 +88,7 @@ form   {
 }
 .openbtn:hover  {
     background-color: black;
-    transform: scale(1.2) perspective(20px);
+    border: 3px solid white;
 }  
 .homebtn:hover    {
     background-color: black;
