@@ -12,19 +12,19 @@
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"
   ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="chemistry.js"></script>
     <link rel="stylesheet" href="chemistry.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Calculator</title>
+<title>Chemistry Calculator</title>
 </head>
 <body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
              <!-- sidebar contents -->
             <div class="sidebar bg-danger" id="chemsidebar">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="#mainpart">Main</a>
                 <a href="#molecon">Mole Concept</a>
                 <a href="#atomstruct">Atomic Structure</a>
@@ -48,7 +48,7 @@
             <!-- sidebar button -->
             <div id="main">
                 <button class="openbtn btn btn-danger" onclick="openNav()">&#9776;</button>
-                
+                <button class="closebtn btn btn-danger" onclick="closeNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">

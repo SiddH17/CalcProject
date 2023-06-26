@@ -12,6 +12,7 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" href="physics.css" />
     <script src="physics.js"></script>
     <meta charset="UTF-8">
@@ -25,10 +26,9 @@
         <div class="container-fluid">
                 <!-- sidebar contents -->
             <div class="sidebar bg-danger" id="physidebar"> 
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <a href="#mainpart">Main</a>
                 <a href="#kinematics">Kinematics</a>
-                <a href="#nlm">Newton's Laws of Motion</a>
+                <a href="#heatthermo">Heat and Thermodynamics</a>
                 <a href="#circmot">Circular Motion</a>
                 <a href="#sop">System of Particles</a>
                 <a href="#rotmot">Rotational Motion</a>
@@ -56,6 +56,7 @@
             <!-- sidebar button -->
             <div id="main">
                 <button class="openbtn btn btn-danger" onclick="openNav()">&#9776;</button>
+                <button class="closebtn btn btn-danger"  onclick="closeNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
