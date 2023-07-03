@@ -1,0 +1,6 @@
+Corrections to be made in website:
+
+1. UI
+2. Resetting select and option tags
+3. Hiding paragraph eqmtnans after displaying one answer
+4. 

@@ -121,8 +121,118 @@
     <hr>
     <!-- kinematics topic section -->
     <div id="kinematics">
-       <h2 id="eqmtn">Equations of Motion:</h2>
-        Select the value to be calculated
+       <h2 id="eqmtn"><u><b>Equations of Motion:</b></u></h2>
+        <h4>Select the value to be calculated</h4>
+        <!-- Selecting value to be found -->
+        <select name="eqsmtn" id="eqsmtn">
+            <option value="Select" id="blank1">---Select---</option>
+            <option value="disp" id="disp">Displacement(s)</option>
+            <option value="time" id="time">Time(t)</option>
+            <option value="initvel" id="initvel">Initial Velocity(u)</option>
+            <option value="finvel" id="finvel">Final Velocity(v)</option>
+            <option value="acc" id="acc">Acceleration(a)</option>
+        </select>
+        <br><br>
+
+        <!-- Choose method to be selected -->
+        <h4 id="eqmtnid">Select the method to be used for calculation</h4>
+        <div id="kinmethod1">
+            <!-- Displacement is selected -->
+            <select name="dispbtn" id="dispbtn">
+                <option value="Select">---Select---</option>
+                <option value="second" id="dispsecond" onclick="funcDispSec()">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="dispthird" onclick="funcDispTrd()">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Time is selected -->
+            <select name="timebtn" id="timebtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="timefirst" onclick="funcTimeFst()">v = u + a*t</option>
+                <option value="second" id="timesecond" onclick="funcTimeSec()">s = ut + (1/2)a(t)^2</option>
+            </select>
+            <!-- Initial Velocity is selected -->
+            <select name="initvelbtn" id="initvelbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="initvelfirst" onclick="funcInitFst()">v = u + a*t</option>
+                <option value="second" id="initvelsecond" onclick="funcInitSec()">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="initvelthird" onclick="funcInitTrd()">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Final Velocity is selected -->
+            <select name="finvelbtn" id="finvelbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="finvelfirst" onclick="funcFinFst()">v = u + a*t</option>
+                <option value="third" id="finvelthird" onclick="funcFinTrd()">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Acceleration is selected -->
+            <select name="accbtn" id="accbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="accfirst" onclick="funcAccFst()">v = u + a*t</option>
+                <option value="second" id="accsecond" onclick="funcAccSec()">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="accthird" onclick="funcAccTrd()">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <br><br>
+            <p id="eqmtnans">
+            </p>
+        </div>
+
+        <!-- projectile motion -->
+        <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
+        <h4>Select the value to be calculated</h4>
+        <select name="proj" id="proj">
+            <option value="Select" id="blank2">---Select---</option>
+            <option value="range" id="range">Range(R)</option>
+            <option value="maxheight" id="maxheight">Maximum Height(H)</option>
+            <option value="tof" id="tof">Time of Flight(T)</option>
+            <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
+            <option value="projang" id="projang">Angle of projection(x)</option>
+            <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
+            <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
+        </select>
+        <br><br>
+
+        <!-- Choose method to be selected -->
+        <h4 id="projid">Select method used for calculation</h4>
+        <div id="kinmethod2">
+            <!-- Range is selected -->
+            <select name="rangebtn" id="rangebtn">
+                <option value="Select">---Select---</option>
+                <option value="third" id="rangethird" onclick="funcRangeTrd()">R = u^2(sin(2x))/g</option>
+            </select>
+            <!-- Maximum height is selected -->
+            <select name="heightbtn" id="heightbtn">
+                <option value="Select">---Select---</option>
+                <option value="second" id="heightsecond" onclick="funcHeightSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+            </select>
+            <!-- Time of Flight is selected -->
+            <select name="tofbtn" id="tofbtn">
+                <option value="Select">---Select---</option>
+                <option value="toffirst" id="toffirst" onclick="funcTofFst()">T = 2*u*sin(x)/g</option>
+            </select>
+            <!-- Horizontal and Vertical components of Velocity is selected -->
+            <select name="horverbtn" id="horverbtn">
+                <option value="Select">---Select---</option>
+                <option value="fourth1" id="horverfourth1" onclick="funcHorVerFour1()">Horizontal component(u*cos(x))</option>
+                <option value="fourth2" id="horverfourth2" onclick="funcHorVerFour2()">Vertical component(u*sin(x))</option>
+            </select>
+            <!-- Angle of projection is selected -->
+            <select name="projangbtn" id="projangbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="projangfirst" onclick="funcProjAngFst()">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projangsecond" onclick="funcProjAngSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projangthird" onclick="funcProjAngTrd()">R = u^2(sin(2x))/g</option>
+                <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
+            </select>
+            <!-- Initial Velocity is selected -->
+            <select name="projvelbtn" id="projvelbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="projvelfirst" onclick="funcProjVelFst()">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projvelsecond" onclick="funcProjVelSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projvelthird" onclick="funcProjVelTrd()">R = u^2(sin(2x))/g</option>
+            </select>
+            <!-- Time of ascent and descent are selected -->
+            <select name="tadbtn" id="tadbtn">
+
+            </select>
+        </div>
     </div>
 </body>
 </html>
