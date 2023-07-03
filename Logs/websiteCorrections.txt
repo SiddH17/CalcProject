@@ -4,3 +4,6 @@ Corrections to be made in website:
 2. Resetting select and option tags
 3. Hiding paragraph eqmtnans after displaying one answer
 4. 
+
+GitHub Personal Access Token:
+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
