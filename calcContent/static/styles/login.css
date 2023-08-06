@@ -1,0 +1,45 @@
+body    {
+    background-image: url("/home/sid/Documents/Calculator/Main_Content/mlcalc.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.8;
+}
+h1  {
+    text-align: center;
+    font-family: 'Shantell Sans', cursive;
+    margin-bottom: 100px;
+}
+
+/* classes */
+.container  {
+    background-color:aquamarine;
+    border: 1em;
+    margin: auto;
+    padding: 10px;
+    margin-top: 100px;
+    width: 900px;
+}
+.form-control   {
+    width: 650px;
+    margin: auto;
+    margin-left: 30px;
+}
+.para   {
+    margin-left: 30px;
+    font-family: 'Shantell Sans', cursive;
+}
+.btn-primary    {
+    opacity: 1;
+    margin: auto;
+    padding: 10px;
+    margin-left: 400px;
+    margin-top: 50px;
+}
+
+/* IDs */
+
+/* others */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}

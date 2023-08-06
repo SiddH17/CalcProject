@@ -1,0 +1,48 @@
+body    {
+    color: white;
+}
+form   {
+    float: right;
+    text-align: right;
+    margin-left: 70em;   
+}
+a   {
+    font-size: 16px;
+}
+a:link   {
+    color: white;
+    text-decoration: none;
+}
+a:visited   {
+    color: white;
+    text-decoration: none;
+}
+.topic    {
+    text-align: center;
+}
+.btn  {
+    font-size: 20px;
+    border: 10px;
+    border-color: white;
+}
+.dropdown-menu-danger   {
+    background-color:crimson;
+}
+.mlcalculator   {
+    margin-left: 1.5em;
+}
+.mlcalculator:hover {
+    transform: scale(1.1) perspective(50px);
+    background-color: black;
+}
+.topic:hover    {
+    transform: scale(1.2) perspective(20px);
+    background-color: black;
+}
+#signin {
+    box-shadow: inset;
+}
+#signin:hover   {
+    transform: scale(1.1) perspective(100px);
+    background-color: black;
+}

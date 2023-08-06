@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
+    <title>Kinematics Calculator</title>
+</head>
+<body>
+    <!-- Navbar contents -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container-fluid">
+                <!-- sidebar contents -->
+            <div class="sidebar bg-danger" id="physidebar"> 
+                <a href="{% url 'physics' %}">Main</a>
+                <a href="">Kinematics</a>
+                <a href="#heatthermo">Heat and Thermodynamics</a>
+                <a href="#circmot">Circular Motion</a>
+                <a href="#sop">System of Particles</a>
+                <a href="#rotmot">Rotational Motion</a>
+                <a href="#phythermo">Heat and Thermodynamics</a>
+                <a href="#elasticity">Elasticity</a>
+                <a href="#flumech">Fluid Mechanics</a>
+                <a href="#viscosity">Viscosity</a>
+                <a href="#surften">Surface Tension</a>
+                <a href="#shm">Simple Harmonic Motion</a>
+                <a href="#grav">Gravitation</a>
+                <a href="#soundwav">Sound Waves</a>
+                <a href="#rayopt">Ray Optics</a>
+                <a href="#wavopts">Wave Optics</a>
+                <a href="#elecstats">Electrostatics</a>
+                <a href="#capacitor">Capacitors</a>
+                <a href="#currele">Current Electricity</a>
+                <a href="#magnet">Magnetism</a>
+                <a href="#emi">Electromagnetic Induction</a>
+                <a href="#acdc">Alternating Current</a>
+                <a href="#modphy">Modern Physics</a>
+                <a href="#semicon">Semi-conductors</a>
+                <a href="#errors">Errors and Experiments</a>
+                <a href="#opts">Optical Instruments and Diffraction</a>
+            </div>
+            <!-- sidebar button -->
+            <div id="main">
+                <button class="openbtn btn btn-danger" onclick="openNav()">&#9776;</button>
+                <button class="closebtn btn btn-danger"  onclick="closeNav()">&#9776;</button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <!-- homepage button -->
+                    <li>
+                        <button class="btn btn-danger container-fluid homebtn frame">
+                            <a href="index.html">Logo Placeholder</a>
+                        </button>
+                    </li>
+                    <!-- Normal scientific calculator button -->
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
+                        Calculate
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-danger">
+                        <!-- Dropdown for physics -->
+                        <li>
+                            <button class="btn btn-danger topic container-fluid">
+                            <a href="{% url 'physics' %}">Physics</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for Chemistry -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="{% url 'Chemistry:chemistry' %}">Chemistry</a>
+                            </button>
+                        </li>
+                        <!-- Dropdown for mathematics -->
+                        <li>
+                            <button type="button" class="btn btn-danger topic container-fluid">
+                                <a href="{% url 'Mathematics:mathematics' %}">Mathematics</a>
+                            </button>
+                        </li>
+                        </ul>
+                    </li>
+                    <!-- ML calculator button -->
+                    <li>
+                        <button class="btn btn-danger mlcalculator frame">
+                        <a href="">Scan/Type Question</a>
+                        </button>
+                    </li>
+                    <!-- Searchbar -->
+                    <li>
+                        <form class="d-flex sbar" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                        </form>        
+                    </li>
+                    <!-- Login/Register button -->
+                    <li>
+                        <button id="signin" class="btn btn-danger frame">
+                        <a href="{% url 'login' %}">Login/Register</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- kinematics topic section -->
+    <div id="kinematics">
+        <h2 id="eqmtn"><u><b>Equations of Motion:</b></u></h2>
+        <h4>Select the value to be calculated</h4>
+        <!-- Selecting value to be found -->
+        <select name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
+            <option value="Select" id="blank1">---Select---</option>
+            <option value="disp" id="disp">Displacement(s)</option>
+            <option value="time" id="time">Time(t)</option>
+            <option value="initvel" id="initvel">Initial Velocity(u)</option>
+            <option value="finvel" id="finvel">Final Velocity(v)</option>
+            <option value="acc" id="acc">Acceleration(a)</option>
+        </select>
+        <br><br>
+ 
+        <!-- Choose method to be selected -->
+        <h4 id="eqmtnid">Select the method to be used for calculation</h4>
+        <div id="kinmethod1">
+            <!-- Displacement is selected -->
+            <select name="dispbtn" id="dispbtn" style="display: none;" onchange="methodChange(this.value, 'disp')">
+                <option value="Select">---Select---</option>
+                <option value="second" id="dispsecond">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="dispthird">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Time is selected -->
+            <select name="timebtn" id="timebtn" style="display: none;" onchange="methodChange(this.value, 'time')">
+                <option value="Select">---Select---</option>
+                <option value="first" id="timefirst">v = u + a*t</option>
+                <option value="second" id="timesecond">s = ut + (1/2)a(t)^2</option>
+            </select>
+            <!-- Initial Velocity is selected -->
+            <select name="initvelbtn" id="initvelbtn" style="display: none;" onchange="methodChange(this.value, 'u')">
+                <option value="Select">---Select---</option>
+                <option value="first" id="initvelfirst">v = u + a*t</option>
+                <option value="second" id="initvelsecond">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="initvelthird">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Final Velocity is selected -->
+            <select name="finvelbtn" id="finvelbtn" style="display: none;" onchange="methodChange(this.value, 'v')">
+                <option value="Select">---Select---</option>
+                <option value="first" id="finvelfirst">v = u + a*t</option>
+                <option value="third" id="finvelthird">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <!-- Acceleration is selected -->
+            <select name="accbtn" id="accbtn" style="display: none;" onchange="methodChange(this.value, 'acc')">
+                <option value="Select">---Select---</option>
+                <option value="first" id="accfirst">v = u + a*t</option>
+                <option value="second" id="accsecond">s = ut + (1/2)a(t)^2</option>
+                <option value="third" id="accthird">v^2 = u^2 + 2*a*s</option>
+            </select>
+            <br><br>
+        </div>
+
+        <!-- Different methods of finding the answer -->
+        <form action="{% url 'equations_of_motion' %}" method="POST">
+
+            <!-- Displacement form -->
+            <div id="seconddisp" style="display: none;">
+                <h4>Calculate Displacement(s)</h4>
+                <div>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="s">{{ result1 }}</p>
+                </div>
+            </div>
+            <div id="thirddisp" style="display: none;">
+                <h4>Calculate Displacement(s)</h4>
+                <div>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="s2">{{ result2 }}</p>
+                </div>
+            </div>
+
+            <!-- Time Form -->
+            <div id="firsttime" style="display: none;">
+                <h4>Calculate Time(t)</h4>
+                <div>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="t">{{ result }}</p>
+                </div>
+            </div>
+            <div id="secondtime" style="display: none;">
+                <h4>Calculate Time(t)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="t2">{{ result }}</p>
+                </div>
+            </div>
+
+            <!-- Initial Velocity Form -->
+            <div id="firstinitvel" style="display: none;">
+                <h4>Calculate Initial Velocity(u)</h4>
+                <div>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="u">{{ result }}</p>
+                </div>
+            </div>
+            <div id="secondinitvel" style="display: none;">
+                <h4>Calculate Initial Velocity(u)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="u2">{{ result }}</p>
+                </div>
+            </div>
+            <div id="thirdinitvel" style="display: none;">  
+                <h4>Calculate Initial Velocity(u)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="u3">{{ result }}</p>
+                </div>
+            </div>
+            <div id="firstfinvel" style="display: none;">
+                <h4>Calculate Final Velocity(v)</h4>
+                <div>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="v">{{ result }}</p>
+                </div>
+            </div>
+            <div id="thirdfinvel" style="display: none;">
+                <h4>Calculate Final Velocity(v)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="a1">Acceleration(a):
+                        <input type="number" name="a1">
+                    </label>
+                    <br><br>
+                    <p id="v2">{{ result }}</p>
+                </div>
+            </div>
+            <div id="firstacc" style="display: none;">
+                <h4>Calculate Acceleration(a)</h4>
+                <div>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <br><br>
+                    <p id="a">{{ result }}</p>
+                </div>
+            </div>
+            <div id="secondacc" style="display: none;">
+                <h4>Calculate Acceleration(a)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="t1">Time(t):
+                        <input type="number" name="t1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <br><br>
+                    <p id="a2">{{ result }}</p>
+                </div>
+            </div>
+            <div id="firstacc" style="display: none;">
+                <h4>Calculate Acceleration(a)</h4>
+                <div>
+                    <label for="s1">Displacement(s):
+                        <input type="number" name="s1">
+                    </label>
+                    <label for="u1">Initial Velocity(u):
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="v1">Final Velocity(v):
+                        <input type="number" name="v1">
+                    </label>
+                    <br><br>
+                    <p id="a1">{{ result }}</p>
+                </div>
+            </div>
+            <br><br>
+
+            <button type="submit" class="btn btn-primary" style="display: none;" id="kinSubmit">Calculate result</button>
+        </form>
+ 
+        <!-- projectile motion -->
+        <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
+        <h4>Select the value to be calculated</h4>
+        <select name="proj" id="proj">
+            <option value="Select" id="blank2">---Select---</option>
+            <option value="range" id="range">Range(R)</option>
+            <option value="maxheight" id="maxheight">Maximum Height(H)</option>
+            <option value="tof" id="tof">Time of Flight(T)</option>
+            <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
+            <option value="projang" id="projang">Angle of projection(x)</option>
+            <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
+            <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
+        </select>
+        <br><br>
+
+        <!-- Choose method to be selected -->
+        <h4 id="projid">Select method used for calculation</h4>
+        <div id="kinmethod2">
+            <!-- Range is selected -->
+            <select name="rangebtn" id="rangebtn">
+                <option value="Select">---Select---</option>
+                <option value="third" id="rangethird" onclick="funcRangeTrd()">R = u^2(sin(2x))/g</option>
+            </select>
+            <!-- Maximum height is selected -->
+            <select name="heightbtn" id="heightbtn">
+                <option value="Select">---Select---</option>
+                <option value="second" id="heightsecond" onclick="funcHeightSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+            </select>
+            <!-- Time of Flight is selected -->
+            <select name="tofbtn" id="tofbtn">
+                <option value="Select">---Select---</option>
+                <option value="toffirst" id="toffirst" onclick="funcTofFst()">T = 2*u*sin(x)/g</option>
+            </select>
+            <!-- Horizontal and Vertical components of Velocity is selected -->
+            <select name="horverbtn" id="horverbtn">
+                <option value="Select">---Select---</option>
+                <option value="fourth1" id="horverfourth1" onclick="funcHorVerFour1()">Horizontal component(u*cos(x))</option>
+                <option value="fourth2" id="horverfourth2" onclick="funcHorVerFour2()">Vertical component(u*sin(x))</option>
+            </select>
+            <!-- Angle of projection is selected -->
+            <select name="projangbtn" id="projangbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="projangfirst" onclick="funcProjAngFst()">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projangsecond" onclick="funcProjAngSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projangthird" onclick="funcProjAngTrd()">R = u^2(sin(2x))/g</option>
+                <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
+            </select>
+            <!-- Initial Velocity is selected -->
+            <select name="projvelbtn" id="projvelbtn">
+                <option value="Select">---Select---</option>
+                <option value="first" id="projvelfirst" onclick="funcProjVelFst()">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projvelsecond" onclick="funcProjVelSec()">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projvelthird" onclick="funcProjVelTrd()">R = u^2(sin(2x))/g</option>
+            </select>
+            <!-- Time of ascent and descent are selected -->
+            <select name="tadbtn" id="tadbtn">
+                <option value="eighth" id="tadeighth" onclick="funcTadEth">T(a) = u*sin(x)/g</option>
+                <option value="eighth" id="tadeighth" onclick="funcTadEth">T(a) = sqrt(2*h/g)</option>
+            </select>
+            <br><br>
+            <p id="projans">
+            </p>
+        </div>
+    </div>
+    <script src="{% static 'scripts/sidebar-script.js' %}"></script>
+    <script>
+       $(document).ready(function() {
+            function showMethods(methodToShow)  {
+                var Displacement = document.getElementById('dispbtn');
+                var Time = document.getElementById('timebtn');
+                var Initial_Velocity = document.getElementById('initvelbtn');
+                var Final_Velocity = document.getElementById('finvelbtn');
+                var Acceleration = document.getElementById('accbtn');
+
+                if(methodToShow == 'Select')    {
+                    console.log("Selected Nothing");
+                }
+                else if(methodToShow == 'disp') {
+                    Displacement.value = 'Select';
+                    Displacement.style.display = 'block';
+                }
+                else if(methodToShow == 'time') {
+                    Time.value = 'Select';
+                    Time.style.display = 'block';
+                }
+                else if(methodToShow == 'initvel')  {
+                    Initial_Velocity.value = 'Select';
+                    Initial_Velocity.style.display = 'block';
+                }
+                else if(methodToShow == 'finvel')   {
+                    Final_Velocity.value = 'Select';
+                    Final_Velocity.style.display = 'block';
+                }
+                else if(methodToShow == 'acc')  {
+                    Acceleration.value = 'Select';
+                    Acceleration.style.display = 'block';
+                }
+            }
+
+            function methodChange(methodField, dropdownID)  {
+                var submitButton = document.getElementById('kinSubmit');
+
+                if(methodField == 'first')  {
+                    if(dropdownID == 'time')    {
+                        document.getElementById('t1').value = '';
+                        document.getElementById('firsttime').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'u')  {
+                        document.getElementById('u1').value = '';
+                        document.getElementById('firstinitvel').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'v')  {
+                        document.getElementById('v1').value = '';
+                        document.getElementById('firstfinvel').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'acc')  {
+                        document.getElementById('a1').value = '';
+                        document.getElementById('firstacc').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                }
+                else if(methodField == 'second')    {
+                    if(dropdownID == 'disp')    {
+                        document.getElementById('s1').value = '';
+                        document.getElementById('seconddisp').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'time') {
+                        document.getElementById('t2').value = '';
+                        document.getElementById('secondtime').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'u') {
+                        document.getElementById('u2').value = '';
+                        document.getElementById('secondinitvel').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'acc') {
+                        document.getElementById('a2').value = '';
+                        document.getElementById('secondacc').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                }
+                else if(methodField == 'third') {
+                    if(dropdownID == 'disp')    {
+                        document.getElementById('s2').value = '';
+                        document.getElementById('thirddisp').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'u')  {
+                        document.getElementById('u3').value = '';
+                        document.getElementById('thirdinitvel').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'v')  {
+                        document.getElementById('v2').value = '';
+                        document.getElementById('thirdfinvel').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                    else if(dropdownID == 'u')  {
+                        document.getElementById('a3').value = '';
+                        document.getElementById('thirdacc').style.display = 'block';
+                        submitButton.style.display = 'block';
+                    }
+                }
+                else if(methodField == 'Select')    {
+                    console.log("Used Select Tag");
+                }
+            }
+       })
+    </script>
+</body>
+</html>
