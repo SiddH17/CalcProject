@@ -59,7 +59,7 @@ hr  {
     position: fixed;
     z-index: 1;
     top: 0px;
-    left: 0px;
+    left: -150px;
     overflow-x: visible;
     overflow-y: scroll;
     padding-top: 40px;
@@ -76,35 +76,16 @@ hr  {
 .sidebar a:hover    {
     color: gray;
 }
-.sidebar .closebtn .openbtn  {
+.sidebar #toggleNavButton  {
     position: absolute;
     top: 0px;
     right: 25px;
     font-size: 30px;
     margin-left: 40px;
 }
-.openbtn    {
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-}
-.openbtn:hover  {
-    background-color: black;
-    border: 3px solid white;
-}  
-.closebtn    {
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-}
-.closebtn:hover  {
-    background-color: black;
-    border: 3px solid white;
-}  
+.sidebar-open   {
+    left: 0;
+} 
 .homebtn:hover    {
     background-color: black;
 }
@@ -120,7 +101,6 @@ hr  {
 #main   {
     transition: margin-left .4s;
 }
-
 
 /* others */
 @media screen and (max-height: 450px) {

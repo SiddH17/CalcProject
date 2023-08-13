@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -13,21 +14,22 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="physics.css" />
-    <script src="physics.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Physics Calculator</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
 </head>
 <body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
                 <!-- sidebar contents -->
             <div class="sidebar bg-danger" id="physidebar"> 
-                <a href="#mainpart">Main</a>
-                <a href="#kinematics">Kinematics</a>
+                <a href="#">Main</a>
+                <a href="{% url 'equations_of_motion' %}">Kinematics</a>
                 <a href="#heatthermo">Heat and Thermodynamics</a>
                 <a href="#circmot">Circular Motion</a>
                 <a href="#sop">System of Particles</a>
@@ -55,15 +57,14 @@
             </div>
             <!-- sidebar button -->
             <div id="main">
-                <button class="openbtn btn btn-danger" onclick="openNav()">&#9776;</button>
-                <button class="closebtn btn btn-danger"  onclick="closeNav()">&#9776;</button>
+                <button class="openbtn btn btn-danger" id="toggleNavButton" onclick="toggleNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
                     <li>
                         <button class="btn btn-danger container-fluid homebtn frame">
-                            <a href="index.html">Logo Placeholder</a>
+                            <a href="{% url 'index' %}">Logo Placeholder</a>
                         </button>
                     </li>
                     <!-- Normal scientific calculator button -->
@@ -81,13 +82,13 @@
                         <!-- Dropdown for Chemistry -->
                         <li>
                             <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="chemistry.html">Chemistry</a>
+                                <a href="Chemistry:chemistry">Chemistry</a>
                             </button>
                         </li>
                         <!-- Dropdown for mathematics -->
                         <li>
                             <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="mathematics.html">Mathematics</a>
+                                <a href="Mathematics:mathematics">Mathematics</a>
                             </button>
                         </li>
                         </ul>
@@ -118,5 +119,16 @@
     <div id="mainpart">
         Home page of sorts
     </div>
+    <script>
+        var toggleSidebarButton = document.getElementById('toggleNavButton');
+        var sidebar = document.getElementById('physidebar');
+
+            function toggleNav() {
+            console.log("Going inside toggle function");
+            sidebar.classList.toggle('sidebar-open');
+        }
+
+        toggleSidebarButton.addEventListener('click', toggleNav);
+    </script>
 </body>
 </html>
