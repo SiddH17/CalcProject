@@ -50,6 +50,12 @@ hr  {
     margin-left: 0.5em;
     font-size: 30px;
 }
+.navbar {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    height: 75px;
+}
 .frame  {
     border: 5px solid white;
 }
@@ -92,6 +98,9 @@ hr  {
 }
 .homebtn:hover    {
     background-color: black;
+}
+.content    {
+    margin-top: 80px;
 }
 
 /* IDs */
