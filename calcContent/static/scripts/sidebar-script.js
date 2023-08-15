@@ -1,9 +1,23 @@
-// var toggleSidebarButton = document.getElementById('toggleNavButton');
-// var sidebar = document.getElementById('physidebar');
+// jquery code
+$(document).ready(function(){
+    $(".closebtn").hide();
+    $(".openbtn").click(function(){
+        $(".openbtn").hide();
+        $(".closebtn").show();
+    });
+    $(".closebtn").click(function(){
+        $(".closebtn").hide();
+        $(".openbtn").show();
+    });
+});
 
-// function toggleNav() {
-//     console.log("Going inside toggle function");
-//     sidebar.classList.toggle('sidebar-open');
-// }
-
-// toggleSidebarButton.addEventListener('click', toggleNav);
+// javascript code
+function openNav()  {
+    document.getElementById('physidebar').style.width = "250px";
+    document.getElementById('main').style.marginLeft = "250px";
+    document.getElementById('physidebar').style.height = "1000px";
+}
+function closeNav() {
+    document.getElementById('physidebar').style.width = "0";
+    document.getElementById('main').style.marginLeft = "0";
+}

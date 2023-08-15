@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+   
     <title>Physics Calculator</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
@@ -25,7 +25,7 @@
 </head>
 <body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <div class="container-fluid">
+        <div class="container-fluid" style="height:70px;">
                 <!-- sidebar contents -->
             <div class="sidebar bg-danger" id="physidebar"> 
                 <a href="#">Main</a>
@@ -57,61 +57,62 @@
             </div>
             <!-- sidebar button -->
             <div id="main">
-                <button class="openbtn btn btn-danger" id="toggleNavButton" onclick="toggleNav()">&#9776;</button>
+                <button class="openbtn btn btn-danger" id="openNavButton" onclick="openNav()">&#9776;</button>
+                <button class="closebtn btn btn-danger" id="closeNavButton" onclick="closeNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
-                    <li>
-                        <button class="btn btn-danger container-fluid homebtn frame">
-                            <a href="{% url 'index' %}">Logo Placeholder</a>
-                        </button>
+                    <li class="nav-item">
+                        <a class="btn btn-danger container-fluid homebtn frame" href="{% url 'index' %}">
+                            Logo Placeholder
+                        </a>
                     </li>
                     <!-- Normal scientific calculator button -->
                     <li class="nav-item dropdown">
                         <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
-                        Calculate
+                            Calculate
                         </button>
                         <ul class="dropdown-menu dropdown-menu-danger">
-                        <!-- Dropdown for physics -->
-                        <li>
-                            <button class="btn btn-danger topic container-fluid">
-                            <a href="#">Physics</a>
-                            </button>
-                        </li>
-                        <!-- Dropdown for Chemistry -->
-                        <li>
-                            <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="Chemistry:chemistry">Chemistry</a>
-                            </button>
-                        </li>
-                        <!-- Dropdown for mathematics -->
-                        <li>
-                            <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="Mathematics:mathematics">Mathematics</a>
-                            </button>
-                        </li>
+                            <!-- Dropdown for physics -->
+                            <li>
+                                <a class="btn btn-danger topic container-fluid" href="#">
+                                    Physics
+                                </a>
+                            </li>
+                            <!-- Dropdown for Chemistry -->
+                            <li>
+                                <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                                    Chemistry
+                                </a>
+                            </li>
+                            <!-- Dropdown for mathematics -->
+                            <li>
+                                <a class="btn btn-danger topic container-fluid" href="{% url 'Mathematics:mathematics' %}">
+                                    Mathematics
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <!-- ML calculator button -->
-                    <li>
-                        <button class="btn btn-danger mlcalculator frame">
-                        <a href="#">Scan/Type Question</a>
-                        </button>
+                    <li class="nav-item">
+                        <a class="btn btn-danger mlcalculator frame" href="#">
+                            Scan/Type Question
+                        </a>
                     </li>
                     <!-- Searchbar -->
-                    <li>
+                    <li class="nav-item">
                         <form class="d-flex sbar" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                        </form>        
+                            <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                        </form>
                     </li>
                     <!-- Login/Register button -->
-                    <li>
-                        <button id="signin" class="btn btn-danger frame">
-                        <a href="login.html">Login/Register</a>
-                        </button>
+                    <li class="nav-item">
+                        <a id="signin" class="btn btn-danger frame" href="login.html">
+                            Login/Register
+                        </a>
                     </li>
-                </ul>
+                </ul>                
             </div>
         </div>
     </nav>
@@ -119,16 +120,119 @@
     <div id="mainpart">
         Home page of sorts
     </div>
-    <script>
-        var toggleSidebarButton = document.getElementById('toggleNavButton');
-        var sidebar = document.getElementById('physidebar');
+    <div id="mainpart">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam enim dicta voluptatem nostrum error adipisci quis, aliquid eos reiciendis recusandae illo incidunt ipsum, totam at perspiciatis fuga possimus obcaecati? Non maxime sit quibusdam totam, ut id dolor nesciunt alias ex distinctio adipisci modi, corporis quos velit vero saepe impedit accusantium suscipit magni quod similique error molestias omnis neque? Ratione sint reiciendis nobis cum, ipsum praesentium maiores quod voluptatem, deleniti ex quae nisi repellat atque natus vero iste, voluptate voluptatum veniam ad. Reprehenderit tempora fuga ea mollitia officia earum, commodi asperiores optio aperiam rem iure maxime, praesentium fugiat sequi laborum at ullam explicabo quibusdam. Voluptate, consectetur aliquid cum dicta neque accusamus vero exercitationem nulla, modi tempore voluptas nihil, atque explicabo nostrum totam. Quos fugiat labore earum atque dolor tenetur recusandae, eum eius voluptate in repellendus asperiores possimus est nobis ex! Ipsam maxime doloremque, eum a culpa nobis iure, facilis sint eius illum rerum minus? Itaque est nesciunt facere quas. Veritatis possimus, at dolores molestias laudantium totam iure voluptate. Beatae, perspiciatis. Animi doloremque temporibus dicta enim. Minima deleniti nisi quo! Incidunt beatae ipsa eum! Quibusdam pariatur reiciendis nam, nemo tenetur accusantium libero voluptate laudantium aliquid commodi atque totam aut, distinctio culpa quas repellat. Sunt ea architecto itaque possimus dolore ipsum placeat fuga iure consequuntur qui, accusantium odit ad id voluptatibus ex tenetur deleniti excepturi vel distinctio cupiditate, maxime expedita obcaecati laboriosam eos. Natus, doloribus labore adipisci dolor, incidunt fugiat dolores perferendis reiciendis illum consectetur cum a temporibus maiores! Totam qui nam nihil nemo dolorem quam explicabo, a, debitis facilis inventore modi ullam voluptatibus odit nisi, facere saepe quod recusandae distinctio eligendi? Earum ipsa aspernatur possimus nobis voluptatibus et architecto tempora. Unde provident in minus, dolores recusandae sunt, tenetur numquam reprehenderit eveniet impedit illum? Hic molestias quae, natus voluptates aut aliquid soluta sit obcaecati id explicabo aperiam quibusdam quidem nulla, maiores nostrum omnis possimus magnam laudantium asperiores? Molestiae, natus. Quibusdam soluta ducimus quas quisquam vitae incidunt impedit, obcaecati pariatur aliquam non facilis sit aperiam quae accusantium quod maxime. Fugiat libero pariatur nam doloribus quae esse voluptas molestiae ea aperiam beatae, nisi quibusdam totam nulla dolores saepe ipsam. Facilis, rerum. Magni fugiat debitis molestias quo perspiciatis, odit excepturi explicabo necessitatibus quibusdam ullam dolor officia fuga cumque saepe quam a dignissimos cupiditate repellendus illum esse ea id officiis fugit rem. Optio aut iusto ut doloremque velit odit minima quas sit, temporibus totam! Eum suscipit dolores reprehenderit obcaecati est aliquid odit natus vitae! Expedita odio tenetur maxime tempore quo, ex autem suscipit dolor laudantium atque accusamus, optio eos?
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    <div id="mainpart">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sequi laborum mollitia! Maiores et quae quas, numquam blanditiis laboriosam optio officia eum.
+    </div>
+    
 
-            function toggleNav() {
-            console.log("Going inside toggle function");
-            sidebar.classList.toggle('sidebar-open');
-        }
-
-        toggleSidebarButton.addEventListener('click', toggleNav);
-    </script>
+    <script src="{% static 'scripts/sidebar-script.js' %}"></script>
 </body>
 </html>
