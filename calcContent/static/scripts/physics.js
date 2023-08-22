@@ -8,6 +8,32 @@ window.onload = function()    {
     document.getElementById('initvelbtn').value = 'Select';
     document.getElementById('finvelbtn').value = 'Select';
     document.getElementById('accbtn').value = 'Select';
+
+    // Reset input data values to zero
+    function resetInputs(divID) {
+        var resetDiv = document.getElementById(divID);
+        var elements = resetDiv.getElementsByTagName('input');
+
+        for(var i=0;i<elements.length;i++)  {
+            elements[i].value = '';
+        }
+    }
+
+    // Resetting all input data values to zero
+    function resetAllInputs()   {
+        resetInputs('seconddisp');
+        resetInputs('thirddisp');
+        resetInputs('firsttime');
+        resetInputs('secondtime');
+        resetInputs('firstinitvel');
+        resetInputs('secondinitvel');
+        resetInputs('thirdinitvel');
+        resetInputs('firstfinvel');
+        resetInputs('thirdfinvel');
+        resetInputs('firstacc');
+        resetInputs('secondacc');
+        resetInputs('thirdacc');
+    }
 };
 // setting selected Div tag to null for resetting dropdowns
 var activeDiv = null;
@@ -149,7 +175,7 @@ function methodChange(methodField, dropdownID)  {
             answers.style.display = 'block';
             submitButton.style.display = 'block';
         }
-        else if(dropdownID == 'u')  {
+        else if(dropdownID == 'acc')  {
             activeDiv = document.getElementById('thirdacc');
             answers.style.display = 'block';
             submitButton.style.display = 'block';
