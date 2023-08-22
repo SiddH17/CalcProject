@@ -15,7 +15,7 @@ $(document).ready(function(){
 function openNav()  {
     document.getElementById('physidebar').style.width = "250px";
     document.getElementById('main').style.marginLeft = "250px";
-    document.getElementById('physidebar').style.height = "1000px";
+    document.getElementById('physidebar').style.height = "100vh";
 }
 function closeNav() {
     document.getElementById('physidebar').style.width = "0";
