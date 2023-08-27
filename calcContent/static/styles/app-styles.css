@@ -111,7 +111,7 @@ li  {
 }
 
 /* Pseudo-elements */
-.frame::after   {
+/* .frame::after   {
     position: absolute;
     right: 0;
     left: 0;
@@ -120,7 +120,7 @@ li  {
 }
 .frame.show::after  {
     content: '\f106';
-}
+} */
 
 /* IDs */
 #signin {

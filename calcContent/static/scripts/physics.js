@@ -105,12 +105,10 @@ function showMethods(methodToShow)  {
 function methodChange(methodField, dropdownID)  {
     var submitButton = document.getElementById('kinSubmit');
     var answers = document.getElementById('eqmtnans');
-    var answers1 = document.getElementById('eqmtnans1');
-    var answers2 = document.getElementById('eqmtnans2');
 
     if(activeDiv!=null) {
         activeDiv.style.display = 'none';
-        answers.innerHTML = answers1.innerHTML = answers2.innerHTML = "";
+        answers.innerHTML = "";
     }
 
     if(methodField == 'first')  {
@@ -139,7 +137,7 @@ function methodChange(methodField, dropdownID)  {
     else if(methodField == 'second')    {
         if(dropdownID == 'disp')    {
             activeDiv = document.getElementById('seconddisp');
-            answers1.style.display = 'block';
+            answers.style.display = 'block';
             submitButton.style.display = 'block';
         }
         else if(dropdownID == 'time') {
@@ -162,7 +160,7 @@ function methodChange(methodField, dropdownID)  {
     else if(methodField == 'third') {
         if(dropdownID == 'disp')    {
             activeDiv = document.getElementById('thirddisp');
-            answers2.style.display = 'block';
+            answers.style.display = 'block';
             submitButton.style.display = 'block';
         }
         else if(dropdownID == 'u')  {

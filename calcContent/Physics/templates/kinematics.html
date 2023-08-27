@@ -115,8 +115,8 @@
         </div>
     </nav>
     <!-- kinematics topic section -->
-    <div id="kinematics">
-        <h2 id="eqmtn"><u><b>Equations of Motion:</b></u></h2>
+    <div id="kinematics" class="container-fluid content">
+        <h2><u><b>Equations of Motion:</b></u></h2>
         <h4>Select the value to be calculated</h4>
         <!-- Selecting value to be found -->
         <select name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
@@ -363,8 +363,6 @@
     <button type="submit" class="btn btn-primary" style="display: none;" id="kinSubmit">Calculate Result</button>
 
     <p id="eqmtnans" style="display: none;">{{ result }}</p>
-    <p id="eqmtnans1" style="display: none;">{{ result1 }}</p>
-    <p id="eqmtnans2" style="display: none;">{{ result2 }}</p>
     <hr>
  
         <!-- projectile motion -->
