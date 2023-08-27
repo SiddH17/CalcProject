@@ -6,9 +6,11 @@ import math
 def physicsMain(request):
     return render(request, 'physics.html')
 
+#Equations of motion view
 def equations_of_motion(request):
     return render(request, 'kinematics.html')
 
+#Equations of motion API view
 def equations_of_motion_api(request):
     if request.method == 'GET':
         result = None
@@ -112,53 +114,78 @@ def equations_of_motion_api(request):
         }
         return JsonResponse(context)
 
+#Projectile motion view
 def proj_motion(request):
-    # result = result1 = result2 = result3 = result4 = result5 = None
-    # t1 = request.POST.get('t1')
-    # u1 = request.POST.get('u1')
-    # h1 = request.POST.get('h1')
-    # r1 = request.POST.get('r1')
-    # g1 = request.POST.get('g1')
-    # x1 = request.POST.get('x1')
-    # uc1 = request.POST.get('uc1')
-    # us1 = request.POST.get('us1')
+    return render(request, 'kinematics.html')
 
-    # if request.method == 'POST':
-    #     if 't1' in request.POST:
-    #         if 'u1' in request.POST:
-    #             x = (t1*g1)/(2*u1)
-    #             result = math.degrees(math.asin(x)) #calculation of x1
-    #         elif 'x1' in request.POST:
-    #             result = (t1*g1)/(2*(math.sin(x2))) #calculation of u1
-    #     elif 'u1' in request.POST:
-    #         result = (2*u1*(math.sin(x2)))/g1   #calculation of t1
-    #         result1 = (((u1)**2)*(math.sin(x2))**2)/(2*g1)  #calculation of h1
-    #         result2 = ((u1)**2)*(math.sin(x3))/g1   #calculation of r1
-    #         result3 = u1*(math.cos(x2)) #calculation of uc1
-    #         result4 = u1*(math.sin(x2)) #calculation of us1
-    #         result5 = (u1*(math.sin(x2)))/g1   #calculation of ta1
-    #         if 'h1' in request.POST:
-    #             x = (h1*2*g1)/((u1)**2)
-    #             result = (math.degrees(math.asin(x)))**(1/2)    #calculation of x2
-    #         elif 'r1' in request.POST:
-    #             x = (r1*g1)/(u1**2)
-    #             result = (math.degrees(math.asin(x)))/2 #calculation of x3
-    #     elif 'h1' in request.POST:
-    #         if 'x1' in request.POST:
-    #             result = ((h1*2*g1)**(1/2))/(math.sin(x2))  #calculation of u2
-    #         else:
-    #             result = ((2*h1)/g1)**(1/2) #calculation of td1
-    #     elif 'r1' in request.POST:
-    #         result = ((r1*g1)/math.sin(x3))**(1/2)  #calculation of u3
-    #     elif 'uc1' in request.POST:
-    #         result = math.degrees(math.atan2(us1, uc1)) #calculation of x7
+#Projectile motion API view
+def proj_motion_api(request):
+    if request.method == 'GET':
+        result = None
+        t1 = request.GET.get('t1')
+        u1 = request.GET.get('u1')
+        h1 = request.GET.get('h1')
+        r1 = request.GET.get('r1')
+        g1 = request.GET.get('g1')
+        x1 = request.GET.get('x1')
+        uc1 = request.GET.get('uc1')
+        us1 = request.GET.get('us1')
 
-    # context = {
-    #     'result': result,
-    #     'result1': result1,
-    #     'result2': result2,
-    #     'result3': result3,
-    #     'result4': result4,
-    #     'result5': result5,
-    # }
-    return render(request, 'kinematics.html')#, context=context)
+        if t1:
+            t1 = int(t1)
+            print('t1 is real!!', t1)
+        if u1:
+            u1 = int(u1)
+            print('u1 is real!!', u1)
+        if h1:
+            h1 = int(h1)
+            print('h1 is real!!', h1)
+        if r1:
+            r1 = int(r1)
+            print('r1 is real!!', r1)
+        if g1:
+            g1 = int(g1)
+            print('g1 is real!!', g1)
+        if x1:
+            x1 = int(x1)
+            print('x1 is real!!', x1)
+        if uc1:
+            uc1 = int(uc1)
+            print('uc1 is real!!', uc1)
+        if us1:
+            us1 = int(us1)
+            print('us1 is real!!', us1)
+
+        if 't1':
+            if 'u1':
+                x = (t1*g1)/(2*u1)
+                result = math.degrees(math.asin(x)) #calculation of x1
+            elif 'x1':
+                result = (t1*g1)/(2*(math.sin(x1))) #calculation of u1
+        elif 'u1':
+            result = (2*u1*(math.sin(x1)))/g1   #calculation of t1
+            result1 = (((u1)**2)*(math.sin(x1))**2)/(2*g1)  #calculation of h1
+            result2 = ((u1)**2)*(math.sin(x1))/g1   #calculation of r1
+            result3 = u1*(math.cos(x1)) #calculation of uc1
+            result4 = u1*(math.sin(x1)) #calculation of us1
+            result5 = (u1*(math.sin(x1)))/g1   #calculation of ta1
+            if 'h1':
+                x = (h1*2*g1)/((u1)**2)
+                result = (math.degrees(math.asin(x)))**(1/2)    #calculation of x2
+            elif 'r1':
+                x = (r1*g1)/(u1**2)
+                result = (math.degrees(math.asin(x)))/2 #calculation of x3
+        elif 'h1':
+            if 'x1':
+                result = ((h1*2*g1)**(1/2))/(math.sin(x1))  #calculation of u2
+            else:
+                result = ((2*h1)/g1)**(1/2) #calculation of td1
+        elif 'r1':
+            result = ((r1*g1)/math.sin(x1))**(1/2)  #calculation of u3
+        elif 'uc1':
+            result = math.degrees(math.atan2(us1, uc1)) #calculation of x7
+
+    context = {
+        'result': result,
+    }
+    return JsonResponse(context)

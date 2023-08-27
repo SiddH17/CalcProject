@@ -366,311 +366,284 @@
     <hr>
  
         <!-- projectile motion -->
-        <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
-        <h4>Select the value to be calculated</h4>
-        <select name="proj" id="proj" onchange="projMethods(this.value)">
-            <option value="Select" id="blank2">---Select---</option>
-            <option value="range" id="range">Range(R)</option>
-            <option value="maxheight" id="maxheight">Maximum Height(H)</option>
-            <option value="tof" id="tof">Time of Flight(T)</option>
-            <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
-            <option value="projang" id="projang">Angle of projection(x)</option>
-            <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
-            <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
+    <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
+    <h4>Select the value to be calculated</h4>
+    <select name="proj" id="proj" onchange="projMethods(this.value)">
+        <option value="Select" id="blank2">---Select---</option>
+        <option value="range" id="range">Range(R)</option>
+        <option value="maxheight" id="maxheight">Maximum Height(H)</option>
+        <option value="tof" id="tof">Time of Flight(T)</option>
+        <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
+        <option value="projang" id="projang">Angle of projection(x)</option>
+        <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
+        <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
+    </select>
+    <br><br>
+
+    <!-- Choose method to be selected -->
+    <h4 id="projid" style="display: none;">Select method used for calculation</h4>
+    <div id="kinmethod2">
+        <!-- Range is selected -->
+        <select name="rangebtn" id="rangebtn" style="display: none;" onchange="ProjChange(this.value, 'range')">
+            <option value="Select">---Select---</option>
+            <option value="third" id="rangethird">R = u^2(sin(2x))/g</option>
+        </select>
+        <!-- Maximum height is selected -->
+        <select name="heightbtn" id="heightbtn" style="display: none;" onchange="ProjChange(this.value, 'maxheight')">
+            <option value="Select">---Select---</option> 
+            <option value="second" id="heightsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+        </select>
+        <!-- Time of Flight is selected -->
+        <select name="tofbtn" id="tofbtn" style="display: none;" onchange="ProjChange(this.value, 'tof')">
+            <option value="Select">---Select---</option>
+            <option value="first" id="toffirst">T = 2*u*sin(x)/g</option>
+        </select>
+        <!-- Horizontal and Vertical components of Velocity is selected -->
+        <select name="horverbtn" id="horverbtn" style="display: none;" onchange="ProjChange(this.value, 'velcomps')">
+            <option value="Select">---Select---</option>
+            <option value="fourth" id="horverfourth">Horizontal component(u*cos(x))</option>
+            <option value="fifth" id="horverfifth">Vertical component(u*sin(x))</option>
+        </select>
+        <!-- Angle of projection is selected -->
+        <select name="projangbtn" id="projangbtn" style="display: none;" onchange="ProjChange(this.value, 'projang')">
+            <option value="Select">---Select---</option>
+            <option value="first" id="projangfirst">T = 2*u*sin(x)/g</option>
+            <option value="second" id="projangsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+            <option value="third" id="projangthird">R = u^2(sin(2x))/g</option>
+            <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
+        </select>
+        <!-- Initial Velocity is selected -->
+        <select name="projvelbtn" id="projvelbtn" style="display: none;" onchange="ProjChange(this.value, 'projinitvel')">
+            <option value="Select">---Select---</option>
+            <option value="first" id="projvelfirst">T = 2*u*sin(x)/g</option>
+            <option value="second" id="projvelsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+            <option value="third" id="projvelthird">R = u^2(sin(2x))/g</option>
+        </select>
+        <!-- Time of ascent and descent are selected -->
+        <select name="tadbtn" id="tadbtn" style="display: none;" onchange="ProjChange(this.value, 'tad')">
+            <option value="Select">---Select---</option>
+            <option value="eighth" id="tadeighth">T(a) = u*sin(x)/g</option>
+            <option value="ninth" id="tadeighth">T(a) = sqrt(2*h/g)</option>
         </select>
         <br><br>
-
-        <!-- Choose method to be selected -->
-        <h4 id="projid">Select method used for calculation</h4>
-        <div id="kinmethod2">
-            <!-- Range is selected -->
-            <select name="rangebtn" id="rangebtn" onchange="ProjChange(this.value, 'range')">
-                <option value="Select">---Select---</option>
-                <option value="third" id="rangethird">R = u^2(sin(2x))/g</option>
-            </select>
-            <!-- Maximum height is selected -->
-            <select name="heightbtn" id="heightbtn" onchange="ProjChange(this.value, 'maxheight')">
-                <option value="Select">---Select---</option> 
-                <option value="second" id="heightsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-            </select>
-            <!-- Time of Flight is selected -->
-            <select name="tofbtn" id="tofbtn" onchange="ProjChange(this.value, 'tof')">
-                <option value="Select">---Select---</option>
-                <option value="first" id="toffirst">T = 2*u*sin(x)/g</option>
-            </select>
-            <!-- Horizontal and Vertical components of Velocity is selected -->
-            <select name="horverbtn" id="horverbtn" onchange="ProjChange(this.value, 'velcomps')">
-                <option value="Select">---Select---</option>
-                <option value="fourth" id="horverfourth">Horizontal component(u*cos(x))</option>
-                <option value="fifth" id="horverfifth">Vertical component(u*sin(x))</option>
-            </select>
-            <!-- Angle of projection is selected -->
-            <select name="projangbtn" id="projangbtn" onchange="ProjChange(this.value, 'projang')">
-                <option value="Select">---Select---</option>
-                <option value="first" id="projangfirst">T = 2*u*sin(x)/g</option>
-                <option value="second" id="projangsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-                <option value="third" id="projangthird">R = u^2(sin(2x))/g</option>
-                <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
-            </select>
-            <!-- Initial Velocity is selected -->
-            <select name="projvelbtn" id="projvelbtn" onchange="ProjChange(this.value, 'projinitvel')">
-                <option value="Select">---Select---</option>
-                <option value="first" id="projvelfirst">T = 2*u*sin(x)/g</option>
-                <option value="second" id="projvelsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-                <option value="third" id="projvelthird">R = u^2(sin(2x))/g</option>
-            </select>
-            <!-- Time of ascent and descent are selected -->
-            <select name="tadbtn" id="tadbtn" onchange="ProjChange(this.value, 'tad')">
-                <option value="Select">---Select---</option>
-                <option value="eighth" id="tadeighth">T(a) = u*sin(x)/g</option>
-                <option value="ninth" id="tadeighth">T(a) = sqrt(2*h/g)</option>
-            </select>
+    </div>
+    
+        {% csrf_token %}
+        <!-- Range Calculation -->
+    <div id="trdrange" style="display: none;">
+        <h4>Calculate Range:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
             <br><br>
         </div>
-        
-            {% csrf_token %}
-            <!-- Range Calculation -->
-        <div id="trdrange" style="display: none;">
-            <h4>Calculate Range:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="r1">{{ result2 }}</p>
-            </div>
-        </div>
-
-        <!-- Maximum Height Calculation -->
-        <div id="secheight" style="display: none;">
-            <h4>Calculate Maximum Height:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="h1">{{ result1 }}</p>
-            </div>
-        </div>
-
-        <!-- Time of Flight Calculation -->
-        <div id="fsttof" style="display: none;">
-            <h4>Calculate Time of Flight:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="t1">{{ result }}</p>
-            </div>
-        </div>
-
-        <!-- Components of Velocity Calculation -->
-        <div id="fourthhorver" style="display: none;">
-            <h4>Calculate Horizontal Component of Velocity:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of projection:
-                    <input type="number" name="x1">
-                </label>
-                <br><br>
-
-                <p id="uc1">{{ result3 }}</p>
-            </div>
-        </div>
-        <div id="fifthhorver" style="display: none;">
-            <h4>Calculate Horizontal Component of Velocity:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of projection:
-                    <input type="number" name="x1">
-                </label>
-                <br><br>
-
-                <p id="us1">{{ result4 }}</p>
-            </div>
-        </div>
-
-        <!-- Angle of Projection Calculation -->
-        <div id="fstprojang" style="display: none;">
-            <h4>Calculate Angle of Projection</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="t1">Time of Flight:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="x1">{{ result }}</p>
-            </div>
-        </div>
-        <div id="secprojang" style="display: none;">
-            <h4>Calculate Angle of Projection</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="h1">Maximum Height:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="x2">{{ result }}</p>
-            </div>
-            <div id="trdprojang" style="display: none;">
-                <h4>Calculate Angle of Projection</h4>
-                <div>
-                    <label for="u1">Initial Velocity:
-                        <input type="number" name="u1">
-                    </label>
-                    <label for="r1">Range:
-                        <input type="number" name="x1">
-                    </label>
-                    <label for="g1">Gravitational Acceleration:
-                        <input type="number" name="g1">
-                    </label>
-                    <br><br>
-
-                    <p id="x3">{{ result }}</p>
-                </div>
-            </div>
-        </div>
-        <div id="seventhprojang" style="display: none;">
-            <h4>Calculate Angle of Projection:</h4>
-            <div>
-                <label for="uc1">Horizontal Component(Ux):
-                    <input type="number" name="uc1">
-                </label>
-                <label for="us1">Vertical Component(Uy):
-                    <input type="number" name="us1">
-                </label>
-                <br><br>
-
-                <p id="x7">{{ result }}</p>
-            </div>
-        </div>
-
-        <!-- Initial Velocity Calculation -->
-        <div id="fstprojinitvel" style="display: none;">
-            <h4>Calculate Initial Velocity:</h4>
-            <div>
-                <label for="t1">Time of Flight:
-                    <input type="number" name="t1">
-                </label>
-                <label for="x1">Angle of Projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="u1">{{ result }}</p>
-            </div>
-        </div>
-        <div id="secprojinitvel" style="display: none;">
-            <h4>Calculate Initial Velocity:</h4>
-            <div>
-                <label for="h1">Maximum Height:
-                    <input type="number" name="h1">
-                </label>
-                <label for="x1">Angle of Projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br>
-
-                <p id="u2">{{ result }}</p>
-            </div>
-        </div>
-        <div id="trdprojinitvel" style="display: none;">
-            <h4>Calculate Initial Velocity:</h4>
-            <div>
-                <label for="r1">Range:
-                    <input type="number" name="r1">
-                </label>
-                <label for="x1">Angle of Projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br>
-
-                <p id="u3">{{ result }}</p>
-            </div>
-        </div>
-        
-        <!-- Time of Ascent and Descent Calculation -->
-        <div id="eighthtad" style="display: none;">
-            <h4>Calculate Time of Ascent:</h4>
-            <div>
-                <label for="u1">Initial Velocity:
-                    <input type="number" name="u1">
-                </label>
-                <label for="x1">Angle of Projection:
-                    <input type="number" name="x1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-
-                <p id="ta1">{{ result5 }}</p>
-            </div>
-        </div>
-        <div id="ninthtad" style="display: none;">
-            <h4>Calculate Time of Descent:</h4>
-            <div>
-                <label for="h1">Height:
-                    <input type="number" name="h1">
-                </label>
-                <label for="g1">Gravitational Acceleration:
-                    <input type="number" name="g1">
-                </label>
-                <br><br>
-                
-                <p id="td1">{{ result }}</p>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" id="projSubmit" style="display: none;">Calculate Result</button>
     </div>
+
+    <!-- Maximum Height Calculation -->
+    <div id="secheight" style="display: none;">
+        <h4>Calculate Maximum Height:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+
+    <!-- Time of Flight Calculation -->
+    <div id="fsttof" style="display: none;">
+        <h4>Calculate Time of Flight:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+
+    <!-- Components of Velocity Calculation -->
+    <div id="fourthhorver" style="display: none;">
+        <h4>Calculate Horizontal Component of Velocity:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of projection:
+                <input type="number" name="x1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+    <div id="fifthhorver" style="display: none;">
+        <h4>Calculate Horizontal Component of Velocity:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of projection:
+                <input type="number" name="x1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+
+    <!-- Angle of Projection Calculation -->
+    <div id="fstprojang" style="display: none;">
+        <h4>Calculate Angle of Projection</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="t1">Time of Flight:
+                <input type="number" name="t1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+    <div id="secprojang" style="display: none;">
+        <h4>Calculate Angle of Projection</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="h1">Maximum Height:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+        <div id="trdprojang" style="display: none;">
+            <h4>Calculate Angle of Projection</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="r1">Range:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    </div>
+    <div id="seventhprojang" style="display: none;">
+        <h4>Calculate Angle of Projection:</h4>
+        <div>
+            <label for="uc1">Horizontal Component(Ux):
+                <input type="number" name="uc1">
+            </label>
+            <label for="us1">Vertical Component(Uy):
+                <input type="number" name="us1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+
+    <!-- Initial Velocity Calculation -->
+    <div id="fstprojinitvel" style="display: none;">
+        <h4>Calculate Initial Velocity:</h4>
+        <div>
+            <label for="t1">Time of Flight:
+                <input type="number" name="t1">
+            </label>
+            <label for="x1">Angle of Projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+    <div id="secprojinitvel" style="display: none;">
+        <h4>Calculate Initial Velocity:</h4>
+        <div>
+            <label for="h1">Maximum Height:
+                <input type="number" name="h1">
+            </label>
+            <label for="x1">Angle of Projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br>
+        </div>
+    </div>
+    <div id="trdprojinitvel" style="display: none;">
+        <h4>Calculate Initial Velocity:</h4>
+        <div>
+            <label for="r1">Range:
+                <input type="number" name="r1">
+            </label>
+            <label for="x1">Angle of Projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br>
+        </div>
+    </div>
+    
+    <!-- Time of Ascent and Descent Calculation -->
+    <div id="eighthtad" style="display: none;">
+        <h4>Calculate Time of Ascent:</h4>
+        <div>
+            <label for="u1">Initial Velocity:
+                <input type="number" name="u1">
+            </label>
+            <label for="x1">Angle of Projection:
+                <input type="number" name="x1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+    <div id="ninthtad" style="display: none;">
+        <h4>Calculate Time of Descent:</h4>
+        <div>
+            <label for="h1">Height:
+                <input type="number" name="h1">
+            </label>
+            <label for="g1">Gravitational Acceleration:
+                <input type="number" name="g1">
+            </label>
+            <br><br>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="projSubmit" style="display: none;">Calculate Result</button>
+    <p id="projans">{{ result }}</p>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'scripts/sidebar-script.js' %}"></script>
     <script src="{% static 'scripts/physics.js'%}"></script>
@@ -681,6 +654,13 @@
             $('[name="u1"]').val('');
             $('[name="v1"]').val('');
             $('[name="a1"]').val('');
+            $('[name="x1"]').val('');
+            $('[name="g1"]').val('');
+            $('[name="uc1"]').val('');
+            $('[name="us1"]').val('');
+            $('[name="t1"]').val('');
+            $('[name="r1"]').val('');
+            $('[name="h1"]').val('');
         }
     </script>
     <script>
@@ -706,11 +686,35 @@
                     data: data,
                     success: function(response) {
                         $('#eqmtnans').text(response.result);
-                        $('#eqmtnans1').text(response.result);
-                        $('#eqmtnans2').text(response.result);
                         clearInputFields();
                         console.log(response.result);
                         console.log(data);
+                    }
+                });
+            });
+            $('#projButton').click(function()   {
+                const projDiv = $('div:visible');
+                const projInputs = projDiv.find('input[type=number]');
+                const projData = {};
+
+                projInputs.each(function()  {
+                    console.log("Entered the projectile motion inputs function!!");
+                    const projName = $(this).attr('name');
+                    const projValue = parseFloat($(this).val());
+                    projData[projName] = projValue;
+
+                    console.log(projValue, "Your projectile value!");
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "proj_motion_api" %}',
+                    data: 'projData',
+                    success: function(response) {
+                        $('#projans').text(response.result);
+                        clearInputFields();
+                        console.log(response.result);
+                        console.log(projData);
                     }
                 });
             });

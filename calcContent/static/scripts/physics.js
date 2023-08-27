@@ -8,32 +8,6 @@ window.onload = function()    {
     document.getElementById('initvelbtn').value = 'Select';
     document.getElementById('finvelbtn').value = 'Select';
     document.getElementById('accbtn').value = 'Select';
-
-    // Reset input data values to zero
-    function resetInputs(divID) {
-        var resetDiv = document.getElementById(divID);
-        var elements = resetDiv.getElementsByTagName('input');
-
-        for(var i=0;i<elements.length;i++)  {
-            elements[i].value = '';
-        }
-    }
-
-    // Resetting all input data values to zero
-    function resetAllInputs()   {
-        resetInputs('seconddisp');
-        resetInputs('thirddisp');
-        resetInputs('firsttime');
-        resetInputs('secondtime');
-        resetInputs('firstinitvel');
-        resetInputs('secondinitvel');
-        resetInputs('thirdinitvel');
-        resetInputs('firstfinvel');
-        resetInputs('thirdfinvel');
-        resetInputs('firstacc');
-        resetInputs('secondacc');
-        resetInputs('thirdacc');
-    }
 };
 // setting selected Div tag to null for resetting dropdowns
 var activeDiv = null;
@@ -188,18 +162,21 @@ function methodChange(methodField, dropdownID)  {
 // Projectile motion
 // Methods to calculate for different variables selected
 function projMethods(projShowMethod)    {
-    var range = document.getElementById('range');
-    var maxheight = document.getElementById('maxheight');
-    var tof = document.getElementById('tof');
-    var velcomps = document.getElementById('velcomps');
-    var projang = document.getElementById('projang');
-    var projinitvel = document.getElementById('projinitvel');
-    var tad = document.getElementById('tad');
+    console.log("Entered the projMethods function!!");
+    var range = document.getElementById('rangebtn');
+    var maxheight = document.getElementById('heightbtn');
+    var tof = document.getElementById('tofbtn');
+    var velcomps = document.getElementById('horverbtn');
+    var projang = document.getElementById('projangbtn');
+    var projinitvel = document.getElementById('projvelbtn');
+    var tad = document.getElementById('tadbtn');
+    var header = document.getElementById('projid');
     
     if(projShowMethod == 'Select')  {
         console.log("Nothing to see here, move on....");
     }
     else if(projShowMethod == 'range')  {
+        header.style.display = 'block';
         range.value = 'Select';
         range.style.display = 'block';
         maxheight.style.display = 'none';
@@ -210,6 +187,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'maxheight')  {
+        header.style.display = 'block';
         maxheight.value = 'Select';
         maxheight.style.display = 'block';
         range.style.display = 'none';
@@ -220,6 +198,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'tof')    {
+        header.style.display = 'block';
         tof.value = 'Select';
         tof.style.display = 'block';
         range.style.display = 'none';
@@ -230,6 +209,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'velcomps')   {
+        header.style.display = 'block';
         velcomps.value = 'Select';
         velcomps.style.display = 'block';
         range.style.display = 'none';
@@ -240,6 +220,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'projang')    {
+        header.style.display = 'block';
         projang.value = 'Select';
         projang.style.display = 'block';
         range.style.display = 'none';
@@ -250,6 +231,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'projinitvel')    {
+        header.style.display = 'block';
         projinitvel.value = 'Select';
         projinitvel.style.display = 'block';
         range.style.display = 'none';
@@ -260,6 +242,7 @@ function projMethods(projShowMethod)    {
         tad.style.display = 'none';
     }
     else if(projShowMethod == 'tad')    {
+        header.style.display = 'block';
         tad.value = 'Select';
         tad.style.display = 'block';
         range.style.display = 'none';
@@ -274,91 +257,108 @@ function projMethods(projShowMethod)    {
 // Changing between different methods for projectile motion
 function ProjChange(projField, projDropdown)    {
     var projButton = document.getElementById('projSubmit');
+    var answers = document.getElementById('eqmtnans');
+
+    if(activeDiv!=null) {
+        activeDiv.style.display = 'none';
+        answers.innerHTML = "";
+    }
 
     if(projField == 'first')    {
         if(projDropdown == 'tof')  {
-            document.getElementById('t1').value = '';
-            document.getElementById('fsttof').style.display = 'block';
+            activeDiv = document.getElementById('fsttof');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projang')  {
-            document.getElementById('x1').value = '';
-            document.getElementById('fstprojang').style.display = 'block';
+            activeDiv = document.getElementById('fstprojang');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projinitvel')  {
-            document.getElementById('u1').value = '';
-            document.getElementById('fstprojinitvel').style.display = 'block';
+            activeDiv = document.getElementById('fstprojinitvel');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'second')  {
         if(projDropdown == 'maxheight') {
-            document.getElementById('h1').value = '';
-            document.getElementById('secheight').style.display = 'block';
+            activeDiv = document.getElementById('secheight');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projang')  {
-            document.getElementById('x2').value = '';
-            document.getElementById('secprojang').style.display = 'block';
+            activeDiv = document.getElementById('secprojang');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projinitvel')  {
-            document.getElementById('u2').value = '';
-            document.getElementById('secprojinitvel').style.display = 'block';
+            activeDiv = document.getElementById('secprojinitvel');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'third')   {
         if(projDropdown == 'range') {
-            document.getElementById('r1').value = '';
-            document.getElementById('trdrange').style.display = 'block';
+            activeDiv = document.getElementById('trdrange');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projang')  {
-            document.getElementById('x3').value = '';
-            document.getElementById('trdprojang').style.display = 'block';
+            activeDiv = document.getElementById('trdprojang');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
         else if(projDropdown == 'projinitvel')  {
-            document.getElementById('u3').value = '';
-            document.getElementById('trdprojinitvel').style.display = 'block';
+            activeDiv = document.getElementById('trdprojinitvel');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'fourth')  {
         if(projDropdown == 'velcomps')  {
-            document.getElementById('uc1').value = '';
-            document.getElementById('fourthhorver').style.display = 'block';
+            activeDiv = document.getElementById('fourthhorver');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'fifth')   {
         if(projDropdown == 'velcomps')  {
-            document.getElementById('us1').value = '';
-            document.getElementById('fifthhorver').style.display = 'block';
+            activeDiv = document.getElementById('fifthhorver');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'seventh') {
         if(projDropdown == 'projang')   {
-            document.getElementById('x7').value = '';
-            document.getElementById('seventhprojang').style.display = 'block';
+            activeDiv = document.getElementById('seventhprojang');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'eighth')  {
         if(projDropdown == 'tad')   {
-            document.getElementById('ta1').value = '';
-            document.getElementById('eighthtad').style.display = 'block';
+            activeDiv = document.getElementById('eigthtad');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
     }
     else if(projField == 'ninth')  {
         if(projDropdown == 'tad')   {
-            document.getElementById('td1').value = '';
-            document.getElementById('ninthtad').style.display = 'block';
+            activeDiv = document.getElementById('ninthtad');
+            answers.style.display = 'block';
             projButton.style.display = 'block';
         }
+        activeDiv.style.display = 'block';
+    }
+    else if(projField == 'Select')  {
+        console.log('Used select tag');
     }
 }
