@@ -8,6 +8,14 @@ window.onload = function()    {
     document.getElementById('initvelbtn').value = 'Select';
     document.getElementById('finvelbtn').value = 'Select';
     document.getElementById('accbtn').value = 'Select';
+    document.getElementById('proj').value = 'Select';
+    document.getElementById('rangebtn').value = 'Select';
+    document.getElementById('heightbtn').value = 'Select';
+    document.getElementById('tofbtn').value = 'Select';
+    document.getElementById('horverbtn').value = 'Select';
+    document.getElementById('projangbtn').value = 'Select';
+    document.getElementById('projvelbtn').value = 'Select';
+    document.getElementById('tadbtn').value = 'Select';
 };
 // setting selected Div tag to null for resetting dropdowns
 var activeDiv = null;
@@ -352,6 +360,7 @@ function ProjChange(projField, projDropdown)    {
     }
     else if(projField == 'ninth')  {
         if(projDropdown == 'tad')   {
+            console.log(projDropdown, "PRojectile function dropdown");
             activeDiv = document.getElementById('ninthtad');
             answers.style.display = 'block';
             projButton.style.display = 'block';

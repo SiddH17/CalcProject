@@ -9,5 +9,5 @@ urlpatterns = [
     
     # API paths
     path('equations_of_motion_api/', views.equations_of_motion_api, name='equations_of_motion_api'),
-    path('proj_motion_api/',views.proj_motion_api, name='proj_motion'),
+    path('proj_motion_api/',views.proj_motion_api, name='proj_motion_api'),
 ]
