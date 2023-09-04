@@ -74,7 +74,7 @@
                         <ul class="dropdown-menu bg-danger">
                             <!-- Dropdown for physics -->
                             <li>
-                                <a class="btn btn-danger topic container-fluid" href="#">
+                                <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">
                                     Physics
                                 </a>
                             </li>
@@ -114,435 +114,330 @@
             </div>
         </div>
     </nav>
-    <!-- kinematics topic section -->
-    <div id="kinematics" class="container-fluid content">
-        <h2><u><b>Equations of Motion:</b></u></h2>
+    <div class="container-fluid" id="phybody">
+        <!-- Kinematics div -->
+        <div id="kinematics" class="container-fluid content">
+            <h2><u><b>Equations of Motion:</b></u></h2>
+            <h4>Select the value to be calculated</h4>
+            <!-- Selecting value to be found -->
+            <select name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
+                <option value="Select" id="blank1">---Select---</option>
+                <option value="disp" id="disp">Displacement(s)</option>
+                <option value="time" id="time">Time(t)</option>
+                <option value="initvel" id="initvel">Initial Velocity(u)</option>
+                <option value="finvel" id="finvel">Final Velocity(v)</option>
+                <option value="acc" id="acc">Acceleration(a)</option>
+            </select>
+            <br><br>
+     
+            <!-- Choose method to be selected -->
+            <h4 id="eqmtnid" style="display: none;">Select the method to be used for calculation</h4>
+            <div id="kinmethod1">
+                <!-- Displacement is selected -->
+                <select name="dispbtn" id="dispbtn" style="display: none;" onchange="methodChange(this.value, 'disp')">
+                    <option value="Select">---Select---</option>
+                    <option value="second" id="dispsecond">s = ut + (1/2)a(t)^2</option>
+                    <option value="third" id="dispthird">v^2 = u^2 + 2*a*s</option>
+                </select>
+                <!-- Time is selected -->
+                <select name="timebtn" id="timebtn" style="display: none;" onchange="methodChange(this.value, 'time')">
+                    <option value="Select">---Select---</option>
+                    <option value="first" id="timefirst">v = u + a*t</option>
+                    <option value="second" id="timesecond">s = ut + (1/2)a(t)^2</option>
+                </select>
+                <!-- Initial Velocity is selected -->
+                <select name="initvelbtn" id="initvelbtn" style="display: none;" onchange="methodChange(this.value, 'u')">
+                    <option value="Select">---Select---</option>
+                    <option value="first" id="initvelfirst">v = u + a*t</option>
+                    <option value="second" id="initvelsecond">s = ut + (1/2)a(t)^2</option>
+                    <option value="third" id="initvelthird">v^2 = u^2 + 2*a*s</option>
+                </select>
+                <!-- Final Velocity is selected -->
+                <select name="finvelbtn" id="finvelbtn" style="display: none;" onchange="methodChange(this.value, 'v')">
+                    <option value="Select">---Select---</option>
+                    <option value="first" id="finvelfirst">v = u + a*t</option>
+                    <option value="third" id="finvelthird">v^2 = u^2 + 2*a*s</option>
+                </select>
+                <!-- Acceleration is selected -->
+                <select name="accbtn" id="accbtn" style="display: none;" onchange="methodChange(this.value, 'acc')">
+                    <option value="Select">---Select---</option>
+                    <option value="first" id="accfirst">v = u + a*t</option>
+                    <option value="second" id="accsecond">s = ut + (1/2)a(t)^2</option>
+                    <option value="third" id="accthird">v^2 = u^2 + 2*a*s</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+        
+        <!-- Different methods of finding the answer -->
+        <!-- Displacement form -->
+        <div id="seconddisp" class="eqmtn" style="display: none;">
+            <h4>Calculate Displacement(s)</h4>
+            <div>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="thirddisp" class="eqmtn" style="display: none;">
+            <h4>Calculate Displacement(s)</h4>
+            <div>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Time Form -->
+        <div id="firsttime" class="eqmtn" style="display: none;">
+            <h4>Calculate Time(t)</h4>
+            <div>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="secondtime" class="eqmtn" style="display: none;">
+            <h4>Calculate Time(t)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Initial Velocity Form -->
+        <div id="firstinitvel" class="eqmtn" style="display: none;">
+            <h4>Calculate Initial Velocity(u)</h4>
+            <div>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="secondinitvel" class="eqmtn" style="display: none;">
+            <h4>Calculate Initial Velocity(u)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="thirdinitvel" class="eqmtn" style="display: none;">  
+            <h4>Calculate Initial Velocity(u)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Final Velocity Form -->
+        <div id="firstfinvel" class="eqmtn" style="display: none;">
+            <h4>Calculate Final Velocity(v)</h4>
+            <div>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="thirdfinvel" class="eqmtn" style="display: none;">
+            <h4>Calculate Final Velocity(v)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="a1">Acceleration(a):
+                    <input type="number" name="a1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Acceleration Form  -->
+        <div id="firstacc" class="eqmtn" style="display: none;">
+            <h4>Calculate Acceleration(a)</h4>
+            <div>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="secondacc" class="eqmtn" style="display: none;">
+            <h4>Calculate Acceleration(a)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="t1">Time(t):
+                    <input type="number" name="t1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="thirdacc" class="eqmtn" style="display: none;">
+            <h4>Calculate Acceleration(a)</h4>
+            <div>
+                <label for="s1">Displacement(s):
+                    <input type="number" name="s1">
+                </label>
+                <label for="u1">Initial Velocity(u):
+                    <input type="number" name="u1">
+                </label>
+                <label for="v1">Final Velocity(v):
+                    <input type="number" name="v1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <br>
+    
+        <button type="submit" class="btn btn-primary" style="display: none;" id="kinSubmit">Calculate Result</button>
+    
+        <p id="eqmtnans" style="display: none;">{{ result }}</p>
+        <hr>
+     
+            <!-- projectile motion -->
+        <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
         <h4>Select the value to be calculated</h4>
-        <!-- Selecting value to be found -->
-        <select name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
-            <option value="Select" id="blank1">---Select---</option>
-            <option value="disp" id="disp">Displacement(s)</option>
-            <option value="time" id="time">Time(t)</option>
-            <option value="initvel" id="initvel">Initial Velocity(u)</option>
-            <option value="finvel" id="finvel">Final Velocity(v)</option>
-            <option value="acc" id="acc">Acceleration(a)</option>
+        <select name="proj" id="proj" onchange="projMethods(this.value)">
+            <option value="Select" id="blank2">---Select---</option>
+            <option value="range" id="range">Range(R)</option>
+            <option value="maxheight" id="maxheight">Maximum Height(H)</option>
+            <option value="tof" id="tof">Time of Flight(T)</option>
+            <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
+            <option value="projang" id="projang">Angle of projection(x)</option>
+            <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
+            <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
         </select>
         <br><br>
- 
+    
         <!-- Choose method to be selected -->
-        <h4 id="eqmtnid" style="display: none;">Select the method to be used for calculation</h4>
-        <div id="kinmethod1">
-            <!-- Displacement is selected -->
-            <select name="dispbtn" id="dispbtn" style="display: none;" onchange="methodChange(this.value, 'disp')">
+        <h4 id="projid" style="display: none;">Select method used for calculation</h4>
+        <div id="kinmethod2">
+            <!-- Range is selected -->
+            <select name="rangebtn" id="rangebtn" style="display: none;" onchange="ProjChange(this.value, 'range')">
                 <option value="Select">---Select---</option>
-                <option value="second" id="dispsecond">s = ut + (1/2)a(t)^2</option>
-                <option value="third" id="dispthird">v^2 = u^2 + 2*a*s</option>
+                <option value="third" id="rangethird">R = u^2(sin(2x))/g</option>
             </select>
-            <!-- Time is selected -->
-            <select name="timebtn" id="timebtn" style="display: none;" onchange="methodChange(this.value, 'time')">
+            <!-- Maximum height is selected -->
+            <select name="heightbtn" id="heightbtn" style="display: none;" onchange="ProjChange(this.value, 'maxheight')">
+                <option value="Select">---Select---</option> 
+                <option value="second" id="heightsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+            </select>
+            <!-- Time of Flight is selected -->
+            <select name="tofbtn" id="tofbtn" style="display: none;" onchange="ProjChange(this.value, 'tof')">
                 <option value="Select">---Select---</option>
-                <option value="first" id="timefirst">v = u + a*t</option>
-                <option value="second" id="timesecond">s = ut + (1/2)a(t)^2</option>
+                <option value="first" id="toffirst">T = 2*u*sin(x)/g</option>
+            </select>
+            <!-- Horizontal and Vertical components of Velocity is selected -->
+            <select name="horverbtn" id="horverbtn" style="display: none;" onchange="ProjChange(this.value, 'velcomps')">
+                <option value="Select">---Select---</option>
+                <option value="fourth" id="horverfourth">Horizontal component(u*cos(x))</option>
+                <option value="fifth" id="horverfifth">Vertical component(u*sin(x))</option>
+            </select>
+            <!-- Angle of projection is selected -->
+            <select name="projangbtn" id="projangbtn" style="display: none;" onchange="ProjChange(this.value, 'projang')">
+                <option value="Select">---Select---</option>
+                <option value="first" id="projangfirst">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projangsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projangthird">R = u^2(sin(2x))/g</option>
+                <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
             </select>
             <!-- Initial Velocity is selected -->
-            <select name="initvelbtn" id="initvelbtn" style="display: none;" onchange="methodChange(this.value, 'u')">
+            <select name="projvelbtn" id="projvelbtn" style="display: none;" onchange="ProjChange(this.value, 'projinitvel')">
                 <option value="Select">---Select---</option>
-                <option value="first" id="initvelfirst">v = u + a*t</option>
-                <option value="second" id="initvelsecond">s = ut + (1/2)a(t)^2</option>
-                <option value="third" id="initvelthird">v^2 = u^2 + 2*a*s</option>
+                <option value="first" id="projvelfirst">T = 2*u*sin(x)/g</option>
+                <option value="second" id="projvelsecond">H = (u^2)Sin^2(x)/(2*g)</option>
+                <option value="third" id="projvelthird">R = u^2(sin(2x))/g</option>
             </select>
-            <!-- Final Velocity is selected -->
-            <select name="finvelbtn" id="finvelbtn" style="display: none;" onchange="methodChange(this.value, 'v')">
+            <!-- Time of ascent and descent are selected -->
+            <select name="tadbtn" id="tadbtn" style="display: none;" onchange="ProjChange(this.value, 'tad')">
                 <option value="Select">---Select---</option>
-                <option value="first" id="finvelfirst">v = u + a*t</option>
-                <option value="third" id="finvelthird">v^2 = u^2 + 2*a*s</option>
-            </select>
-            <!-- Acceleration is selected -->
-            <select name="accbtn" id="accbtn" style="display: none;" onchange="methodChange(this.value, 'acc')">
-                <option value="Select">---Select---</option>
-                <option value="first" id="accfirst">v = u + a*t</option>
-                <option value="second" id="accsecond">s = ut + (1/2)a(t)^2</option>
-                <option value="third" id="accthird">v^2 = u^2 + 2*a*s</option>
+                <option value="eighth" id="tadeighth">T(a) = u*sin(x)/g</option>
+                <option value="ninth" id="tadeighth">T(a) = sqrt(2*h/g)</option>
             </select>
             <br><br>
         </div>
-    </div>
-    
-    <!-- Different methods of finding the answer -->
-    <!-- Displacement form -->
-    <div id="seconddisp" class="eqmtn" style="display: none;">
-        <h4>Calculate Displacement(s)</h4>
-        <div>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="thirddisp" class="eqmtn" style="display: none;">
-        <h4>Calculate Displacement(s)</h4>
-        <div>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Time Form -->
-    <div id="firsttime" class="eqmtn" style="display: none;">
-        <h4>Calculate Time(t)</h4>
-        <div>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="secondtime" class="eqmtn" style="display: none;">
-        <h4>Calculate Time(t)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Initial Velocity Form -->
-    <div id="firstinitvel" class="eqmtn" style="display: none;">
-        <h4>Calculate Initial Velocity(u)</h4>
-        <div>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="secondinitvel" class="eqmtn" style="display: none;">
-        <h4>Calculate Initial Velocity(u)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="thirdinitvel" class="eqmtn" style="display: none;">  
-        <h4>Calculate Initial Velocity(u)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Final Velocity Form -->
-    <div id="firstfinvel" class="eqmtn" style="display: none;">
-        <h4>Calculate Final Velocity(v)</h4>
-        <div>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="thirdfinvel" class="eqmtn" style="display: none;">
-        <h4>Calculate Final Velocity(v)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="a1">Acceleration(a):
-                <input type="number" name="a1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Acceleration Form  -->
-    <div id="firstacc" class="eqmtn" style="display: none;">
-        <h4>Calculate Acceleration(a)</h4>
-        <div>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="secondacc" class="eqmtn" style="display: none;">
-        <h4>Calculate Acceleration(a)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="t1">Time(t):
-                <input type="number" name="t1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="thirdacc" class="eqmtn" style="display: none;">
-        <h4>Calculate Acceleration(a)</h4>
-        <div>
-            <label for="s1">Displacement(s):
-                <input type="number" name="s1">
-            </label>
-            <label for="u1">Initial Velocity(u):
-                <input type="number" name="u1">
-            </label>
-            <label for="v1">Final Velocity(v):
-                <input type="number" name="v1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <br>
-
-    <button type="submit" class="btn btn-primary" style="display: none;" id="kinSubmit">Calculate Result</button>
-
-    <p id="eqmtnans" style="display: none;">{{ result }}</p>
-    <hr>
- 
-        <!-- projectile motion -->
-    <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
-    <h4>Select the value to be calculated</h4>
-    <select name="proj" id="proj" onchange="projMethods(this.value)">
-        <option value="Select" id="blank2">---Select---</option>
-        <option value="range" id="range">Range(R)</option>
-        <option value="maxheight" id="maxheight">Maximum Height(H)</option>
-        <option value="tof" id="tof">Time of Flight(T)</option>
-        <option value="velcomps" id="velcomps">Velocity components(Ux,Uy)</option>
-        <option value="projang" id="projang">Angle of projection(x)</option>
-        <option value="projinitvel" id="projinitvel">Initial Velocity(u)</option>
-        <option value="tad" id="tad">Time of ascent and descent(Ta,Td)</option>
-    </select>
-    <br><br>
-
-    <!-- Choose method to be selected -->
-    <h4 id="projid" style="display: none;">Select method used for calculation</h4>
-    <div id="kinmethod2">
-        <!-- Range is selected -->
-        <select name="rangebtn" id="rangebtn" style="display: none;" onchange="ProjChange(this.value, 'range')">
-            <option value="Select">---Select---</option>
-            <option value="third" id="rangethird">R = u^2(sin(2x))/g</option>
-        </select>
-        <!-- Maximum height is selected -->
-        <select name="heightbtn" id="heightbtn" style="display: none;" onchange="ProjChange(this.value, 'maxheight')">
-            <option value="Select">---Select---</option> 
-            <option value="second" id="heightsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-        </select>
-        <!-- Time of Flight is selected -->
-        <select name="tofbtn" id="tofbtn" style="display: none;" onchange="ProjChange(this.value, 'tof')">
-            <option value="Select">---Select---</option>
-            <option value="first" id="toffirst">T = 2*u*sin(x)/g</option>
-        </select>
-        <!-- Horizontal and Vertical components of Velocity is selected -->
-        <select name="horverbtn" id="horverbtn" style="display: none;" onchange="ProjChange(this.value, 'velcomps')">
-            <option value="Select">---Select---</option>
-            <option value="fourth" id="horverfourth">Horizontal component(u*cos(x))</option>
-            <option value="fifth" id="horverfifth">Vertical component(u*sin(x))</option>
-        </select>
-        <!-- Angle of projection is selected -->
-        <select name="projangbtn" id="projangbtn" style="display: none;" onchange="ProjChange(this.value, 'projang')">
-            <option value="Select">---Select---</option>
-            <option value="first" id="projangfirst">T = 2*u*sin(x)/g</option>
-            <option value="second" id="projangsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-            <option value="third" id="projangthird">R = u^2(sin(2x))/g</option>
-            <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
-        </select>
-        <!-- Initial Velocity is selected -->
-        <select name="projvelbtn" id="projvelbtn" style="display: none;" onchange="ProjChange(this.value, 'projinitvel')">
-            <option value="Select">---Select---</option>
-            <option value="first" id="projvelfirst">T = 2*u*sin(x)/g</option>
-            <option value="second" id="projvelsecond">H = (u^2)Sin^2(x)/(2*g)</option>
-            <option value="third" id="projvelthird">R = u^2(sin(2x))/g</option>
-        </select>
-        <!-- Time of ascent and descent are selected -->
-        <select name="tadbtn" id="tadbtn" style="display: none;" onchange="ProjChange(this.value, 'tad')">
-            <option value="Select">---Select---</option>
-            <option value="eighth" id="tadeighth">T(a) = u*sin(x)/g</option>
-            <option value="ninth" id="tadeighth">T(a) = sqrt(2*h/g)</option>
-        </select>
-        <br><br>
-    </div>
-    
-        {% csrf_token %}
-        <!-- Range Calculation -->
-    <div id="trdrange" class="projmtn" style="display: none;">
-        <h4>Calculate Range:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Maximum Height Calculation -->
-    <div id="secheight" class="projmtn" style="display: none;">
-        <h4>Calculate Maximum Height:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Time of Flight Calculation -->
-    <div id="fsttof" class="projmtn" style="display: none;">
-        <h4>Calculate Time of Flight:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Components of Velocity Calculation -->
-    <div id="fourthhorver" class="projmtn" style="display: none;">
-        <h4>Calculate Horizontal Component of Velocity:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of projection:
-                <input type="number" name="x1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="fifthhorver" class="projmtn" style="display: none;">
-        <h4>Calculate Horizontal Component of Velocity:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of projection:
-                <input type="number" name="x1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Angle of Projection Calculation -->
-    <div id="fstprojang" class="projmtn" style="display: none;">
-        <h4>Calculate Angle of Projection</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="t1">Time of Flight:
-                <input type="number" name="t1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="secprojang" class="projmtn" style="display: none;">
-        <h4>Calculate Angle of Projection</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="h1">Maximum Height:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-        <div id="trdprojang" class="projmtn" style="display: none;">
-            <h4>Calculate Angle of Projection</h4>
+        
+            {% csrf_token %}
+            <!-- Range Calculation -->
+        <div id="trdrange" class="projmtn" style="display: none;">
+            <h4>Calculate Range:</h4>
             <div>
                 <label for="u1">Initial Velocity:
                     <input type="number" name="u1">
                 </label>
-                <label for="r1">Range:
+                <label for="x1">Angle of projection:
                     <input type="number" name="x1">
                 </label>
                 <label for="g1">Gravitational Acceleration:
@@ -551,98 +446,205 @@
                 <br><br>
             </div>
         </div>
-    </div>
-    <div id="seventhprojang" class="projmtn" style="display: none;">
-        <h4>Calculate Angle of Projection:</h4>
-        <div>
-            <label for="uc1">Horizontal Component(Ux):
-                <input type="number" name="uc1">
-            </label>
-            <label for="us1">Vertical Component(Uy):
-                <input type="number" name="us1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-
-    <!-- Initial Velocity Calculation -->
-    <div id="fstprojinitvel" class="projmtn" style="display: none;">
-        <h4>Calculate Initial Velocity:</h4>
-        <div>
-            <label for="t1">Time of Flight:
-                <input type="number" name="t1">
-            </label>
-            <label for="x1">Angle of Projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
-        </div>
-    </div>
-    <div id="secprojinitvel" class="projmtn" style="display: none;">
-        <h4>Calculate Initial Velocity:</h4>
-        <div>
-            <label for="h1">Maximum Height:
-                <input type="number" name="h1">
-            </label>
-            <label for="x1">Angle of Projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br>
-        </div>
-    </div>
-    <div id="trdprojinitvel" class="projmtn" style="display: none;">
-        <h4>Calculate Initial Velocity:</h4>
-        <div>
-            <label for="r1">Range:
-                <input type="number" name="r1">
-            </label>
-            <label for="x1">Angle of Projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br>
-        </div>
-    </div>
     
-    <!-- Time of Ascent and Descent Calculation -->
-    <div id="eighthtad" class="projmtn" style="display: none;">
-        <h4>Calculate Time of Ascent:</h4>
-        <div>
-            <label for="u1">Initial Velocity:
-                <input type="number" name="u1">
-            </label>
-            <label for="x1">Angle of Projection:
-                <input type="number" name="x1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
+        <!-- Maximum Height Calculation -->
+        <div id="secheight" class="projmtn" style="display: none;">
+            <h4>Calculate Maximum Height:</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="x1">Angle of projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
         </div>
-    </div>
-    <div id="ninthtad" class="projmtn" style="display: none;">
-        <h4>Calculate Time of Descent:</h4>
-        <div>
-            <label for="h1">Height:
-                <input type="number" name="h1">
-            </label>
-            <label for="g1">Gravitational Acceleration:
-                <input type="number" name="g1">
-            </label>
-            <br><br>
+    
+        <!-- Time of Flight Calculation -->
+        <div id="fsttof" class="projmtn" style="display: none;">
+            <h4>Calculate Time of Flight:</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="x1">Angle of projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
         </div>
+    
+        <!-- Components of Velocity Calculation -->
+        <div id="fourthhorver" class="projmtn" style="display: none;">
+            <h4>Calculate Horizontal Component of Velocity:</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="x1">Angle of projection:
+                    <input type="number" name="x1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="fifthhorver" class="projmtn" style="display: none;">
+            <h4>Calculate Horizontal Component of Velocity:</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="x1">Angle of projection:
+                    <input type="number" name="x1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Angle of Projection Calculation -->
+        <div id="fstprojang" class="projmtn" style="display: none;">
+            <h4>Calculate Angle of Projection</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="t1">Time of Flight:
+                    <input type="number" name="t1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="secprojang" class="projmtn" style="display: none;">
+            <h4>Calculate Angle of Projection</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="h1">Maximum Height:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+            <div id="trdprojang" class="projmtn" style="display: none;">
+                <h4>Calculate Angle of Projection</h4>
+                <div>
+                    <label for="u1">Initial Velocity:
+                        <input type="number" name="u1">
+                    </label>
+                    <label for="r1">Range:
+                        <input type="number" name="x1">
+                    </label>
+                    <label for="g1">Gravitational Acceleration:
+                        <input type="number" name="g1">
+                    </label>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <div id="seventhprojang" class="projmtn" style="display: none;">
+            <h4>Calculate Angle of Projection:</h4>
+            <div>
+                <label for="uc1">Horizontal Component(Ux):
+                    <input type="number" name="uc1">
+                </label>
+                <label for="us1">Vertical Component(Uy):
+                    <input type="number" name="us1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <!-- Initial Velocity Calculation -->
+        <div id="fstprojinitvel" class="projmtn" style="display: none;">
+            <h4>Calculate Initial Velocity:</h4>
+            <div>
+                <label for="t1">Time of Flight:
+                    <input type="number" name="t1">
+                </label>
+                <label for="x1">Angle of Projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="secprojinitvel" class="projmtn" style="display: none;">
+            <h4>Calculate Initial Velocity:</h4>
+            <div>
+                <label for="h1">Maximum Height:
+                    <input type="number" name="h1">
+                </label>
+                <label for="x1">Angle of Projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br>
+            </div>
+        </div>
+        <div id="trdprojinitvel" class="projmtn" style="display: none;">
+            <h4>Calculate Initial Velocity:</h4>
+            <div>
+                <label for="r1">Range:
+                    <input type="number" name="r1">
+                </label>
+                <label for="x1">Angle of Projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br>
+            </div>
+        </div>
+        
+        <!-- Time of Ascent and Descent Calculation -->
+        <div id="eighthtad" class="projmtn" style="display: none;">
+            <h4>Calculate Time of Ascent:</h4>
+            <div>
+                <label for="u1">Initial Velocity:
+                    <input type="number" name="u1">
+                </label>
+                <label for="x1">Angle of Projection:
+                    <input type="number" name="x1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+        <div id="ninthtad" class="projmtn" style="display: none;">
+            <h4>Calculate Time of Descent:</h4>
+            <div>
+                <label for="h1">Height:
+                    <input type="number" name="h1">
+                </label>
+                <label for="g1">Gravitational Acceleration:
+                    <input type="number" name="g1">
+                </label>
+                <br><br>
+            </div>
+        </div>
+    
+        <button type="submit" class="btn btn-primary" id="projSubmit" style="display: none;">Calculate Result</button>
+        <p id="projans">{{ result1 }}</p>    
     </div>
-
-    <button type="submit" class="btn btn-primary" id="projSubmit" style="display: none;">Calculate Result</button>
-    <p id="projans">{{ result1 }}</p>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'scripts/sidebar-script.js' %}"></script>
