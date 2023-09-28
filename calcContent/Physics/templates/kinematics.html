@@ -42,7 +42,7 @@
                 <a href="#soundwav">Sound Waves</a>
                 <a href="#rayopt">Ray Optics</a>
                 <a href="#wavopts">Wave Optics</a>
-                <a href="#elecstats">Electrostatics</a>
+                <a href="{% url 'electrostatics' %}">Electrostatics</a>
                 <a href="#capacitor">Capacitors</a>
                 <a href="#currele">Current Electricity</a>
                 <a href="#magnet">Magnetism</a>
@@ -61,11 +61,11 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
-                    <li class="nav-item">
-                        <a class="btn btn-danger container-fluid homebtn frame" style="height: 70px;" href="{% url 'index' %}">
-                            Logo Placeholder
-                        </a>
-                    </li>
+                    <a class="btn btn-danger container-fluid homebtn frame" style="height: 70px;" href="{% url 'index' %}">
+                        <li class="nav-item">
+                            Logo Placeholder   
+                        </li>
+                    </a>
                     <!-- Normal scientific calculator button -->
                     <li class="nav-item dropdown">
                         <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,31 +73,31 @@
                         </button>
                         <ul class="dropdown-menu bg-danger">
                             <!-- Dropdown for physics -->
-                            <li>
-                                <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">
+                            <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">                
+                                <li>
                                     Physics
-                                </a>
-                            </li>
-                            <!-- Dropdown for Chemistry -->
-                            <li>
-                                <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                                </li>
+                            </a>
+                                <!-- Dropdown for Chemistry -->
+                            <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                                <li>
                                     Chemistry
-                                </a>
-                            </li>
+                                </li>
+                            </a>
                             <!-- Dropdown for mathematics -->
-                            <li>
-                                <a class="btn btn-danger topic container-fluid" href="{% url 'Mathematics:mathematics' %}">
-                                    Mathematics
-                                </a>
-                            </li>
+                            <a class="btn btn-danger topic container-fluid" href="{% url 'Mathematics:mathematics' %}">
+                                <li>
+                                        Mathematics                                
+                                </li>
+                            </a>
                         </ul>
                     </li>
                     <!-- ML calculator button -->
-                    <li class="nav-item">
-                        <a class="btn btn-danger mlcalculator frame" href="#">
-                            Scan/Type Question
-                        </a>
-                    </li>
+                    <a class="btn btn-danger mlcalculator frame" href="#">
+                        <li class="nav-item">
+                                Scan/Type Question
+                        </li>
+                    </a>    
                     <!-- Searchbar -->
                     <li class="nav-item">
                         <form class="d-flex sbar" role="search">
@@ -105,11 +105,11 @@
                         </form>
                     </li>
                     <!-- Login/Register button -->
-                    <li class="nav-item">
-                        <a id="signin" class="btn btn-danger frame" href="#">
-                            Login/Register
-                        </a>
-                    </li>
+                    <a id="signin" class="btn btn-danger frame" href="#">
+                        <li class="nav-item">
+                                Login/Register
+                        </li>
+                    </a>    
                 </ul>                
             </div>
         </div>

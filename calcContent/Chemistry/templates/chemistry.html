@@ -53,56 +53,56 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
-                    <li>
-                        <button class="btn btn-danger container-fluid homebtn frame">
-                            <a href="index.html">Logo Placeholder</a>
-                        </button>
-                    </li>
+                    <a class="btn btn-danger container-fluid homebtn frame" style="height: 70px;" href="{% url 'index' %}">
+                        <li class="nav-item">
+                            Logo Placeholder   
+                        </li>
+                    </a>
                     <!-- Normal scientific calculator button -->
                     <li class="nav-item dropdown">
                         <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
-                        Calculate
+                            Calculate
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-danger">
-                        <!-- Dropdown for physics -->
-                        <li>
-                            <button class="btn btn-danger topic container-fluid">
-                            <a href="{% url 'physics' %}">Physics</a>
-                            </button>
-                        </li>
-                        <!-- Dropdown for Chemistry -->
-                        <li>
-                            <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="#">Chemistry</a>
-                            </button>
-                        </li>
-                        <!-- Dropdown for mathematics -->
-                        <li>
-                            <button type="button" class="btn btn-danger topic container-fluid">
-                                <a href="{% url 'Mathematics:mathematics' %}">Mathematics</a>
-                            </button>
-                        </li>
+                        <ul class="dropdown-menu bg-danger">
+                            <!-- Dropdown for physics -->
+                            <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">                
+                                <li>
+                                    Physics
+                                </li>
+                            </a>
+                                <!-- Dropdown for Chemistry -->
+                            <a class="btn btn-danger topic container-fluid" href="#">
+                                <li>
+                                    Chemistry
+                                </li>
+                            </a>
+                            <!-- Dropdown for mathematics -->
+                            <a class="btn btn-danger topic container-fluid" href="{% url 'Mathematics:mathematics' %}">
+                                <li>
+                                        Mathematics                                
+                                </li>
+                            </a>
                         </ul>
                     </li>
                     <!-- ML calculator button -->
-                    <li>
-                        <button class="btn btn-danger mlcalculator frame">
-                        <a href="#">Scan/Type Question</a>
-                        </button>
-                    </li>
+                    <a class="btn btn-danger mlcalculator frame" href="#">
+                        <li class="nav-item">
+                                Scan/Type Question
+                        </li>
+                    </a>    
                     <!-- Searchbar -->
-                    <li>
+                    <li class="nav-item">
                         <form class="d-flex sbar" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                        </form>        
+                            <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                        </form>
                     </li>
                     <!-- Login/Register button -->
-                    <li>
-                        <button id="signin" class="btn btn-danger frame">
-                        <a href="login.html">Login/Register</a>
-                        </button>
-                    </li>
-                </ul>
+                    <a id="signin" class="btn btn-danger frame" href="#">
+                        <li class="nav-item">
+                                Login/Register
+                        </li>
+                    </a>    
+                </ul>                
             </div>
         </div>
     </nav>

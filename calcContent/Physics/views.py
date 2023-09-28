@@ -176,3 +176,6 @@ def proj_motion_api(request):
         'result1': result1,
     }
     return JsonResponse(context)
+
+def electrostatics(request):
+    return render(request, 'electrostatics.html')
