@@ -144,9 +144,9 @@ def proj_motion_api(request):
             if x1:
                 if g1:
                     if projSelectedDiv == 'fsttof':
-                        result1 = (2*u1*(math.sin(x1)))/g1   #calculation of t1
+                        result1 = (2*u1*(math.sin(math.degrees(x1))))/g1   #calculation of t1
                     elif projSelectedDiv == 'secheight':
-                        result1 = (((u1)**2)*(math.sin(x1))**2)/(2*g1)  #calculation of h1
+                        result1 = (((u1)**2)*(math.sin(math.degrees(x1)))**2)/(2*g1)  #calculation of h1
                     elif projSelectedDiv == 'trdrange':
                         result1 = ((u1)**2)*(math.sin(x1))/g1   #calculation of r1
                     elif projSelectedDiv == 'fourthhorver':
@@ -177,5 +177,37 @@ def proj_motion_api(request):
     }
     return JsonResponse(context)
 
+def thermodynamics(request):
+    return render(request, 'thermodynamics.html')
+
 def electrostatics(request):
     return render(request, 'electrostatics.html')
+
+def electrostatics_api(request):
+    valueSelected = request.GET.get('select_value')
+    F = float(request.GET.get('F'))
+    Q = float(request.GET.get('Q'))
+    q = float(request.GET.get('q'))
+    r = float(request.GET.get('r'))
+
+    print(valueSelected, "This is the value that has been selected eventually")
+    k=1/(4*math.pi*8.854187817e-12)
+    result = None
+
+    if valueSelected == 'force':
+        result = (k*q*Q)/r
+
+    elif valueSelected == 'charge2':
+        result = (F*r)/(k*Q)
+
+    elif valueSelected == 'charge1': 
+        result = (F*r)/(k*q)
+        
+    elif valueSelected == 'distance':
+        result = (k*q*Q)/F
+
+    context = {
+        'result': result,
+    }
+    return JsonResponse(context)
+

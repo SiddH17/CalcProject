@@ -2,20 +2,41 @@ window.onload = function()    {
     console.log("Inside the window onload function!!");
 
     // Resetting all dropdowns to default value 'Select'
-    document.getElementById('eqsmtn').value = 'Select';
-    document.getElementById('dispbtn').value = 'Select';
-    document.getElementById('timebtn').value = 'Select';
-    document.getElementById('initvelbtn').value = 'Select';
-    document.getElementById('finvelbtn').value = 'Select';
-    document.getElementById('accbtn').value = 'Select';
-    document.getElementById('proj').value = 'Select';
-    document.getElementById('rangebtn').value = 'Select';
-    document.getElementById('heightbtn').value = 'Select';
-    document.getElementById('tofbtn').value = 'Select';
-    document.getElementById('horverbtn').value = 'Select';
-    document.getElementById('projangbtn').value = 'Select';
-    document.getElementById('projvelbtn').value = 'Select';
-    document.getElementById('tadbtn').value = 'Select';
+    electroValue = document.getElementById('electros')
+    if(electroValue)    {
+        electroValue.value = 'Select';
+    }
+    else    {
+        document.getElementById('eqsmtn').value = 'Select';
+        document.getElementById('dispbtn').value = 'Select';
+        document.getElementById('timebtn').value = 'Select';
+        document.getElementById('initvelbtn').value = 'Select';
+        document.getElementById('finvelbtn').value = 'Select';
+        document.getElementById('accbtn').value = 'Select';
+        document.getElementById('proj').value = 'Select';
+        document.getElementById('rangebtn').value = 'Select';
+        document.getElementById('heightbtn').value = 'Select';
+        document.getElementById('tofbtn').value = 'Select';
+        document.getElementById('horverbtn').value = 'Select';
+        document.getElementById('projangbtn').value = 'Select';
+        document.getElementById('projvelbtn').value = 'Select';
+        document.getElementById('tadbtn').value = 'Select';
+    }
+    
+    function clearInputFields() {
+        $('[name="s1"]').val('');
+        $('[name="t1"]').val('');
+        $('[name="u1"]').val('');
+        $('[name="v1"]').val('');
+        $('[name="a1"]').val('');
+        $('[name="x1"]').val('');
+        $('[name="g1"]').val('');
+        $('[name="uc1"]').val('');
+        $('[name="us1"]').val('');
+        $('[name="t1"]').val('');
+        $('[name="r1"]').val('');
+        $('[name="h1"]').val('');
+    }
 };
 // setting selected Div tag to null for resetting dropdowns
 var activeDiv = null;

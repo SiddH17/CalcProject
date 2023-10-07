@@ -114,140 +114,53 @@
         </div>
     </nav>
 
-    <div id="electrostatics" class="container-fluid content">
-        <!-- Coulumb's law div -->
-        <h2><u><b>Coulumb's law:</b></u></h2>
-        <h4>Select the value to be calculated:</h4>
-
-        <!-- selecting the value to be found -->
-        <select name="cl" id="electros">
-            <option value="Select" id="blank1">--Select--</option>
-            <option value="force" id="force">Force(F)</option>
-            <option value="charge1" id="charge1">Charge1(Q)</option>
-            <option value="charge2" id="charge2">Charge2(q)</option>
-            <option value="distance" id="distance">Distance(r)</option>
+    <!-- Different types of expansion dropdown -->
+    <div id="expansion">
+        <h4><u><b>Select the value to be calculated:</b></u></h4>
+        <select name="coe" id="thermalexp">
+            <option value="Select">--Select--</option>
+            <option value="Temperature">Temperature(T)</option>
+            <option value="Linear Expansion">Linear Expansion Co-efficient</option>
+            <option value="Area Expansion">Area Expansion Co-efficient</option>
+            <option value="Volume Expansion">Volume Expansion Co-efficient</option>
         </select>
-        <br><br>
+    </div>
 
-        {% csrf_token %}
-        <div id="electro1" style="display: none;">
-            <h4>Calculate <span id="result_label"></span> </h4>
-            <div>
-                <label for="FInput" id="forceInput">Force(F):
-                    <input type="number" name="F">
-                </label>
-                <label for="QInput" id="charge1Input">Charge 1(Q):
-                    <input type="number" name="Q">
-                </label>
-                <label for="qInput" id="charge2Input">Charge 2(q):
-                    <input type="number" name="q">
-                </label>
-                <label for="rInput" id="distanceInput">Distance (r):
-                    <input type="number" name="r">
-                </label>
-                <br>
-            </div>
-
-            <button type="submit" id="electrosubmit" class="btn btn-primary">Calculate Result</button>
+    <!-- Div for linear expansion -->
+    <div id="linexp" style="display: none;">
+        <h4>Calculate <span id="resultLabel1"></span></h4>
+        <div>
+            <label for="colinexp" id="cole">Co-efficient of Linear Expansion:
+                <input type="number" name="colinexp">
+            </label>
+            <label for="temp" id="temp1">Temperature:
+                <input type="number" name="temp">
+            </label>
         </div>
-        <p id="electroans"></p>
+    </div>
+    <!-- Div for area expansion -->
+    <div id="arexp" style="display: none;">
+        <h4>Calculate <span id="resultLabel2"></span></h4>
+        <div>
+            <label for="coaexp" id="coae">Co-efficient of Area Expansion:
+                <input type="number" name="coaexp">
+            </label>
+            <label for="temp" id="temp2">Temperature:
+                <input type="number" name="temp">
+            </label>
+        </div>
+    </div>
+    <!-- Div for volume expansion -->
+    <div id="volexp" style="display: none;">
+        <h4>Calculate <span id="resultLabel3"></span></h4>
+        <label for="covexp" id="cove">Co-efficient of Volume Expansion:
+            <input type="number" name="covexp">
+        </label>
+        <label for="temp" id="temp3">Temperature:
+            <input type="number" name="temp">
+        </label>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'scripts/sidebar-script.js' %}"></script>
-    <script src="{% static 'scripts/physics.js'%}"></script>
-    <script>
-        // Coulumb's law JS and Jquery along with ajax
-        $(document).ready(function()    {
-            const selectElement = document.getElementById('electros');
-            const electroDiv = document.getElementById('electro1');
-            const resultLabel = document.getElementById('result_label');
-            var selectValue;
-
-            const force = document.getElementById('forceInput');
-            const charge1 = document.getElementById('charge1Input');
-            const charge2 = document.getElementById('charge2Input');
-            const distance = document.getElementById('distanceInput');
-
-            selectElement.addEventListener('change', function()   {
-                // changes the value of the option selected
-                selectValue = selectElement.value;
-                console.log('This is the value: ',selectValue);
-                resultLabel.textContent = selectValue;
-
-                clearInputFields();
-
-                if (selectValue == 'force') {
-                    electroDiv.style.display = 'block';
-                    charge1.style.display = 'block';
-                    charge2.style.display = 'block';
-                    distance.style.display = 'block';
-                    force.style.display = 'none';
-                }   
-                else if(selectValue == 'charge1')   {
-                    electroDiv.style.display = 'block';
-                    force.style.display = 'block';
-                    charge2.style.display = 'block';
-                    distance.style.display = 'block';
-                    charge1.style.display = 'none';
-                }
-                else if(selectValue == 'charge2')   {
-                    electroDiv.style.display = 'block';
-                    force.style.display = 'block';
-                    charge1.style.display = 'block';
-                    distance.style.display = 'block';
-                    charge2.style.display = 'none';
-                }
-                else if(selectValue == 'distance')    {
-                    electroDiv.style.display = 'block';
-                    force.style.display = 'block';
-                    charge1.style.display = 'block';
-                    charge2.style.display = 'block';
-                    distance.style.display = 'none';
-                }
-            })
-
-            function clearInputFields()  {
-                $('[name="F"]').val('');
-                $('[name="Q"]').val('');
-                $('[name="q"]').val('');
-                $('[name="r"]').val('');
-            }
-
-            $('#electrosubmit').click(function()    {
-                // fetches the value of the select dropdown
-                const valueSelected = $('#electros').val();
-                // selects the #electro1 div
-                const selectDiv = $('div#electro1:visible');
-                const inputs = selectDiv.find('input[type=number]');
-                const data = {};
-
-                console.log("This is the value of valueSelected variable, ",valueSelected);
-
-                inputs.each(function () {
-                    console.log("Entered the inputs each function!!");
-                    const name = $(this).attr('name');
-                    const value = parseFloat($(this).val());
-                    // Passes the value of the number inputs to data
-                    data[name] = value;
-
-                    console.log(value);
-                    console.log(data, "THe data that's been provided here!");
-                })
-
-                // Include valueSelected in the data object if needed
-                data.select_value = valueSelected;
-
-                $.ajax({
-                    type: 'GET',
-                    url: '{% url "electrostatics_api" %}',
-                    data: data,
-                    success: function(response)  {
-                        $('#electroans').text(response.result);
-                        clearInputFields();
-                        console.log(response.result, "This is the response result");
-                    },
-                })
-            })
-        })
-    </script>
+</body>
