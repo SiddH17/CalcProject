@@ -10,6 +10,17 @@ def physicsMain(request):
 def equations_of_motion(request):
     return render(request, 'kinematics.html')
 
+#Projectile motion view
+def proj_motion(request):
+    return render(request, 'kinematics.html')
+
+def thermodynamics(request):
+    return render(request, 'thermodynamics.html')
+
+def electrostatics(request):
+    return render(request, 'electrostatics.html')
+
+# APIs
 #Equations of motion API view
 def equations_of_motion_api(request):
     if request.method == 'GET':
@@ -90,10 +101,6 @@ def equations_of_motion_api(request):
             'result': result,
         }
         return JsonResponse(context)
-
-#Projectile motion view
-def proj_motion(request):
-    return render(request, 'kinematics.html')
 
 #Projectile motion API view
 def proj_motion_api(request):
@@ -177,12 +184,7 @@ def proj_motion_api(request):
     }
     return JsonResponse(context)
 
-def thermodynamics(request):
-    return render(request, 'thermodynamics.html')
-
-def electrostatics(request):
-    return render(request, 'electrostatics.html')
-
+# electrostatics API view
 def electrostatics_api(request):
     valueSelected = request.GET.get('select_value')
     F = float(request.GET.get('F'))

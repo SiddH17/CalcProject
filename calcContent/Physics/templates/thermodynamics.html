@@ -1,166 +1,132 @@
+{% extends "physics.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
     {% load static %}
-<head>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <title>Kinematics Calculator</title>
+    <head>
+        <title>{% block title %}Thermodynamics Calculator{% endblock %}</title>
+    </head>
+    <body class="bg-dark">
+        
+        {% block content %}
+            <div class="container-fluid content" id="thermodynamics">
+                <!-- Different types of expansion dropdown -->
+                <div id="expansion">
+                    <h2><u><b>Thermal Expansion:</b></u></h2>
+                    <h4>Select the value to be calculated</h4>
+                    <select name="coe" id="thermalexp">
+                        <option value="Select">--Select--</option>
+                        <option value="Temperature">Temperature(T)</option>
+                        <option value="Linear Expansion">Linear Expansion Co-efficient</option>
+                        <option value="Area Expansion">Area Expansion Co-efficient</option>
+                        <option value="Volume Expansion">Volume Expansion Co-efficient</option>
+                    </select>
+                </div>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
-</head>
-<body class="bg-dark">
-    <!-- Navbar contents -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <div class="container-fluid">
-            <!-- sidebar contents -->
-            <div class="sidebar bg-danger" id="physidebar"> 
-                <a href="{% url 'physics' %}">Main</a>
-                <a href="{% url 'equations_of_motion' %}">Kinematics</a>
-                <a href="#heatthermo">Heat and Thermodynamics</a>
-                <a href="#circmot">Circular Motion</a>
-                <a href="#sop">System of Particles</a>
-                <a href="#rotmot">Rotational Motion</a>
-                <a href="#elasticity">Elasticity</a>
-                <a href="#flumech">Fluid Mechanics</a>
-                <a href="#viscosity">Viscosity</a>
-                <a href="#surften">Surface Tension</a>
-                <a href="#shm">Simple Harmonic Motion</a>
-                <a href="#grav">Gravitation</a>
-                <a href="#soundwav">Sound Waves</a>
-                <a href="#rayopt">Ray Optics</a>
-                <a href="#wavopts">Wave Optics</a>
-                <a href="#">Electrostatics</a>
-                <a href="#capacitor">Capacitors</a>
-                <a href="#currele">Current Electricity</a>
-                <a href="#magnet">Magnetism</a>
-                <a href="#emi">Electromagnetic Induction</a>
-                <a href="#acdc">Alternating Current</a>
-                <a href="#modphy">Modern Physics</a>
-                <a href="#semicon">Semi-conductors</a>
-                <a href="#errors">Errors and Experiments</a>
-                <a href="#opts">Optical Instruments and Diffraction</a>
+                <!-- Div for linear expansion -->
+                <div id="linexp" style="display: none;">
+                    <h4>Calculate <span id="resultLabel1"></span></h4>
+                    <div>
+                        <label for="colinexp" id="cole">Co-efficient of Linear Expansion:
+                            <input type="number" name="colinexp">
+                        </label>
+                        <label for="lenchange" class="change">Change in length:
+                            <input type="number" name="lenchange">
+                        </label>
+                        <span id="lor"><b>OR</b></span>
+                        <label for="oglen" class="l1">Original Length:
+                            <input type="number" name="oglen">
+                        </label>
+                        <label for="newlen" class="l2">New Length:
+                            <input type="number" name="newlen">
+                        </label>
+                        <label for="lt1" class="t1">Initial Temperature:
+                            <input type="number" name="temp1">
+                        </label>
+                        <label for="lt2" class="t2">Final Temperature:
+                            <input type="number" name="temp2">
+                        </label>
+                        <span id="ltor"><b>OR</b></span>
+                        <label for="temp1" class="temp">Temperature Change:
+                            <input type="number" name="temp1">
+                        </label>
+                    </div>
+                </div>
+                <!-- Div for area expansion -->
+                <div id="arexp" style="display: none;">
+                    <h4>Calculate <span id="resultLabel2"></span></h4>
+                    <div>
+                        <label for="coaexp" id="coae">Co-efficient of Area Expansion:
+                            <input type="number" name="coaexp">
+                        </label>
+                        <label for="areachange" class="lc">Change in area:
+                            <input type="number" name="areachange">
+                        </label>
+                        <span id="aor"><b>OR</b></span>
+                        <label for="ogarea" class="l1">Original Area:
+                            <input type="number" name="ogarea">
+                        </label>
+                        <label for="newarea" class="l2">New Area:
+                            <input type="number" name="newarea">
+                        </label>
+                        <label for="at1" class="t1">Original Temperature:
+                            <input type="number" name="at1">
+                        </label>
+                        <label for="at2" class="t2">New Temperature:
+                            <input type="number" name="at2">
+                        </label>
+                        <span class="ator"><b>OR</b></span>
+                        <label for="temp2" class="temp">Temperature Change:
+                            <input type="number" name="temp2">
+                        </label>
+                    </div>
+                </div>
+                <!-- Div for volume expansion -->
+                <div id="volexp" style="display: none;">
+                    <h4>Calculate <span class="resultLabel3"></span></h4>
+                    <div>
+                        <label for="covexp" id="cove">Co-efficient of Volume Expansion:
+                            <input type="number" name="covexp">
+                        </label>
+                        <label for="volchange" class="lc">Change in Volume:
+                            <input type="number" name="volchange">
+                        </label>
+                        <span id="vor"><b>OR</b></span>
+                        <label for="ogvol" class="l1">Original Volume:
+                            <input type="number" name="ogvol">
+                        </label>
+                        <label for="newvol" class="l2">New Volume:
+                            <input type="number" name="newvol">
+                        </label>
+                        <label for="vt1" class="t1">Original Temperature:
+                            <input type="number" name="vt1">
+                        </label>
+                        <label for="vt2" class="t2">New Temperature:
+                            <input type="number" name="vt2">
+                        </label>
+                        <label for="temp3" class="temp">Temperature Change:
+                            <input type="number" name="temp3">
+                        </label>
+                    </div>
+                </div>
             </div>
-            <!-- sidebar button -->
-            <div id="main">
-                <button class="openbtn btn btn-danger" id="openNavButton" onclick="openNav()">&#9776;</button>
-                <button class="closebtn btn btn-danger" id="closeNavButton" onclick="closeNav()">&#9776;</button>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
-                    <!-- homepage button -->
-                    <a class="btn btn-danger container-fluid homebtn frame" style="height: 70px;" href="{% url 'index' %}">
-                        <li class="nav-item">
-                            Logo Placeholder   
-                        </li>
-                    </a>
-                    <!-- Normal scientific calculator button -->
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
-                            Calculate
-                        </button>
-                        <ul class="dropdown-menu bg-danger">
-                            <!-- Dropdown for physics -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">                
-                                <li>
-                                    Physics
-                                </li>
-                            </a>
-                                <!-- Dropdown for Chemistry -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
-                                <li>
-                                    Chemistry
-                                </li>
-                            </a>
-                            <!-- Dropdown for mathematics -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'Mathematics:mathematics' %}">
-                                <li>
-                                    Mathematics                                
-                                </li>
-                            </a>
-                        </ul>
-                    </li>
-                    <!-- ML calculator button -->
-                    <a class="btn btn-danger mlcalculator frame" href="#">
-                        <li class="nav-item">
-                            Scan/Type Question
-                        </li>
-                    </a>    
-                    <!-- Searchbar -->
-                    <li class="nav-item">
-                        <form class="d-flex sbar" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                        </form>
-                    </li>
-                    <!-- Login/Register button -->
-                    <a id="signin" class="btn btn-danger frame" href="#">
-                        <li class="nav-item">
-                                Login/Register
-                        </li>
-                    </a>    
-                </ul>                
-            </div>
-        </div>
-    </nav>
 
-    <!-- Different types of expansion dropdown -->
-    <div id="expansion">
-        <h4><u><b>Select the value to be calculated:</b></u></h4>
-        <select name="coe" id="thermalexp">
-            <option value="Select">--Select--</option>
-            <option value="Temperature">Temperature(T)</option>
-            <option value="Linear Expansion">Linear Expansion Co-efficient</option>
-            <option value="Area Expansion">Area Expansion Co-efficient</option>
-            <option value="Volume Expansion">Volume Expansion Co-efficient</option>
-        </select>
-    </div>
+            <script>
+                $(document).ready(function()    {
+                    clearInputFields();
 
-    <!-- Div for linear expansion -->
-    <div id="linexp" style="display: none;">
-        <h4>Calculate <span id="resultLabel1"></span></h4>
-        <div>
-            <label for="colinexp" id="cole">Co-efficient of Linear Expansion:
-                <input type="number" name="colinexp">
-            </label>
-            <label for="temp" id="temp1">Temperature:
-                <input type="number" name="temp">
-            </label>
-        </div>
-    </div>
-    <!-- Div for area expansion -->
-    <div id="arexp" style="display: none;">
-        <h4>Calculate <span id="resultLabel2"></span></h4>
-        <div>
-            <label for="coaexp" id="coae">Co-efficient of Area Expansion:
-                <input type="number" name="coaexp">
-            </label>
-            <label for="temp" id="temp2">Temperature:
-                <input type="number" name="temp">
-            </label>
-        </div>
-    </div>
-    <!-- Div for volume expansion -->
-    <div id="volexp" style="display: none;">
-        <h4>Calculate <span id="resultLabel3"></span></h4>
-        <label for="covexp" id="cove">Co-efficient of Volume Expansion:
-            <input type="number" name="covexp">
-        </label>
-        <label for="temp" id="temp3">Temperature:
-            <input type="number" name="temp">
-        </label>
-    </div>
+                    function expansion()    {
+                        const expansionDiv = $('#thermalexp');
+                        const linExpansion = $('#linexp');
+                        const areaExp = $('#arexp');
+                        const volumeExp = $('#volexp');
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'scripts/sidebar-script.js' %}"></script>
-</body>
+                        const linCoeff = $('#cole');
+                        const areaCoeff = $('#coae');
+                        const volCoeff = $('#cove');
+                    }
+                })
+            </script>
+        {% endblock %} 
+    </body>
+</html>

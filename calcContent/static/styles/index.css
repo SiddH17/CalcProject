@@ -8,8 +8,7 @@ nav {
 }
 form   {
     float: right;
-    text-align: right;
-    margin-left: 70em;   
+    text-align: right;   
 }
 a   {
     font-size: 16px;
@@ -21,6 +20,12 @@ a:link   {
 a:visited   {
     color: white;
     text-decoration: none;
+}
+li  {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 /* classes */
@@ -38,23 +43,13 @@ a:visited   {
 .mlcalculator   {
     margin-left: 1.5em;
 }
-.mlcalculator:hover {
-    transform: scale(1.1) perspective(50px);
-    background-color: black;
-}
-.topic:hover    {
-    transform: scale(1.2) perspective(20px);
-    background-color: black;
-}
-.form-control   {
-    margin-left: 900px;
-}
 
 /* IDs */
 #signin {
-    box-shadow: inset;
+    margin-left: 15px !important;
 }
-#signin:hover   {
-    transform: scale(1.1) perspective(100px);
-    background-color: black;
+#searchlogin    {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }

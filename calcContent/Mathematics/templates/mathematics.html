@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathematics Calculator</title>
+    <title>{% block title %}Mathematics Calculator{% endblock title %}</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
@@ -27,18 +27,18 @@
         <div class="container-fluid">
              <!-- sidebar contents -->
             <div class="sidebar bg-danger" id="mathsidebar">
-                <a href="#mainpart">Main</a>
-                <a href="#trig">Trigonometric Functions</a>
+                <a href="{% url 'mathematics' %}">Home</a>
+                <a href="{% url 'trigonometry' %}">Trigonometric Functions</a>
                 <a href="#seq">Sequence and Series</a>
                 <a href="#stline">Straight Lines</a>
                 <a href="#circ">Circles</a>
-                <a href="#parab">Parabola</a>
-                <a href="#ell">Ellipse</a>
-                <a href="#hyp">Hyperbola</a>
+                <a href="{% url 'parabola' %}">Parabola</a>
+                <a href="{% url 'ellipse' %}">Ellipse</a>
+                <a href="{% url 'hyperbola' %}">Hyperbola</a>
                 <a href="#detmat">Determinants and Matrices</a>
                 <a href="#vec">Vectors</a>
                 <a href="#3dgeo">3-D Geometry</a>
-                <a href="#stats">Statistics</a>
+                <a href="{% url 'statistics' %}">Statistics</a>
             </div>
             <!-- sidebar button -->
             <div id="main">
@@ -74,7 +74,7 @@
                             <!-- Dropdown for mathematics -->
                             <a class="btn btn-danger topic container-fluid" href="#">
                                 <li>
-                                        Mathematics                                
+                                    Mathematics                                
                                 </li>
                             </a>
                         </ul>
@@ -85,24 +85,30 @@
                                 Scan/Type Question
                         </li>
                     </a>    
-                    <!-- Searchbar -->
-                    <li class="nav-item">
-                        <form class="d-flex sbar" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                        </form>
-                    </li>
-                    <!-- Login/Register button -->
-                    <a id="signin" class="btn btn-danger frame" href="#">
+                    <div id="searchlogin">
+                        <!-- Searchbar -->
                         <li class="nav-item">
-                                Login/Register
+                            <form class="d-flex sbar" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
+                            </form>
                         </li>
-                    </a>    
+                        <!-- Login/Register button -->
+                        <a id="signin" class="btn btn-danger frame" href="#">
+                            <li class="nav-item">
+                                    Login/Register
+                            </li>
+                        </a> 
+                    </div>   
                 </ul>                
             </div>
         </div>
     </nav>
-    <h1 id="mainpart">Welcome to the Mathematics side of our calculator</h1>
-    
+    {% block content %}
+        <div class="container-fluid content" id="mathbody">
+            <h1 id="mainpart">Welcome to the Mathematics side of our calculator</h1>
+        </div>
+    {% endblock content %}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'scripts/sidebar-script.js' %}"></script>
 </body>

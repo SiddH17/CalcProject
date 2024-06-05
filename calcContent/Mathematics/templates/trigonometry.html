@@ -1,0 +1,104 @@
+{% extends "mathematics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Trigonometric Functions Calculator{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <div class="container-fluid content" id="trigonometry">
+            <div id="trigId">
+                <h2><u><b>Trigonometric Identities</b></u></h2>
+                <h4>Select the value to be calculated:</h4>
+
+                <select name="trigIds" id="Identities">
+                    <option value="Select" id="blank1">--Select--</option>
+                    <option value="sin(a+b)" id="sinPlus">sin(a+b)</option>
+                    <option value="sin(a-b)" id="sinMinus">sin(a-b)</option>
+                    <option value="cos(a+b)" id="cosPlus">cos(a+b)</option>
+                    <option value="cos(a-b)" id="cosMinus">cos(a-b)</option>
+                    <option value="tan(a+b)" id="tanPlus">tan(a+b)</option>
+                    <option value="tan(a-b)" id="tanMinus">tan(a-b)</option>
+                </select>
+                <br><br>
+
+                {% csrf_token %}
+                <div id="trigoIdentities" style="display: none;">
+                    <h4>Calculate <span id="result_label"></span></h4>
+                    <div>
+                        <label for="ang1" id="angle1">First angle(in deg.):
+                            <input type="number" name="angle1">
+                        </label>
+                        <label for="ang2" id="angle2">Second angle(in deg):
+                            <input type="number" name="angle2">
+                        </label>
+                        <br>
+                    </div>
+                    <button type="submit" id="trigIdSubmit" class="btn btn-primary">Calculate Result</button>
+                </div>
+                <p id="trigIdAns"></p>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function()    {
+                // Clear all input fields on load
+                function clearInputFields() {
+                    $('[name="angle1"]').val('');
+                    $('[name="angle2"]').val('');
+                    $('#trigIdAns').text('');
+                }
+                clearInputFields();
+
+                // Trigonometric Identities JS
+                var selectElement = $('#Identities');
+                var  resultLabel = $('#result_label');
+                var selectDiv = $('#trigoIdentities');
+                selectElement.change(function() {
+                    clearInputFields();
+                    var selectedValue = $(this).val();
+                    
+                    resultLabel.text(selectedValue);
+                    console.log(resultLabel, "The result label");
+                
+                    var a = $('#angle1');
+                    var b = $('#angle2');
+                    
+                    if(this.value != 'Select')   {
+                        selectDiv.css('display', 'block');
+                    }
+                    else    {
+                        selectDiv.css('display', 'none');
+                    }
+                });        
+                $('#trigIdSubmit').click(function()  {
+                    
+                    const inputs = selectDiv.find('input[type=number]');
+                    const data = {};
+                    inputs.each(function()  {
+                        //name and value to capture the name attribute of the input and its corresponding input value
+                        const name = $(this).attr('name');
+                        const value = parseFloat($(this).val());
+                        data[name] = value;
+                    })
+                    
+                    data.select_value = selectElement.val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "trigonometry_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#trigIdAns').text(response.result);
+                            console.log(response.result, "the response result");
+                        }
+                    })
+                })
+            })
+        </script>
+    {% endblock content %}
+</body>
+</html>

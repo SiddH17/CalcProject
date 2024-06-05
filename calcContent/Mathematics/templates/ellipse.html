@@ -1,0 +1,59 @@
+{% extends "mathematics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ellipse Calculator{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <div id="ellipseEccentricity" class="container-fluid content">
+            <h4>Calculate Eccentricity</h4>
+            <div>
+                <label for="ecc2a">A:
+                    <input type="number" name="ecc2a">
+                </label>
+                <label for="ecc2b">B:
+                    <input type="number" name="ecc2b">
+                </label>
+
+                <br>
+                <button type="submit" id="ellipseSubmit" class="btn btn-primary">Calculate Result</button>
+            </div>
+            
+            <p id="ellipseAns"></p>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#ellipseSubmit').click(function() {
+                    ellipseEcc();
+                });
+        
+                function ellipseEcc() {
+                    const selectDiv = $('div#ellipseEccentricity:visible');
+                    const inputs = selectDiv.find('input[type=number]');
+                    const data = {};
+        
+                    inputs.each(function () {
+                        const name = $(this).attr('name');
+                        const value = parseFloat($(this).val());
+                        data[name] = value;
+                    })
+        
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "ellipse_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#ellipseAns').text(response.result);
+                        },
+                    });
+                }
+            });
+        </script>        
+    {% endblock content %}
+</body>
+</html>

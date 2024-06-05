@@ -12,7 +12,9 @@ h1  {
 }
 a   {
     font-size: 16px;
+    width: auto;
 }
+
 a:link  {
     text-decoration: none;
     color: white;
@@ -24,7 +26,6 @@ a:visited   {
 form   {
     float: right;
     text-align: right;
-    margin-left: 49em;   
 }
 hr  {
     border: 3px dashed white;
@@ -53,9 +54,20 @@ hr  {
 }
 .navbar {
     position: fixed;
-    top: 0;
-    z-index: 2;
     height: 75px;
+    width: 100%;
+}
+
+.navbar-nav {
+    width: 100%;
+}
+
+.navbar-nav a   {
+    display: flex !important;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
 }
 .frame  {
     border: 5px solid white;    
@@ -122,4 +134,12 @@ hr  {
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
+}
+::-webkit-scrollbar   {
+    background-color: transparent;
+    width: 3px;
+}
+::-webkit-scrollbar-thumb   {
+    background-color: gray;
+    width: 10%;
 }
