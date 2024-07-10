@@ -13,14 +13,16 @@ h1  {
 a   {
     font-size: 16px;
     width: auto;
+    background-color: #071952 !important;
+    color: whitesmoke !important;
 }
 
 a:link  {
     text-decoration: none;
-    color: white;
+    color: whitesmoke;
 }
 a:visited   {
-    color: white;
+    color: whitesmoke;
     text-decoration: none;
 }
 form   {
@@ -35,9 +37,6 @@ hr  {
 .topic    {
     text-align: center;
     width: 190px;
-}
-.topic:hover    {
-    background-color: black;
 }
 .btn  {
     font-size: 15px; 
@@ -82,7 +81,6 @@ hr  {
     left: 0px;
     overflow-x: visible;
     overflow-y: scroll;
-    padding-top: 40px;
     transition: 0.5s;
 }
 .sidebar a  {
@@ -128,10 +126,12 @@ hr  {
 #main   {
     transition: margin-left .4s;
 }
+#searchlogin    {
+    width: 34% !important;
+}
 
 /* others */
 @media screen and (max-height: 450px) {
-    .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
 }
 ::-webkit-scrollbar   {

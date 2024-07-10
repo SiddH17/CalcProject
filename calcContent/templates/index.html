@@ -12,6 +12,7 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script src="https://kit.fontawesome.com/bece881ded.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'styles/index.css' %}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,30 +21,30 @@
   </head>
   <body class="bg-dark">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="container-fluid">
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav">
             <!-- Normal scientific calculator button -->
             <li class="nav-item dropdown">
-                <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
                     Calculate
                 </button>
-                <ul class="dropdown-menu bg-danger">
+                <ul class="dropdown-menu ">
                     <!-- Dropdown for physics -->
-                    <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">                
+                    <a class="btn  topic container-fluid" href="{% url 'physics' %}">                
                         <li>
                             Physics
                         </li>
                     </a>
                         <!-- Dropdown for Chemistry -->
-                    <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                    <a class="btn  topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
                         <li>
                             Chemistry
                         </li>
                     </a>
                     <!-- Dropdown for mathematics -->
-                    <a class="btn btn-danger topic container-fluid" href="{% url 'mathematics' %}">
+                    <a class="btn  topic container-fluid" href="{% url 'mathematics' %}">
                         <li>
                                 Mathematics                                
                         </li>
@@ -51,25 +52,28 @@
                 </ul>
             </li>
             <!-- ML calculator button -->
-            <a class="btn btn-danger mlcalculator frame" href="#">
+            <a class="btn  mlcalculator frame" href="#">
                 <li class="nav-item">
                         Scan/Type Question
                 </li>
             </a>   
+            <!-- Searchbar -->
+            <li class="nav-item">
+              <form class="d-flex sbar" role="search">
+                <span id="searchLogo">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search" id="searchBar">
+              </form>
+            </li>
             <div id="searchlogin">
-                <!-- Searchbar -->
-                <li class="nav-item">
-                    <form class="d-flex sbar" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                    </form>
-                </li>
-                <!-- Login/Register button -->
-                <a id="signin" class="btn btn-danger frame" href="#">
-                    <li class="nav-item">
-                            Login/Register
-                    </li>
-                </a> 
-            </div>    
+              <!-- Login/Register button -->
+              <a id="signin" class="btn frame" href="{% url 'login' %}">
+                  <li class="nav-item">
+                    Login/Register
+                  </li>
+              </a>
+            </div> 
           </ul>                
       </div>
       </div>

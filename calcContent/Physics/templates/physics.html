@@ -14,6 +14,7 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script src="https://kit.fontawesome.com/bece881ded.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,10 +27,10 @@
 </head>
 <body class="bg-dark">
     <!-- navbar contents -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
                 <!-- sidebar contents -->
-            <div class="sidebar bg-danger" id="physidebar"> 
+            <div class="sidebar" id="physidebar"> 
                 <a href="{% url 'physics' %}">Home</a>
                 <a href="{% url 'equations_of_motion' %}">Kinematics</a>
                 <a href="{% url 'thermodynamics' %}">Heat and Thermodynamics</a>
@@ -58,37 +59,37 @@
             </div>
             <!-- sidebar button -->
             <div id="main">
-                <button class="openbtn btn btn-danger" id="openNavButton" onclick="openNav()">&#9776;</button>
-                <button class="closebtn btn btn-danger" id="closeNavButton" onclick="closeNav()">&#9776;</button>
+                <button class="openbtn btn " id="openNavButton" onclick="openNav()">&#9776;</button>
+                <button class="closebtn btn " id="closeNavButton" onclick="closeNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
-                    <a class="btn btn-danger homebtn frame" style="height: 70px;" href="{% url 'index' %}">
+                    <a class="btn homebtn frame" href="{% url 'index' %}">
                         <li class="nav-item">
                             Logo Placeholder   
                         </li>
                     </a>
                     <!-- Normal scientific calculator button -->
                     <li class="nav-item dropdown">
-                        <button class="btn btn-danger dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
                             Calculate
                         </button>
-                        <ul class="dropdown-menu bg-danger">
+                        <ul class="dropdown-menu">
                             <!-- Dropdown for physics -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'physics' %}">                
+                            <a class="btn  topic container-fluid" href="{% url 'physics' %}">                
                                 <li>
                                     Physics
                                 </li>
                             </a>
                                 <!-- Dropdown for Chemistry -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                            <a class="btn  topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
                                 <li>
                                     Chemistry
                                 </li>
                             </a>
                             <!-- Dropdown for mathematics -->
-                            <a class="btn btn-danger topic container-fluid" href="{% url 'mathematics' %}">
+                            <a class="btn  topic container-fluid" href="{% url 'mathematics' %}">
                                 <li>
                                         Mathematics                                
                                 </li>
@@ -96,25 +97,28 @@
                         </ul>
                     </li>
                     <!-- ML calculator button -->
-                    <a class="btn btn-danger mlcalculator frame" href="#">
+                    <a class="btn  mlcalculator frame" href="#">
                         <li class="nav-item">
                                 Scan/Type Question
                         </li>
                     </a>    
+                    <!-- Searchbar -->
+                    <li class="nav-item">
+                        <form class="d-flex sbar" role="search">
+                          <span id="searchLogo">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                          </span>
+                          <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search" id="searchBar">
+                        </form>
+                      </li>
                     <div id="searchlogin">
-                        <!-- Searchbar -->
-                        <li class="nav-item">
-                            <form class="d-flex sbar" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search">
-                            </form>
-                        </li>
-                        <!-- Login/Register button -->
-                        <a id="signin" class="btn btn-danger frame" href="#">
+                    <!-- Login/Register button -->
+                    <a id="signin" class="btn frame" href="{% url 'login' %}">
                             <li class="nav-item">
-                                    Login/Register
+                                Login/Register
                             </li>
-                        </a> 
-                    </div>   
+                        </a>
+                    </div>    
                 </ul>                
             </div>
         </div>

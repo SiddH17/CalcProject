@@ -5,27 +5,41 @@ body    {
 nav {
     position: fixed;
     top: 0;
+    background-color: #071952;
 }
 form   {
-    float: right;
-    text-align: right;   
+    margin: auto;
 }
 a   {
     font-size: 16px;
+    background-color: #071952 !important;
+    color: whitesmoke !important;
 }
 a:link   {
-    color: white;
+    color: whitesmoke !important;
     text-decoration: none;
 }
 a:visited   {
-    color: white;
+    color: whitesmoke !important;
     text-decoration: none;
+}
+a:hover {
+    background-color: whitesmoke !important;
+    color: #071952 !important;
 }
 li  {
     display: flex !important;
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+}
+button  {
+    background-color: #071952 !important;
+    color: whitesmoke !important;
+}
+button:hover    {
+    background-color: whitesmoke !important;
+    color: #071952 !important;
 }
 
 /* classes */
@@ -37,11 +51,14 @@ li  {
     border: 10px;
     border-color: white;
 }
-.dropdown-menu-danger   {
-    background-color:crimson;
+.dropdown-menu  {
+    background-color: #071952 !important;
 }
 .mlcalculator   {
-    margin-left: 1.5em;
+    margin: auto;
+}
+.navbar-nav {
+    width: 100%;
 }
 
 /* IDs */
@@ -51,5 +68,16 @@ li  {
 #searchlogin    {
     display: flex;
     justify-content: flex-end;
-    width: 100%;
+    width: 56%;
+}
+#searchLogo {
+    display: flex;
+    align-items: center;
+    background-color: whitesmoke;
+    color: #071952;
+}
+#searchBar  {
+    border: 0px;
+    border-radius: 0%;
+    background-color: whitesmoke;
 }

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('Physics/', include('Physics.urls')),
     path('Chemistry/', include('Chemistry.urls')),
     path('Mathematics/', include('Mathematics.urls')),
+    path('login/', views.login, name='login'),
 ]
