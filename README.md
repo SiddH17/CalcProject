@@ -4,6 +4,8 @@ Everything related to the calculator project
 Good day, everyone! This is our very own ML based scientific calculator, which will rely on text as well as image processing to find for the given word problems present within our dataset using Convolutional Neural Networking(CNN), Recurrent Neural Networking(RNN) and other similar Deep Learning based concepts.
 
 
+
+
 Download/clone the master branch on your personal device using any one of the following steps:
 	
 I. Clone the branch (Select 'Code<>' green button, copy the link and execute it on terminal/command prompt as 'git clone branch-clone-link')
@@ -13,9 +15,13 @@ II. Create a pull request (Click on pull request -> new pull request)
 III. Download the ZIP file of the entire branch (available below the git cloning link)
 	
 
+
+
 REFER TO THE BELOW URL FOR INSTALLING AND RUNNING THE PROJECT ON DJANGO:
 
 https://www.geeksforgeeks.org/djnago-installation-and-setup/
+
+
 
 NOTE:
 
