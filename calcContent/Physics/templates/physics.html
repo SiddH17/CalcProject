@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
 </head>
-<body class="bg-dark">
+<body>
     <!-- navbar contents -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
@@ -44,15 +44,15 @@
                 <a href="#shm">Simple Harmonic Motion</a>
                 <a href="#grav">Gravitation</a>
                 <a href="#soundwav">Sound Waves</a>
-                <a href="#rayopt">Ray Optics</a>
-                <a href="#wavopts">Wave Optics</a>
+                <a href="{% url 'rayoptics' %}">Ray Optics</a>
+                <a href="{% url 'wave-optics' %}">Wave Optics</a>
                 <a href="{% url 'electrostatics' %}">Electrostatics</a>
                 <a href="#capacitor">Capacitors</a>
-                <a href="#currele">Current Electricity</a>
+                <a href="{% url 'current-electricity' %}">Current Electricity</a>
                 <a href="#magnet">Magnetism</a>
-                <a href="#emi">Electromagnetic Induction</a>
+                <a href="{% url 'emi' %}">Electromagnetic Induction</a>
                 <a href="#acdc">Alternating Current</a>
-                <a href="#modphy">Modern Physics</a>
+                <a href="{% url 'modern-physics' %}">Modern Physics</a>
                 <a href="#semicon">Semi-conductors</a>
                 <a href="#errors">Errors and Experiments</a>
                 <a href="#opts">Optical Instruments and Diffraction</a>
@@ -65,17 +65,17 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- homepage button -->
-                    <a class="btn homebtn frame" href="{% url 'index' %}">
+                    <a class="btn  container-fluid homebtn frame" href="{% url 'index' %}">
                         <li class="nav-item">
                             Logo Placeholder   
                         </li>
                     </a>
                     <!-- Normal scientific calculator button -->
                     <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn  dropdown-toggle frame" data-bs-toggle="dropdown" aria-expanded="false">
                             Calculate
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu ">
                             <!-- Dropdown for physics -->
                             <a class="btn  topic container-fluid" href="{% url 'physics' %}">                
                                 <li>
@@ -83,7 +83,7 @@
                                 </li>
                             </a>
                                 <!-- Dropdown for Chemistry -->
-                            <a class="btn  topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                            <a class="btn  topic container-fluid" href="{% url 'chemistry' %}">
                                 <li>
                                     Chemistry
                                 </li>
@@ -91,7 +91,7 @@
                             <!-- Dropdown for mathematics -->
                             <a class="btn  topic container-fluid" href="{% url 'mathematics' %}">
                                 <li>
-                                        Mathematics                                
+                                    Mathematics                                
                                 </li>
                             </a>
                         </ul>
@@ -111,14 +111,12 @@
                           <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search" id="searchBar">
                         </form>
                       </li>
-                    <div id="searchlogin">
                     <!-- Login/Register button -->
                     <a id="signin" class="btn frame" href="{% url 'login' %}">
-                            <li class="nav-item">
+                        <li class="nav-item">
                                 Login/Register
-                            </li>
-                        </a>
-                    </div>    
+                        </li>
+                    </a>    
                 </ul>                
             </div>
         </div>

@@ -1,0 +1,590 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Current Electricity{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Ohm's Law -->
+        <div id="ohm" class="container-fluid content">
+            <h2><u><b>Ohm's Law:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <select name="ohmDropdown" id="ohmDropdown">
+                <option value="Select" id="blank1">--Select--</option>
+                <option value="voltage" id="v">Potential Difference/Voltage</option>
+                <option value="current" id="i">Current(I)</option>
+                <option value="resistance" id="r">Resistance(R)</option>
+            </select>
+            <br><br>
+
+            <div id="ohmDiv" style="display: none;">
+                <h4>Calculate <span id="result_label"></span>:</h4>
+
+                <label for="voltage" id="voltageLabel">Potential Difference/Voltage:
+                    <input type="number" name="voltage">
+                </label>
+                <label for="current" id="currentLabel">Current(I):
+                    <input type="number" name="current">
+                </label>
+                <label for="resistance" id="resistanceLabel">Resistance(R):
+                    <input type="number" name="resistance">
+                </label>
+                <br><br>
+
+                <button type="submit" id="ohmSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="ohmAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Calculation of power -->
+        <div id="powerCalc" class="container-fluid content">
+            <h2><u><b>Power:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <select name="powerDropdown" id="powerDropdown">
+                <option value="Select" id="blank2">--Select--</option>
+                <option value="power" id="p">Power(P)</option>
+                <option value="resistance" id="r2">Resistance(R)</option>
+            </select>
+            <br><br>
+
+            <!-- Dropdown for selecting formula to calculate power -->
+            <div id="powerFormulae" style="display: none;">
+                <h4>Select a formula to calculate power:</h4>
+                <br>
+    
+                <select name="pformulae" id="pformulae">
+                    <option value="Select" id="blank3">--Select--</option>
+                    <option value="f1" id="vi">P = V * I</option>
+                    <option value="f2" id="ir">P = I^2 * R</option>
+                    <option value="f3" id="vr">P = V^2 / R</option>
+                </select>
+            </div>
+
+            <!-- Dropdown for selecting formula to calculate resistance -->
+            <div id="resistanceFormulae" style="display: none;">
+                <h4>Select a formula to calculate resistance:</h4>
+                <br>
+    
+                <select name="rformulae" id="rformulae">
+                    <option value="Select" id="blank4">--Select--</option>
+                    <option value="f4" id="ir">R = I^2 / P</option>
+                    <option value="f5" id="vr">R = V^2 * P</option>
+                </select>
+            </div>            
+
+            <div id="powerDiv" style="display: none;">
+                <h4>Calculate <span id="result_label2"></span>:</h4>
+                <br><br>
+
+                <label for="power" id="pwr">Power:
+                    <input type="number" name="power">
+                </label>
+                <label for="voltage" id="vltg">Potential Difference/Voltage:
+                    <input type="number" name="voltage">
+                </label>
+                <label for="current" id="irnt">Current(I):
+                    <input type="number" name="current">
+                </label>
+                <label for="resistance" id="rstnc">Resistance(R):
+                    <input type="number" name="resistance">
+                </label>
+                <br><br>
+
+                <button type="submit" id="powerSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="powerAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Resistivity -->
+        <div id="resistivity" class="container-fluid content">
+        <h2><u><b>Resistivity:</b></u></h2>
+        <h4>Select a value to be calculated:</h4>
+        <br>
+
+        <select name="resistivity" id="resDropdown">
+            <option value="Select" id="blank5">--Select--</option>
+            <option value="resistivity" id="res">Resistivity</option>
+            <option value="resistance" id="rest">Resistance(R)</option>
+            <option value="conductance" id="cond">Conductance</option>
+        </select>
+        <br>
+
+        <div id="resDiv" style="display: none;">
+            <h4>Calculate <span id="result_label3"></span>:</h4>
+            <br><br>
+
+            <label for="rho" id="resLabel">Resistivity:
+                <input type="number" name="rho">
+            </label>
+            <label for="rest" id="rstncLabel">Resistance(R):
+                <input type="number" name="rest">
+            </label>
+            <label for="length" id="lengthLabel">Length(in metres):
+                <input type="number" name="length">
+            </label>
+            <label for="area" id="areaLabel">Area(in metre squared):
+                <input type="number" name="area">
+            </label>
+            <br><br>
+
+            <button type="submit" id="resSubmit" class="btn btn-primary">Calculate Result</button>
+            <p id="resAns"></p>
+        </div>
+        </div>
+        <hr>
+
+        <!-- Heat and Energy -->
+        <div id="hande" class="container-fluid content">
+            <h2><u><b>Heat and Energy:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <select name="heatandenergy" id="heatenergy">
+                <option value="Select" id="blank6">--Select--</option>
+                <option value="energy" id="energy">Energy</option>
+                <option value="heat" id="heat">Heat</option>
+            </select>
+            <br><br>
+
+            <div id="heatDropdown" style="display: none;">
+                <h4>Select a method to calculate heat:</h4>
+
+                <select name="heatDropdown" id="heatSelect">
+                    <option value="Select" id="blank7">--Select--</option>
+                    <option value="heat1" id="firstForm">H = (V^2*t)/R</option>
+                    <option value="heat2" id="secondForm">H = I^2*R*T</option>
+                </select>
+                <br><br>
+            </div>
+
+            <div id="handeDiv" style="display: none;">
+                <h4>Calculate <span id="hande_result_label"></span>:</h4>
+                <br>
+
+                <label for="v" id="volts">Potential Difference/Voltage:
+                    <input type="number" name="v">
+                </label>
+                <label for="i" id="amperes">Current(I):
+                    <input type="number" name="i">
+                </label>
+                <label for="r" id="ohm">Resistance(R):
+                    <input type="number" name="r">
+                </label>
+                <label for="t" id="secs">Time(t):
+                    <input type="number" name="t">
+                </label>
+                <br><br>
+
+                <button type="submit" id="handeSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="handeAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <script>
+            //Function to clear input fields
+            function clearInputFields() {
+                //Ohm's law labels
+                $('#voltageLabel input').val('');
+                $('#currentLabel input').val('');
+                $('#resistanceLabel input').val('');
+                $('#ohmAns').text('');
+
+                //Power labels
+                $('#pwr input').val('');
+                $('#vltg input').val('');
+                $('#irnt input').val('');
+                $('#rstnc input').val('');
+                $('#powerAns').text('');
+
+                //Resistivity labels
+                $('#resLabel input').val('');
+                $('#rstncLabel input').val('');
+                $('#lenLabel input').val('');
+                $('#areaLabel input').val('');
+                $('#resAns').text('');
+
+                //Heat and Energy labels
+                $('#volts input').val('');
+                $('#amperes input').val('');
+                $('#ohm input').val('');
+                $('#secs input').val('');
+                $('#handeAns').text('');
+            }
+
+            //Ohm's Law JS
+            $(document).ready(function()    {
+                clearInputFields();
+                
+                //Define all variables for different elements
+                const ohmDropdown = $('#ohmDropdown');
+                const ohmDiv = $('#ohmDiv');
+                const ohmButton = $('#ohmSubmit');
+                const valueText = $('#result_label');
+
+                //Define variables for all labels and successive inputs
+                const voltageLabel = $('#voltageLabel');
+                const currentLabel = $('#currentLabel');
+                const resistanceLabel = $('#resistanceLabel');
+
+                //Changing the dropdown value
+                ohmDropdown.change(function()   {
+                    clearInputFields();
+                    var ohmValue = ohmDropdown.val();
+                    valueText.text(ohmValue);
+
+                    if(ohmValue=='Select')  {
+                        ohmDiv.hide();
+                    }
+                    else    {
+                        ohmDiv.show();
+
+                        if(ohmValue=='voltage') {
+                            voltageLabel.hide();
+                            currentLabel.show();
+                            resistanceLabel.show();
+                        }
+                        else if(ohmValue=='current')    {
+                            currentLabel.hide();
+                            voltageLabel.show();
+                            resistanceLabel.show();
+                        }
+                        else if(ohmValue=='resistance') {
+                            resistanceLabel.hide();
+                            voltageLabel.show();
+                            currentLabel.show();
+                        }
+                    }
+                });
+
+                //When ohmButton(Button for calculating ohm's law results) is clicked
+                ohmButton.click(function()  {
+                    var inputs = ohmDiv.find('input[type=number]');
+                    var ohmData = {};   //Data only for ohm's law values
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        ohmData[name] = value;
+                    });
+                    ohmData.select_value = ohmDropdown.val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "ohms-law-api" %}',
+                        data: ohmData,
+                        success: function(response) {
+                            $('#ohmAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#ohmAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        
+            //Power JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const powerDropdown = $('#powerDropdown');
+                const powerFormulae = $('#powerFormulae');
+                const resistanceFormulae = $('#resistanceFormulae');
+                const formulae = $('#pformulae');
+                const rformulae = $('#rformulae');
+                const powerDiv = $('#powerDiv');
+                const valueText = $('#result_label2');
+                const powerButton = $('#powerSubmit');
+
+                const powerLabel = $('#pwr');
+                const voltageLabel = $('#vltg');
+                const currentLabel = $('#irnt');
+                const resistanceLabel = $('#rstnc');
+
+                powerDropdown.change(function() {
+                    clearInputFields();
+                    var powerValue = powerDropdown.val();
+                    valueText.text(powerValue)
+
+                    if(powerValue=='Select')    {
+                        powerDiv.hide();
+                        resistanceFormulae.hide();
+                        powerFormulae.hide();
+                    }
+                    else    {
+
+                        if(powerValue=='power') {
+                            powerFormulae.show();
+                            resistanceFormulae.hide();
+                            powerDiv.hide();
+                            
+                            //Working on power formula selection function
+                            formulae.change(function()  {
+                                clearInputFields();
+                                var formVal = formulae.val();
+                                rformulae.val('Select');
+                                
+
+                                if(formVal=='Select')   {
+                                    powerDiv.hide();
+                                }
+                                else    {
+                                    powerDiv.show();
+                                    powerLabel.hide();
+
+                                    if(formVal=='f1')   {
+                                        resistanceLabel.hide();
+                                        voltageLabel.show();
+                                        currentLabel.show();
+                                    }
+                                    else if(formVal=='f2')  {
+                                        voltageLabel.hide();
+                                        currentLabel.show();
+                                        resistanceLabel.show();
+                                    }
+                                    else if(formVal=='f3')  {
+                                        currentLabel.hide();
+                                        voltageLabel.show();
+                                        resistanceLabel.show();
+                                    }
+
+                                    console.log(formVal);
+                                }
+                            });
+                        }
+                        else if(powerValue=='resistance')   {
+                            resistanceFormulae.show();
+                            powerFormulae.hide();
+                            powerDiv.hide();
+
+                            //Working on resistance formula selection function
+                            rformulae.change(function() {
+                                var rForm = rformulae.val();
+                                clearInputFields();
+                                formulae.val('Select');
+
+                                if(rForm=='Select') {
+                                    powerDiv.hide();
+                                }
+                                else    {
+                                    powerDiv.show();
+                                    powerLabel.show();
+                                    resistanceLabel.hide();
+
+                                    if(rForm=='f4') {
+                                        voltageLabel.hide();
+                                        currentLabel.show();
+                                    }
+                                    else if(rForm=='f5')    {
+                                        currentLabel.hide();
+                                        voltageLabel.show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                powerButton.click(function()    {
+                    var inputs = powerDiv.find('input[type=number]');
+                    var powerData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        powerData[name] = value;
+                    });
+                    powerData.select_value = powerDropdown.val();
+                    powerData.power_select = formulae.val();
+                    powerData.resistance_select = rformulae.val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "power-api" %}',
+                        data: powerData,
+                        success: function(response) {
+                            $('#powerAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#powerAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        
+            
+            //Resistivity JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const resDropdown = $('#resDropdown');
+                const resDiv = $('#resDiv');
+                const resButton = $('#resSubmit');
+                const resText = $('#result_label3');
+
+                const resLabel = $('#resLabel');
+                const rstncLabel = $('#rstncLabel');
+                const lenLabel = $('#lengthLabel');
+                const areaLabel = $('#areaLabel');
+
+                resDropdown.change(function()   {
+                    var resValue = resDropdown.val();
+                    clearInputFields();
+                    resText.text(resValue);
+
+                    if(resValue=='Select')  {
+                        resDiv.hide();
+                    }
+                    else    {
+                        resDiv.show();
+                        lenLabel.show();
+                        areaLabel.show();
+
+                        if(resValue=='resistivity') {
+                            resLabel.hide();
+                            rstncLabel.show();
+                        }
+                        else if(resValue=='resistance')   {
+                            rstncLabel.hide();
+                            resLabel.show();
+                        }
+                        else if(resValue=='conductance')    {
+                            lenLabel.hide();
+                            areaLabel.hide();
+                            rstncLabel.hide();
+                            resLabel.show();
+                        }
+                    }
+                });
+
+                resButton.click(function()  {
+                    console.log("Entered this click funciton");
+                    var inputs = resDiv.find('input[type=number]');
+                    var resData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        resData[name] = value;
+                    });
+                    resData.select_value = resDropdown.val();
+                    console.log(resData);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "resistivity-api" %}',
+                        data: resData,
+                        success: function(response) {
+                            $('#resAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#resAns').text("Something's wrong. Please try again.").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        
+            //Heat and Energy JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const handeDropdown = $('#heatenergy');
+                const handeDiv = $('#handeDiv');
+                const handeButton = $('#handeSubmit');
+                const heatDropdown = $('#heatDropdown');
+                const heatSelect = $('#heatSelect');
+                const handeText = $('#hande_result_label');
+
+                const voltageLabel = $('#volts');
+                const currentLabel = $('#amperes');
+                const resistanceLabel = $('#ohms');
+                const timeLabel = $('#secs');
+
+                handeDropdown.change(function() {
+                    clearInputFields();
+                    var handeValue = handeDropdown.val();
+                    handeText.text(handeValue);
+
+                    if(handeValue=='Select')    {
+                        handeDiv.hide();
+                        heatDropdown.hide();
+                    }
+                    else    {
+                        if(handeValue=='energy')    {
+                            handeDiv.show();
+                            heatDropdown.hide();
+                            resistanceLabel.hide();
+                            timeLabel.hide();
+                            voltageLabel.show();
+                            currentLabel.show();
+                        }
+                        else if(handeValue=='heat') {
+                            heatDropdown.show();
+                            handeDiv.hide();
+                            
+
+                            heatSelect.change(function()  {
+                                clearInputFields();
+                                var heatValue = heatSelect.val();
+
+                                if(heatValue=='Select')    {
+                                    handeDiv.hide();
+                                }
+                                else    {
+                                    handeDiv.show();
+                                    resistanceLabel.show();
+                                    timeLabel.show();
+
+                                    if(heatValue=='heat1')  {
+                                        voltageLabel.show();
+                                        currentLabel.hide();
+                                    }
+                                    else if(heatValue=='heat2') {
+                                        currentLabel.show();
+                                        voltageLabel.hide();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                handeButton.click(function()    {
+                    var inputs = handeDiv.find('input[type=number]');
+                    var handeData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        handeData[name] = value;
+                    });
+                    handeData.select_value = handeDropdown.val();
+                    handeData.heat_select = heatSelect.val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "heat-and-energy-api" %}',
+                        data: handeData,
+                        success: function(response) {
+                            $('#handeAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#handeAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

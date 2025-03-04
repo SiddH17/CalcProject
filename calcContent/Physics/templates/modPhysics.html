@@ -1,0 +1,416 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Modern Physics{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- De-Broglie Wavelength -->
+        <div id="dbw" class="container-fluid content">
+            <h2><u><b>De-Broglie Wavelength:</b></u></h2>
+            <h4>Select a method to calculate de-broglie wavelength:</h4>
+            <br>
+
+            <select name="dbwDropdown" id="dbwDropdown">
+                <option value="Select">--Select--</option>
+                <option value="dbw1" id="f1">h/p</option>
+                <option value="dbw2" id="f2">h/mv</option>
+            </select>
+
+            <div id="dbwDiv" style="display: none;">
+                <h4>Calculate de-broglie wavelength:</h4>
+                <br>
+
+                <label for="p" id="momentum">Momentum(p):
+                    <input type="number" name="p">
+                </label>
+                <label for="ma" id="mass">Mass(m):
+                    <input type="number" name="ma">
+                </label>
+                <label for="vel" id="velocity">Velocity(v):
+                    <input type="number" name="vel">
+                </label>
+                <br><br>
+
+                <button type="submit" id="dbwSubmit" class="btn btn-primary">Calculate Result:</button>
+                <p id="dbwAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Bohr's Model -->
+        <div id="bohr" class="container-fluid content">
+        <h2><u><b>Bohr's Model:</b></u></h2>
+        
+        <!-- Conversion from eV to Joules -->
+        <div id="evjConversion">
+            <h4>Select a conversion type:</h4>
+            <br>
+
+            <select id="evjDropdown">
+                <option value="Select">--Select--</option>
+                <option value="eV">eV to Joules</option>
+                <option value="joules">Joules to eV</option>
+            </select>
+
+            <div id="evjDiv" style="display: none;">
+                <h4>Convert <span id="evj_result_label"></span>:</h4>
+                <br>
+
+                <label for="ev" id="evLabel">electron Volt(eV):
+                    <input type="number" name="ev">
+                </label>
+                <label for="j" id="jouleLabel">Joules(J):
+                    <input type="number" name="j">
+                </label>
+                <br><br>
+
+                <button type="submit" id="evjSubmit" class="btn btn-primary">Convert</button>
+                <p id="evjAns"></p>
+            </div>
+        </div>
+        <br><br>
+        
+        <!-- Bohr's model -->
+        <h4>Select a value to be calculated:</h4>
+
+        <select id="bohrDropdown">
+            <option value="Select">--Select--</option>
+            <option value="energy">Energy(E)</option>
+            <option value="radius">Electron Radius(R)</option>
+        </select>
+        <br><br>
+
+        <div id="bohrDiv" style="display: none;">
+            <h4>Calculate <span id="bohr_result_label"></span>:</h4>
+            <br>
+
+            <label for="z" id="zLabel">Atomic Number(z):
+                <input type="number" name="z">
+            </label>
+            <label for="n" id="nLabel">Quantum number(n):
+                <input type="number" name="n">
+            </label>
+            <br><br>
+
+            <button type="submit" id="bohrSubmit" class="btn btn-primary">Calculate Result</button>
+            <p id="bohrAns"></p>
+        </div>
+        </div>
+        <hr>
+
+        <!-- Binding Energy and Mass Defect -->
+        <div id="bemd" class="container-fluid content">
+            <h2><u><b>Binding Energy and Mass Defect:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+
+            <select id="bemdDropdown">
+                <option value="Select">--Select--</option>
+                <option value="binding-energy">Binding Energy(BE)</option>
+                <option value="mass-defect">Mass Defect</option>
+                <option value="atomic-mass">Atomic Mass</option>
+            </select>
+
+            <div id="bemdDiv" style="display: none;">
+                <h4>Calculate <span id="bemd_result_label"></span>:</h4>
+                <br>
+
+                <label for="z" id="atomicLabel">Atomic number(z):
+                    <input type="number" name="z">
+                </label>
+                <label for="n" id="principalLabel">No. of neutrons(n):
+                    <input type="number" name="n">
+                </label>
+                <label for="ma" id="massAtomLabel">Nucleus Mass:
+                    <input type="number" name="ma">
+                </label>
+                <label for="a" id="nucleonsLabel">No. of nucleons:
+                    <input type="number" name="a">
+                </label>
+                <br><br>
+
+                <button type="submit" id="bemdSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="bemdAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Rydbergy Formula -->
+        <div id="rydberg" class="container-fluid content">
+            <h2><u><b>Rydberg Formula:</b></u></h2>
+
+            <div id="rydbergDiv">
+                <h4>Calculate Spectral Wavelength:</h4>
+                <br>
+
+                <label for="n1" id="n1Label">N1 Value:
+                    <input type="number" name="n1">
+                </label>
+
+                <label for="n2" id="n2Label">N2 Value:
+                    <input type="number" name="n2">
+                </label>
+                <br><br>
+
+                <button type="submit" id="rydbergSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="rydbergAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        
+        <script>
+            //Function to clear all input fields
+            function clearInputFields() {
+                //De Broglie wavelength labels
+                $('#p input, #ma input, #vel input').val('');
+                $('#dbwAns').text('');
+
+                //Bohr's model labels
+                $('#evLabel input, #jouleLabel input, #zLabel input, #nLabel input').val('');
+                $('#evjAns, #bohrAns').text('');
+
+                //Binding Energy and Mass Defect Labels
+                $('#atomicLabel input, #principalLabel input, #massAtomLabel input, #nucleonsLabel input').val('');
+                $('#bemdAns').text('');
+
+                //Rydbergy Formula Labels
+                $('#n1Label input, n2Label input').val('');
+                $('#rydbergAns').text('');
+            }
+
+            //De-Broglie wavelength JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const dbwDropdown = $('#dbwDropdown');
+                const dbwDiv = $('#dbwDiv');
+                const dbwButton = $('#dbwSubmit');
+                
+                dbwDropdown.change(function()   {
+                    var dbwValue = dbwDropdown.val();
+                    clearInputFields();
+
+                    if(dbwValue=='Select')  {
+                        dbwDiv.hide();
+                    }
+                    else    {
+                        dbwDiv.show();
+
+                        if(dbwValue=='dbw1')    {
+                            $('#momentum').show();
+                            $('#mass, #velocity').hide();
+                        }
+                        else if(dbwValue=='dbw2')   {
+                            $('#momentum').hide();
+                            $('#mass, #velocity').show();
+                        }
+                    }
+                });
+
+                dbwButton.click(function() {
+                    var inputs = dbwDiv.find('input');
+                    var dbwData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        dbwData[name] = value;
+                    });
+                    dbwData.dbw_select = dbwDropdown.val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "de-broglie-wavelength" %}',
+                        data: dbwData,
+                        success: function(response) {
+                            $('#dbwAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#dbwAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+       
+            //Bohr's model JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                //Conversion JS
+                $('#evjDropdown').change(function() {
+                    var evjValue = $('#evjDropdown').val();
+                    clearInputFields();
+                    $('#evj_result_label').text(evjValue);
+
+                    if(evjValue=='Select')  {
+                        $('#evjDiv').hide();
+                    }
+                    else    {
+                        $('#evjDiv').show();
+
+                        if(evjValue=='eV')  {
+                            $('#evLabel').show();
+                            $('#jouleLabel').hide();
+                        }
+                        else if(evjValue=='joules')  {
+                            $('#evLabel').hide();
+                            $('#jouleLabel').show();
+                        }
+                    }
+                });
+
+                $('#evjSubmit').click(function()    {
+                    var inputs = $('#evjDiv').find('input[type=number]');
+                    var evjData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        evjData[name] = value;
+                    });
+                    evjData.value_select = $('#evjDropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "ev-to-joule-conversion" %}',
+                        data: evjData,
+                        success: function(response) {
+                            $('#evjAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#evjAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            
+                //Bohr's model JS
+                $('#bohrDropdown').change(function()    {
+                    var bohrValue = $('#bohrDropdown').val();
+                    clearInputFields();
+                    $('#bohr_result_label').text(bohrValue);
+
+                    if(bohrValue=='Select') {
+                        $('#bohrDiv').hide();
+                    }
+                    else    {
+                        $('#bohrDiv').show();
+                    }
+                });
+
+                $('#bohrSubmit').click(function()   {
+                    var inputs = $('#bohrDiv').find('input[type=number]');
+                    var bohrData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        bohrData[name] = value;
+                    });
+                    bohrData.value_select = $('#bohrDropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "bohr-model" %}',
+                        data: bohrData,
+                        success: function(response) {
+                            $('#bohrAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#bohrAns').text("Something's wrong. Please try again").css('color','red');
+                        }
+                    });
+                });
+            });
+        
+            //Binding Energy and Mass Defect JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                $('#bemdDropdown').change(function()    {
+                    clearInputFields();
+                    var bemdValue = $('#bemdDropdown').val();
+                    $('#bemd_result_label').text(bemdValue);
+
+                    if(bemdValue=='Select') {
+                        $('#bemdDiv').hide();
+                    }
+                    else    {
+                        $('#bemdDiv').show();
+                        $('#atomicLabel').show();
+
+                        if(bemdValue=='binding-energy') {
+                            $('#nucleonsLabel').hide();
+                            $('#principalLabel, #massAtomLabel').show();
+                        }
+                        else if(bemdValue=='mass-defect')    {
+                            $('#nucleonsLabel, #massAtomLabel').show();
+                            $('#principalLabel').hide();
+                        }
+                        else if(bemdValue=='atomic-mass')   {
+                            $('#nucleonsLabel, #massAtomLabel').hide();
+                            $('#principalLabel').show();
+                        }   
+                    }
+                });
+
+                $('#bemdSubmit').click(function()   {
+                    var inputs = $('#bemdDiv').find('input[type=number]');
+                    var bemdData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        bemdData[name] = value;
+                    });
+                    bemdData.value_select = $('#bemdDropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "be-md" %}',
+                        data: bemdData,
+                        success: function(response) {
+                            $('#bemdAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#bemdAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        
+            //Rydberg Formula JS
+            $(document).ready(function()    {
+                clearInputFields();
+
+                $('#rydbergSubmit').click(function()    {
+                    var inputs = $('#rydbergDiv').find('input');
+                    var rydbergData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        rydbergData[name] = value;
+                    });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "rydberg-formula" %}',
+                        data: rydbergData,
+                        success: function(response) {
+                            $('#rydbergAns').text(response.result);
+                        },
+                        error: function(response) {
+                            $('#rydbergAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

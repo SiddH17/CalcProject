@@ -1,0 +1,69 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Electromagnetic Induction{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Inductance -->
+        <div id="inductance" class="container-fluid content">
+            <h2><u><b>Inductance:</b></u></h2>
+
+            <div id="indDiv">
+                <h4>Calculate Inductance:</h4>
+                <br>
+
+                <label for="perm" id="permLabel">Permeability Value:
+                    <input type="number" name="perm">
+                </label>
+                <label for="turns" id="turnsLabel">No. of turns(N):
+                    <input type="number" name="turns">
+                </label>
+                <label for="length" id="lengthLabel">Coil Length(l):
+                    <input type="number" name="length">
+                </label>
+                <label for="area" id="areaLabel">Area encircled by coil:
+                    <input type="number" name="area">
+                </label>
+                <br><br>
+
+                <button type="submit" id="indSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="indAns"></p>
+            </div>
+        </div>
+
+        <script>
+            //Inductance JS
+            $(document).ready(function()    {
+                $('#indSubmit').click(function()    {
+                    var inputs = $('#indDiv').find('input[type=number]');
+                    var indData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+
+                        indData[name] = value;
+                    });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "inductance" %}',
+                        data: indData,
+                        success: function(response) {
+                            $('#indAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#indAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

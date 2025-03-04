@@ -1,0 +1,106 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wave Optics{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Wavelength-Frequency conversion -->
+        <div id="wavefreq" class="container-fluid content">
+            <h2><u><b>Wavelength & Frequency conversion:</b></u></h2>
+            <h4>Select a unit to be converted:</h4>
+
+            <select id="wavefreqDropdown">
+                <option value="Select">--Select--</option>
+                <option value="wavelength">Wavelength</option>
+                <option value="frequency">Frequency</option>
+            </select>
+
+            <div id="wavefreqDiv" style="display: none;">
+                <h4>Calculate <span id="wavefreq_result_label"></span>:</h4>
+                <br>
+
+                <label for="w" id="wavelengthLabel">Wavelength:
+                    <input type="number" name="w">
+                </label>
+
+                <label for="f" id="freqLabel">Frequency:
+                    <input type="number" name="f">
+                </label>
+                <br><br>
+
+                <button type="submit" id="wavefreqSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="wavefreqAns"></p>
+            </div>
+        </div>
+        <hr>
+
+
+
+        <script>
+            //Clearing input fields of Wavelength-Frequency conversion function
+            function clearWavefreqInputFields() {
+                $('#wavelengthLabel input, #freqLabel input').val('');
+                $('#wavefreqAns').text('');
+            }
+
+            //Wavelength-Frequency conversion JS
+            $(document).ready(function()    {
+                clearWavefreqInputFields();
+               
+                $('#wavefreqDropdown').change(function()    {
+                    clearWavefreqInputFields();
+                    var wavefreqValue = $('#wavefreqDropdown').val();
+                    $('#wavefreq_result_label').text(wavefreqValue);
+
+                    if(wavefreqValue=='Select') {
+                        $('#wavefreqDiv').hide();
+                    }
+                    else    {
+                        $('#wavefreqDiv').show();
+
+                        if(wavefreqValue=='wavelength') {
+                            $('#wavelengthLabel').hide();
+                            $('#freqLabel').show();
+                        }
+                        else if(wavefreqValue=='frequency') {
+                            $('#wavelengthLabel').show();
+                            $('#freqLabel').hide();
+                        }
+                    }
+                });
+
+                $('#wavefreqSubmit').click(function()   {
+                    var inputs = $('#wavefreqDiv').find('input');
+                    var wavefreqData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        wavefreqData[name] = value;
+                    });
+                    wavefreqData.select_value = $('#wavefreqDropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "wavelength-frequency" %}',
+                        data: wavefreqData,
+                        success: function(response) {
+                            $('#wavefreqAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#wavefreqAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+        
+            
+        </script>
+    {% endblock content %}
+</body>
+</html>

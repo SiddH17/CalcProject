@@ -23,16 +23,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
 </head>
-<body class="bg-dark">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark ">
         <div class="container-fluid">
              <!-- sidebar contents -->
-            <div class="sidebar " id="chemsidebar">
-                <a href="#mainpart">Home</a>
+            <div class="sidebar" id="chemsidebar">
+                <a href="{% url 'chemistry' %}">Home</a>
                 <a href="#molecon">Mole Concept</a>
                 <a href="#atomstruct">Atomic Structure</a>
-                <a href="#gasstate">Gaseous State</a>
-                <a href="#chemthermo">Chemical Thermodynamics</a>
+                <a href="{% url 'gaseous' %}">Gaseous State</a>
+                <a href="{% url 'chem-thermo' %}">Chemical Thermodynamics</a>
                 <a href="#chemequi">Chemical Equilibrium</a>
                 <a href="#ionequi">Ionic Equilibrium</a>
                 <a href="#chemkin">Chemical Kinetics</a>
@@ -50,8 +50,8 @@
             </div>
             <!-- sidebar button -->
             <div id="main">
-                <button class="openbtn btn " onclick="openNav()">&#9776;</button>
-                <button class="closebtn btn " onclick="closeNav()">&#9776;</button>
+                <button class="openbtn btn " onclick="openChemNav()">&#9776;</button>
+                <button class="closebtn btn " onclick="closeChemNav()">&#9776;</button>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
@@ -74,7 +74,7 @@
                                 </li>
                             </a>
                                 <!-- Dropdown for Chemistry -->
-                            <a class="btn  topic container-fluid" href="#">
+                            <a class="btn  topic container-fluid" href="{% url 'chemistry' %}">
                                 <li>
                                     Chemistry
                                 </li>
@@ -82,7 +82,7 @@
                             <!-- Dropdown for mathematics -->
                             <a class="btn  topic container-fluid" href="{% url 'mathematics' %}">
                                 <li>
-                                        Mathematics                                
+                                    Mathematics                                
                                 </li>
                             </a>
                         </ul>
@@ -112,13 +112,20 @@
             </div>
         </div>
     </nav>
-    <h1 id="mainpart">Welcome to the Chemistry side of our calculator</h1>
-    <div id="mainpart">
-        Homepage for chemistry
-    </div>
-    <hr>
-    <div id="molecon">
-        Mole Concept code here  
-    </div>
+    {% block content %}
+        <div class="container-fluid content" id="chembody">
+            <h1 id="mainpart">Welcome to the Chemistry side of our calculator</h1>
+            <div id="mainpart">
+                Homepage for chemistry
+            </div>
+            <hr>
+            <div id="molecon">
+                Mole Concept code here  
+            </div>
+        </div>
+    {% endblock content %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'scripts/sidebar-script.js' %}"></script>
 </body>
 </html>

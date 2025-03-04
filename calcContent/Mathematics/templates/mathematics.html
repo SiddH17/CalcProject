@@ -23,13 +23,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/app-styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
 </head>
-<body class="bg-dark">
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark ">
         <div class="container-fluid">
              <!-- sidebar contents -->
-            <div class="sidebar " id="mathsidebar">
+            <div class="sidebar" id="mathsidebar">
                 <a href="{% url 'mathematics' %}">Home</a>
                 <a href="{% url 'trigonometry' %}">Trigonometric Functions</a>
+                <a href="{% url 'quadratics' %}">Quadratic Equations</a>
                 <a href="#seq">Sequence and Series</a>
                 <a href="#stline">Straight Lines</a>
                 <a href="#circ">Circles</a>
@@ -39,7 +40,7 @@
                 <a href="#detmat">Determinants and Matrices</a>
                 <a href="#vec">Vectors</a>
                 <a href="#3dgeo">3-D Geometry</a>
-                <a href="{% url 'statistics' %}">Statistics</a>
+                <a href="{% url 'stats' %}">Statistics</a>
             </div>
             <!-- sidebar button -->
             <div id="main">
@@ -67,13 +68,13 @@
                                 </li>
                             </a>
                                 <!-- Dropdown for Chemistry -->
-                            <a class="btn  topic container-fluid" href="{% url 'Chemistry:chemistry' %}">
+                            <a class="btn  topic container-fluid" href="{% url 'chemistry' %}">
                                 <li>
                                     Chemistry
                                 </li>
                             </a>
                             <!-- Dropdown for mathematics -->
-                            <a class="btn  topic container-fluid" href="#">
+                            <a class="btn  topic container-fluid" href="{% url 'mathematics' %}">
                                 <li>
                                     Mathematics                                
                                 </li>
@@ -95,14 +96,12 @@
                           <input class="form-control me-2" type="search" placeholder="Navigate to..." aria-label="Search" id="searchBar">
                         </form>
                       </li>
-                    <div id="searchlogin">
-                        <!-- Login/Register button -->
-                        <a id="signin" class="btn frame" href="{% url 'login' %}">
-                            <li class="nav-item">
+                    <!-- Login/Register button -->
+                    <a id="signin" class="btn frame" href="{% url 'login' %}">
+                        <li class="nav-item">
                                 Login/Register
-                            </li>
-                        </a>
-                    </div> 
+                        </li>
+                    </a>    
                 </ul>                
             </div>
         </div>

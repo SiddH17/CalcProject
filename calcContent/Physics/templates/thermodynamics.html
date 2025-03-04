@@ -9,7 +9,8 @@
     <body class="bg-dark">
         
         {% block content %}
-            <div class="container-fluid content" id="thermodynamics">
+            <!-- Thermal Expansion -->
+            <div class="container-fluid content" id="thermexp">
                 <!-- Different types of expansion dropdown -->
                 <div id="expansion">
                     <h2><u><b>Thermal Expansion:</b></u></h2>
@@ -22,110 +23,77 @@
                         <option value="Volume Expansion">Volume Expansion Co-efficient</option>
                     </select>
                 </div>
+            </div>
 
-                <!-- Div for linear expansion -->
-                <div id="linexp" style="display: none;">
-                    <h4>Calculate <span id="resultLabel1"></span></h4>
-                    <div>
-                        <label for="colinexp" id="cole">Co-efficient of Linear Expansion:
-                            <input type="number" name="colinexp">
-                        </label>
-                        <label for="lenchange" class="change">Change in length:
-                            <input type="number" name="lenchange">
-                        </label>
-                        <span id="lor"><b>OR</b></span>
-                        <label for="oglen" class="l1">Original Length:
-                            <input type="number" name="oglen">
-                        </label>
-                        <label for="newlen" class="l2">New Length:
-                            <input type="number" name="newlen">
-                        </label>
-                        <label for="lt1" class="t1">Initial Temperature:
-                            <input type="number" name="temp1">
-                        </label>
-                        <label for="lt2" class="t2">Final Temperature:
-                            <input type="number" name="temp2">
-                        </label>
-                        <span id="ltor"><b>OR</b></span>
-                        <label for="temp1" class="temp">Temperature Change:
-                            <input type="number" name="temp1">
-                        </label>
-                    </div>
-                </div>
-                <!-- Div for area expansion -->
-                <div id="arexp" style="display: none;">
-                    <h4>Calculate <span id="resultLabel2"></span></h4>
-                    <div>
-                        <label for="coaexp" id="coae">Co-efficient of Area Expansion:
-                            <input type="number" name="coaexp">
-                        </label>
-                        <label for="areachange" class="lc">Change in area:
-                            <input type="number" name="areachange">
-                        </label>
-                        <span id="aor"><b>OR</b></span>
-                        <label for="ogarea" class="l1">Original Area:
-                            <input type="number" name="ogarea">
-                        </label>
-                        <label for="newarea" class="l2">New Area:
-                            <input type="number" name="newarea">
-                        </label>
-                        <label for="at1" class="t1">Original Temperature:
-                            <input type="number" name="at1">
-                        </label>
-                        <label for="at2" class="t2">New Temperature:
-                            <input type="number" name="at2">
-                        </label>
-                        <span class="ator"><b>OR</b></span>
-                        <label for="temp2" class="temp">Temperature Change:
-                            <input type="number" name="temp2">
-                        </label>
-                    </div>
-                </div>
-                <!-- Div for volume expansion -->
-                <div id="volexp" style="display: none;">
-                    <h4>Calculate <span class="resultLabel3"></span></h4>
-                    <div>
-                        <label for="covexp" id="cove">Co-efficient of Volume Expansion:
-                            <input type="number" name="covexp">
-                        </label>
-                        <label for="volchange" class="lc">Change in Volume:
-                            <input type="number" name="volchange">
-                        </label>
-                        <span id="vor"><b>OR</b></span>
-                        <label for="ogvol" class="l1">Original Volume:
-                            <input type="number" name="ogvol">
-                        </label>
-                        <label for="newvol" class="l2">New Volume:
-                            <input type="number" name="newvol">
-                        </label>
-                        <label for="vt1" class="t1">Original Temperature:
-                            <input type="number" name="vt1">
-                        </label>
-                        <label for="vt2" class="t2">New Temperature:
-                            <input type="number" name="vt2">
-                        </label>
-                        <label for="temp3" class="temp">Temperature Change:
-                            <input type="number" name="temp3">
-                        </label>
-                    </div>
+            <!-- Equipartition of Energy -->
+            <div class="container-fluid content" id="epe">
+                <h2><u><b>Equipartition of Energy:</b></u></h2>
+                <br>
+
+                <div id="epeDiv">
+                    <h4>Calculate Kinetic Energy:</h4>
+                    <br>
+
+                    <label for="dof" id="degoffree">Degrees of Freedom(n):
+                        <input type="number" name="dof">
+                    </label>
+                    <label for="temperature" id="temp1">Temperature(T):
+                        <input type="number" name="temperature">
+                    </label>
+                    <select name="kelvin_celsius" id="kc">
+                        <option value="kelvin">Kelvin</option>
+                        <option value="celsius">Celsius</option>
+                    </select>
+                    <br>
+
+                    <button type="submit" id="epeSubmit" class="btn btn-primary">Calculate Result</button>
+                    <p id="epeAns"></p>
                 </div>
             </div>
 
             <script>
+                //Function to clear input fields
+                function clearInputFields() {
+                    $('#degoffree input').val('');
+                    $('#temp1 input').val('');
+                    $('#epeAns').text('');
+                }
+
+                // Thermal Expansion JS
+                $(document).ready(function()    {
+                });
+
+                //Equipartition of energy JS
                 $(document).ready(function()    {
                     clearInputFields();
 
-                    function expansion()    {
-                        const expansionDiv = $('#thermalexp');
-                        const linExpansion = $('#linexp');
-                        const areaExp = $('#arexp');
-                        const volumeExp = $('#volexp');
+                    const epeButton = $('#epeSubmit');
+                    const epeAns = $('#epeAns');
 
-                        const linCoeff = $('#cole');
-                        const areaCoeff = $('#coae');
-                        const volCoeff = $('#cove');
-                    }
-                })
+                    epeButton.click(function()  {
+                        var inputs = $('#epeDiv').find('input[type=number]');
+                        var epeData = {};
+
+                        inputs.each(function()  {
+                            var name = $(this).attr('name');
+                            var value = parseFloat($(this).val());
+                            epeData[name] = value;
+                        });
+                        epeData.tempUnit = $('#kc').val();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '{% url "equipartition-of-energy" %}',
+                            data: epeData,
+                            success: function(response) {
+                                epeAns.text(response.result);
+                            },
+                            error: function(response)   {
+                                epeAns.text("Something's wrong. Please try again").css('color', 'red');
+                            }
+                        });
+                    });
+                });
             </script>
         {% endblock %} 
     </body>

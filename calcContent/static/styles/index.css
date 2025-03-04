@@ -1,11 +1,16 @@
 /* tags */
 body    {
-    color: white;
+    color: whitesmoke;
+    background-color: #071952;
 }
 nav {
     position: fixed;
     top: 0;
     background-color: #071952;
+    border: 1px solid whitesmoke;
+}
+h5  {
+    color: #D71313;
 }
 form   {
     margin: auto;
@@ -60,10 +65,13 @@ button:hover    {
 .navbar-nav {
     width: 100%;
 }
+.navbar-nav a, .navbar-nav li   {
+    margin: auto;
+}
 
 /* IDs */
 #signin {
-    margin-left: 15px !important;
+    margin: 0 !important;
 }
 #searchlogin    {
     display: flex;
@@ -80,4 +88,9 @@ button:hover    {
     border: 0px;
     border-radius: 0%;
     background-color: whitesmoke;
+}
+
+/* Other styles */
+button[type="submit"]   {
+    border: 1px solid whitesmoke;
 }

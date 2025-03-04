@@ -41,25 +41,13 @@ hr  {
 .btn  {
     font-size: 15px; 
 }
-.mlcalculator   {
-    margin-left: 3em;
-}
-.mlcalculator:hover {
-    background-color: black;
-}
 .nav-item   {
-    margin-left: 0.5em;
     font-size: 19px;
 }
 .navbar {
     position: fixed;
     width: 100%;
 }
-
-.navbar-nav {
-    width: 100%;
-}
-
 .navbar-nav a   {
     display: flex !important;
     align-content: center;
@@ -116,10 +104,6 @@ hr  {
 }
 
 /* IDs */
-#signin {
-    box-shadow: inset;
-    margin-left: 80px;
-}
 #signin:hover   {
     background-color: black;
 }

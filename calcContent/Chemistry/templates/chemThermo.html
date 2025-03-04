@@ -1,0 +1,76 @@
+{% extends "chemistry.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Chemical Thermodynamics{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Internal Energy -->
+        <div id="internal" class="container-fluid content">
+            <h2><u><b>Internal Energy of an ideal gas:</b></u></h2>
+            
+            <div id="internalDiv">
+                <h4>Calculate Internal Energy:</h4>
+                <br>
+
+                <label for="temperature" id="internalTempLabel">Temperature(T)
+                    <input type="number" name="temperature">
+                </label>
+                <select id="int_kc">
+                    <option value="kelvin">Kelvin(K)</option>
+                    <option value="celsius">Celsius(C)</option>
+                </select>
+
+                <label for="moles" id="internalMolesLabel">No. of moles(n):
+                    <input type="number" name="moles">
+                </label>
+
+                <label for="dof" id="degreesLabel">Degrees of Freedom:
+                    <input type="number" name="dof">
+                </label>
+                <br><br>
+            
+                <button type="submit" id="internalSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="internalAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        
+
+        <script>
+            //Internal Energy JS
+            $(document).ready(function()    {
+                $('#internalSubmit').click(function()   {
+                    var inputs = $('#internalDiv').find('input');
+                    var internalData = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        internalData[name] = value;
+                    });
+                    internalData.temperatureUnit = $('#int_kc').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "internal-energy" %}',
+                        data: internalData,
+                        success: function(response) {
+                            $('#internalAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#internalAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            });
+
+        </script>
+    {% endblock content %}
+</body>
+</html>

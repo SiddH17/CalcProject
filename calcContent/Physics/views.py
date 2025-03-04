@@ -14,14 +14,36 @@ def equations_of_motion(request):
 def proj_motion(request):
     return render(request, 'kinematics.html')
 
+#Thermodynamics page view
 def thermodynamics(request):
     return render(request, 'thermodynamics.html')
 
+#Electrostatics page view
 def electrostatics(request):
     return render(request, 'electrostatics.html')
 
+#Ray Optics page view
+def rayOptics(request):
+    return render(request, 'rayoptics.html')
+
+#Current Electricity page view
+def currentElectricity(request):
+    return render(request, 'current.html')
+
+#Modern Physics page view
+def modern_physics(request):
+    return render(request, 'modPhysics.html')
+
+#Electromagnetic Induction page view
+def emi(request):
+    return render(request, 'emi.html')
+
+#Wave Optics page view
+def wave_optics(request):
+    return render(request, 'waveOptics.html')
+
 # APIs
-#Equations of motion API view
+#Kinematics API views
 def equations_of_motion_api(request):
     if request.method == 'GET':
         result = None
@@ -102,7 +124,6 @@ def equations_of_motion_api(request):
         }
         return JsonResponse(context)
 
-#Projectile motion API view
 def proj_motion_api(request):
     if request.method == 'GET':
         result1 = None
@@ -184,7 +205,7 @@ def proj_motion_api(request):
     }
     return JsonResponse(context)
 
-# electrostatics API view
+# electrostatics API views
 def electrostatics_api(request):
     valueSelected = request.GET.get('select_value')
     F = float(request.GET.get('F'))
@@ -212,4 +233,349 @@ def electrostatics_api(request):
         'result': result,
     }
     return JsonResponse(context)
+
+def mirror_api(request):
+    f = float(request.GET.get('fl'))
+    v = float(request.GET.get('imgdist'))
+    u = float(request.GET.get('objdist'))
+    result = None
+
+    select_value = request.GET.get('select_value')
+    mirror_type = request.GET.get('mirror_type')
+
+    #this is to convert positive into negative values for some, if not done already
+    if u>0:   #object distance is always negative
+        u = -abs(u)
+    if v>0 and mirror_type=='convex': #in case of concave mirrors, image distance is always negative
+        v = -abs(v)
+    if f>0 and mirror_type=='concave':    #focal length is always negative in concave mirrors
+        f = -abs(f)
+    if f>v and mirror_type=='concave':  #image distance is negative when less than the focal length of a concave mirror
+        v = -abs(v)  
+
+    #calculating the respective results
+    if select_value == 'focal':
+        result = (u*v)/(u+v)
+    elif select_value == 'virtual':
+        result = (f*u)/(u-f)
+        if (u>f and mirror_type=='concave') or (mirror_type == 'convex'):    #image distance is negative when object is placed between focus and pole
+            print("We have entered the sacred function")
+            result = -abs(result)
+            print(result)
+    elif select_value == 'real':
+        result = (f*v)/(v-f)
+
+
+    context = {
+        'result': result,
+    }
+    return JsonResponse(context)
+
+def lens_api(request):
+    f = float(request.GET.get('lfl'))
+    v = float(request.GET.get('lensimgdist'))
+    u = float(request.GET.get('lensobjdist'))
+    result = None
+
+    select_value = request.GET.get('select_value')
+    lens_type = request.GET.get('lens_type')
+
+    #this is to convert positive into negative values for some, if not done already
+    if u>0:   #object distance is always negative
+        u = -abs(u)
+    if v>0 and lens_type=='concave': #in case of concave lenses, image distance is always negative
+        v = -abs(v)
+    if f>0 and lens_type=='concave':    #focal length is always negative in concave lenses
+        f = -abs(f)
+    if f>v and lens_type=='concave':  #image distance is negative when less than the focal length of a concave lens
+        v = -abs(v)
+    
+    if select_value == 'focal':
+        result = (u*v)/(u-v)
+    elif select_value == 'virtual':
+        result = (f*u)/(f+u)
+        if (u>f and lens_type == 'convex') or (lens_type == 'concave'):
+            result = -abs(result)
+    elif select_value == 'real':
+        result = (f*v)/(f-v)
+
+    
+    
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+#Current Electricity API views
+def ohms_law_api(request):
+    #Selected dropdown value
+    valueSelected = request.GET.get('select_value')
+
+    #All required numerical values
+    v = float(request.GET.get('voltage'))
+    i = float(request.GET.get('current'))
+    r = float(request.GET.get('resistance'))
+    result = None
+
+    if valueSelected == 'voltage':
+        result = r*i
+        result = str(result)
+        result += ' V'
+    elif valueSelected == 'current':
+        result = v/r
+        result = str(result)
+        result += ' A'
+    elif valueSelected == 'resistance':
+        result = v/i
+        result = str(result)
+        result += ' ohm'
+
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+def power_api(request):
+    valueSelected = request.GET.get('select_value')
+    rSelect = request.GET.get('resistance_select')
+    pSelect = request.GET.get('power_select')
+
+    p = float(request.GET.get('power'))
+    v = float(request.GET.get('voltage'))
+    i = float(request.GET.get('current'))
+    r = float(request.GET.get('resistance'))
+    result = None
+
+    if valueSelected == 'power':
+        if pSelect == 'f1':
+            result = v*i
+        elif pSelect == 'f2':
+            result = (i**2)*r
+        elif pSelect == 'f3':
+            result = (v**2)/r
+        result = str(result)
+        result += ' W'
+    elif valueSelected == 'resistance':
+        if rSelect == 'f4':
+            result = (i**2)/p
+        elif rSelect == 'f5':
+            result = (v**2)*p
+        result = str(result)
+        result += ' ohm'
+
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+def resistivity_api(request):
+    valueSelected = request.GET.get('select_value')
+
+    rho = float(request.GET.get('rho'))
+    r = float(request.GET.get('rest'))
+    l = float(request.GET.get('length'))
+    a = float(request.GET.get('area'))
+    result = None
+
+    if valueSelected == 'resistivity':
+        result = (r*a)/l
+        result = str(result)
+        result += ' ohm*m'
+    elif valueSelected == 'resistance':
+        result = (rho*l)/a
+        result = str(result)
+        result += ' ohm'
+    elif valueSelected == 'conductance':
+        result = 1/rho
+        result = str(result)
+        result += ' S'
+
+    context = {
+        'result': result
+    }
+    print(result)
+
+    return JsonResponse(context)
+
+def heat_and_energy_api(request):
+    valueSelected = request.GET.get('select_value')
+    heatValue = request.GET.get('heat_select')
+
+    v = float(request.GET.get('v'))
+    i = float(request.GET.get('i'))
+    r = float(request.GET.get('r'))
+    t = float(request.GET.get('t'))
+    result = None
+
+    if valueSelected == 'energy':
+        result = (1/2)*(v**2)*(i)
+    elif valueSelected == 'heat':
+        if heatValue == 'heat1':
+            result = ((v*2)*t)/r
+        elif heatValue == 'heat2':
+            result = (i**2)*r*t
+
+    result = str(result)
+    result += ' Joules'
+
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+#Thermodynamics API Views
+def equipartition_of_energy(request):
+    tempUnit = request.GET.get('tempUnit')
+
+    n = float(request.GET.get('dof'))
+    t = float(request.GET.get('temperature'))
+    k = 1.38e-23
+    result = None
+
+    if tempUnit == 'celsius':
+        t = 273 + t
+
+    result = (n/2)*k*t
+    result = str(result)
+    result += ' Joules'
+
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+#Modern Physics API Views
+def debroglie_wavelength(request):
+    valueSelected = request.GET.get('dbw_select')
+
+    p = float(request.GET.get('p'))
+    m = float(request.GET.get('ma'))
+    v = float(request.GET.get('vel'))
+    h = 6.626e-34
+    result = None
+
+    if valueSelected == 'dbw1':
+        result = h/p
+    elif valueSelected == 'dbw2':
+        result = h/(m*v)
+
+    result = str(result)
+    result += ' m'
+
+    return JsonResponse({'result': result})
+
+def ev_joule_conversion(request):
+    selectedValue = request.GET.get('value_select')
+
+    ev = float(request.GET.get('ev'))
+    j = float(request.GET.get('j'))
+    result = None
+
+    if selectedValue == 'eV':
+        result = ev*1.6e-19
+        result = str(result)
+        result += ' Joules'
+    elif selectedValue == 'joules':
+        result = j/1.6e-19
+        result = str(result)
+        result += ' eV'
+
+    return JsonResponse({'result': result})
+
+def bohr_model(request):
+    selectedValue = request.GET.get('value_select')
+
+    z = float(request.GET.get('z'))
+    n = float(request.GET.get('n'))
+    e = -13.6
+    a = 0.529e-10
+    result = None
+
+    if selectedValue == 'energy':
+        result = e*((z**2)/n**2)
+        result = str(result)
+        result += ' MeV'
+    elif selectedValue == 'radius':
+        result = ((n**2)/z)*a
+
+    return JsonResponse({'result': result})
+
+def be_md(request):
+    valueSelected = request.GET.get('value_select')
+
+    z = float(request.GET.get('z'))
+    n = float(request.GET.get('n'))
+    ma = float(request.GET.get('ma'))
+    a = float(request.GET.get('a'))
+    result = None
+
+    mp = 1.007276
+    mn = 1.008665
+    c = 3e8
+
+    if valueSelected == 'binding-energy':
+        result = ((z*mp)+(n*mn)-ma)*c**2
+        result = str(result)
+        result += ' MeV'
+    elif valueSelected == 'mass-defect':
+        result = (z*mp)+((a-z)*mn)-ma
+        result = str(result)
+        result += ' MeV/c^2'
+    elif valueSelected == 'atomic-mass':
+        result = z+n
+        result = str(result)
+        result += ' u'
+
+    return JsonResponse({'result': result})
+
+#Electromagnetic Induction API Views
+def inductance_api(request):
+    mu = float(request.GET.get('perm'))
+    n = float(request.GET.get('turns'))
+    l = float(request.GET.get('length'))
+    a = float(request.GET.get('area'))
+    result = None
+
+    result = (mu*(n**2)*a)/l
+    result = str(result)
+    result += ' H'
+
+    return JsonResponse({'result': result})
+
+#Wave Optics API Views
+def wavelength_frequency(request):
+    valueSelected = request.GET.get('select_value')
+
+    c = 3e8
+    l = float(request.GET.get('w'))
+    f = float(request.GET.get('f'))
+    result = None
+
+    if valueSelected == 'wavelength':
+        result = c/f
+        result = str(result)
+        result += ' m'
+    elif valueSelected == 'frequency': 
+        result = c/l
+        result = str(result)
+        result += ' Hz'
+
+    return JsonResponse({'result': result})
+
+def rydberg_formula(request):
+    r=1.1e7
+    n1=float(request.GET.get('n1'))
+    n2=float(request.GET.get('n2'))
+    result = None
+
+    result = (1/r)*(1/n1**2 - 1/n2**2)
+    result = str(result)
+    result += ' m'
+
+    return JsonResponse({'result': result})
 

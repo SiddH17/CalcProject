@@ -1,0 +1,432 @@
+{% extends "chemistry.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gaseous State{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        
+        <!-- Ideal Gas Equation -->
+        <div id="idealGas" class="container-fluid content">
+            <h2><u><b>Ideal Gas Equation:</b></u></h2>
+            <h4>Select the value to be calculated:</h4>
+
+            <select name="ige" id="idealGasSelect">
+                <option value="Select" id="blank1">--Select--</option>
+                <option value="pressure" id="p">Pressure(P)</option>
+                <option value="volume" id="v">Volume(V)</option>
+                <option value="temperature" id="t">Temperature(T)</option>
+                <option value="mole" id="n">No. of moles(n)</option>
+            </select>
+            <br><br>
+
+            {% csrf_token %}
+            <div id="gasEquation" style="display: none;">
+                <h4>Calculate <span id="result_label"></span> </h4>
+                <div>
+                    <!-- Pressure -->
+                    <label for="pressure" id="pressure">Pressure(P):
+                        <input type="number" name="P">
+
+                        <select name="pascal_atm" id="paatm">
+                            <option value="atm" id="atm">Atmospheric Pressure(atm)</option>
+                            <option value="pascal" id="pa">Pascal(Pa)</option>
+                        </select>
+                    </label>
+
+                    <!-- Volume -->
+                    <label for="volume" id="volume">Volume(V):
+                        <input type="number" name="V">
+
+                        <select name="litre_m3" id="km">
+                            <option value="litre" id="k">Litres(L)</option>
+                            <option value="m3" id="m">Meter cubed(m^3)</option>
+                        </select>
+                    </label>
+                    
+                    <!-- Moles -->
+                    <label for="mole" id="mole">No. of moles(n):
+                        <input type="number" name="n">
+                    </label>
+
+                    <!-- Temperature -->
+                    <label for="temperature" id="temperature">Temperature(T):
+                        <input type="number" name="T">
+                        
+                        <select name="kelvin_celsius" id="kc">
+                            <option value="kelvin" id="k">Kelvin</option>
+                            <option value="celsius" id="c">Celsius</option>
+                        </select>
+                    </label>
+                    <br>
+                </div>
+
+                <br>
+                <button type="submit" id="igesubmit" class="btn btn-primary">Calculate Result</button>
+                <br>
+                <p id="igeans">
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    {% if r %}
+                        {{ result }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Kinetic Theory of Gases -->
+        <div id="kineticTheory" class="container-fluid content">
+            <h2><u><b>Kinetic Theory:</b></u></h2>
+            <h4>Select the value to be calculated:</h4>
+
+            <select name="kineticDropdown" id="kinetic">
+                <option value="Select" id="blank2">--Select--</option>
+                <option value="kinetic-energy" id="ke">Kinetic Energy(KE)</option>
+                <option value="moles" id="n">No. of moles(n)</option>
+                <option value="temp" id="t">Temperature(T)</option>
+            </select>
+            <br><br>
+
+            {% csrf_token %}
+            <div id="kineticDiv" style="display: none;">
+                <h4>Calculate <span id="result_label2"></span>:</h4>
+                <label for="kineticEnergy" id="kinetic-energy">Kinetic Energy(KE):
+                    <input type="number" name="ke">
+                </label>
+                
+                <label for="moles" id="moles">No. of moles(n):
+                    <input type="number" name="n">
+                </label>
+                
+                <label for="temperature" id="temperature2">Temperature(T):
+                    <input type="number" name="t">
+                </label>
+                <select name="kelvin_celsius" id="kc2">
+                    <option value="kelvin" id="k2">Kelvin(K)</option>
+                    <option value="celsius" id="c2">Celsius(C)</option>
+                </select>
+                <br><br>
+
+                <button type="submit" id="kineticTheorySubmit" class="btn btn-primary">Calculate Result</button>
+                <br>
+                <p id="kineticTheoryAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- RMS Velocity -->
+         <div id="rms" class="container-fluid content">
+            <h2><u><b>RMS Velocity:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+
+            <select name="rmsDropdown" id="rmsDropdown">
+                <option value="Select" id="blank3">--Select--</option>
+                <option value="rms-velocity" id="rmsvel">Root Mean Square(RMS) Velocity</option>
+                <option value="temperature3" id="t3">Temperature(T)</option>
+                <option value="molar-mass" id="mm">Molar Mass(M)</option>
+            </select>
+
+            {% csrf_token %}
+            <div id="rmsDiv" style="display: none;">
+                <h4>Calculate <span id="result_label3"></span>:</h4>
+                <br>
+                <label for="rms" id="rmsVelocity">RMS Velocity:
+                    <input type="number" name="rms">
+                </label>
+                
+                <label for="t3" id="temperature3">Temperature(T):
+                    <input type="number" name="t3">
+                </label>
+                <select name="kelvin_celsius" id="kc3">
+                    <option value="kelvin" id="k3">Kelvin(K)</option>
+                    <option value="celsius" id="c3">Celsius(C)</option>
+                </select>
+
+                <label for="mm" id="molarMass">Molar Mass(M):
+                    <input type="number" name="mm">
+                </label>
+                <br>
+
+                <button type="submit" id="rmsSubmit" class="btn btn-primary">Calculate Result</button>
+                <br>
+                <p id="rmsAns"></p>
+            </div>
+         </div>
+
+        <script>
+            function clearInputFields() {
+                // Ideal Gas Equation fields
+                $('#pressure input').val('');
+                $('#volume input').val('');
+                $('#temperature input').val('');
+                $('#mole input').val('');
+                $('#igeans').text('');
+
+                //Kinetic theory of gases fields
+                $('#kinetic-energy input').val('');
+                $('#moles input').val('');
+                $('#temperature2 input').val('');
+                $('#kineticTheoryAns').text('');
+
+                //RMS Velocity fields
+                $('#rmsVelocity input').val('');
+                $('#temperature3 input').val('');
+                $('#molarMass input').val('');
+                $('#rmsAns').text('');
+            }
+
+            // Ideal Gas Equation 
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const idealGas = $('#idealGasSelect');
+                const gasDiv = $('#gasEquation');
+                const valueText = $('#result_label');
+                const igeSubmit = $('#igesubmit');
+                const igeAnswer = $('#igeans')
+
+                //All ideal gas equation labels
+                const pressureLabel = $('#pressure');
+                const volumeLabel = $('#volume');
+                const moleLabel = $('#mole');
+                const temperatureLabel = $('#temperature');
+
+                idealGas.change(function()  {
+                    clearInputFields();
+
+                    const idealValue = idealGas.val();
+                    console.log("The value of the selected dropdown, ", idealValue);
+                    valueText.text(idealValue);
+
+                    if(idealValue=='Select')    {
+                        clearInputFields();
+                        gasDiv.hide();
+                    }
+                    else    {
+                        gasDiv.show();
+
+                        if(idealValue=='pressure')  {
+                            pressureLabel.hide();
+                            volumeLabel.show();
+                            moleLabel.show();
+                            temperatureLabel.show();
+                            clearInputFields();
+                        }
+                        if(idealValue=='volume')  {
+                            volumeLabel.hide();
+                            pressureLabel.show();
+                            moleLabel.show();
+                            temperatureLabel.show();
+                            clearInputFields();
+                        }
+                        if(idealValue=='mole')  {
+                            moleLabel.hide();
+                            pressureLabel.show();
+                            volumeLabel.show();
+                            temperatureLabel.show();
+                            clearInputFields();
+                        }
+                        if(idealValue=='temperature')  {
+                            temperatureLabel.hide();
+                            pressureLabel.show();
+                            volumeLabel.show();
+                            moleLabel.show();
+                            clearInputFields();
+                        }
+                    }
+                });
+
+                //Clicking on ideal gas equation submit button
+                igeSubmit.click(function()  {
+                    //Unit type labels
+                    const pressureUnit = $('#paatm').val();
+                    const volumeUnit = $('#km').val();
+                    const temperatureUnit = $('#kc').val();
+                    console.log(pressureUnit, volumeUnit, temperatureUnit, "All the three units");
+                    
+                    var inputs = gasDiv.find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        const name = $(this).attr('name');
+                        const value = parseFloat($(this).val());
+                        data[name] = value;
+
+                        console.log(value);
+                        console.log(data, "The value of the data being passed");
+                    });
+
+                    data.select_value = idealGas.val();
+                    data.pressure = pressureUnit;
+                    data.volume = volumeUnit;
+                    data.temperature = temperatureUnit;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "gaseous_api" %}',
+                        data: data,
+                        success: function(response) {
+                            igeAnswer.text(response.result);
+                            console.log(response.result, "The required result");
+                        },
+                        error: function(response)   {
+                            igeAnswer.text("Units mismatch! Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            })
+
+            //Kinetic Theory of Gases
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const kineticDropdown = $('#kinetic');
+                const kineticDiv = $('#kineticDiv');
+                const valueText = $('#result_label2');
+                const kineticTheoryButton = $('#kineticTheorySubmit');
+
+                const kineticEnergyLabel = $('#kinetic-energy');
+                const molesLabel = $('#moles');
+                const temperatureLabel = $('#temperature2');
+
+                kineticDropdown.change(function()   {
+                    var kineticValue = kineticDropdown.val();
+                    valueText.text(kineticValue);
+
+                    if(kineticValue == 'Select')    {
+                        clearInputFields();
+                        kineticDiv.hide();
+                    }
+                    else    {
+                        clearInputFields();
+                        kineticDiv.show();
+
+                        if(kineticValue == 'kinetic-energy')    {
+                            kineticEnergyLabel.hide();
+                            molesLabel.show();
+                            temperatureLabel.show();
+                        }
+                        else if(kineticValue == 'moles')    {
+                            molesLabel.hide();
+                            kineticEnergyLabel.show();
+                            temperatureLabel.show();
+                        }
+                        else if(kineticValue == 'temp')    {
+                            temperatureLabel.hide();
+                            kineticEnergyLabel.show();
+                            molesLabel.show();
+                        }
+                    }
+                });
+
+                kineticTheoryButton.click(function()    {
+                    var inputs = kineticDiv.find('input[type=number]');
+                    var data = {};
+
+                    const temperatureUnit = $('#kc2').val();
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+
+                    data.select_value2 = kineticDropdown.val();
+                    data.temperature2 = temperatureUnit;
+                    console.log("The data that's being passed: ");
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "kinetic_theory_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#kineticTheoryAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#kineticTheoryAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            })
+
+            //RMS Velocity 
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const rmsDropdown = $('#rmsDropdown');
+                const rmsDiv = $('#rmsDiv');
+                const rmsButton = $('#rmsSubmit');
+                const valueText = $('#result_label3');
+
+                const rmsVelocityLabel = $('#rmsVelocity');
+                const temperatureLabel = $('#temperature3');
+                const molarMassLabel = $('#molarMass');
+
+                rmsDropdown.change(function()   {
+                    var rmsValue = rmsDropdown.val();
+                    valueText.text(rmsValue);
+                    clearInputFields();
+
+                    if(rmsValue == 'Select')    {
+                        rmsDiv.hide();
+                    }
+                    else    {
+                        rmsDiv.show();
+
+                        if(rmsValue == 'rms-velocity')  {
+                            rmsVelocityLabel.hide();
+                            temperatureLabel.show();
+                            molarMassLabel.show();
+                        }
+                        else if(rmsValue == 'temperature3') {
+                            temperatureLabel.hide();
+                            rmsVelocityLabel.show();
+                            molarMassLabel.show();
+                        }
+                        else if(rmsValue == 'molar-mass')   {
+                            molarMassLabel.hide();
+                            rmsVelocityLabel.show();
+                            temperatureLabel.show();
+                        }
+                    }
+                });
+
+                rmsButton.click(function()  {
+                    var inputs = rmsDiv.find('input[type=number]');
+                    var data = {};
+                    var temperatureUnit = $('#kc3').val();
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data.select_value3 = rmsDropdown.val();
+                    data.temperature3 = temperatureUnit;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "rms_velocity_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#rmsAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('rmsAns').text("Something's wrong. Please try again").css('color', 'red');
+                        }
+                    });
+                });
+            })
+        </script>
+    {% endblock content %}
+</body>
+</html>

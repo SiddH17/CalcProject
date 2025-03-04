@@ -9,7 +9,115 @@
 </head>
 <body>
     {% block content %}
-    
+        <div class="container-fluid content" id="stats">
+            
+            <!-- mean, median and mode code -->
+            <div id="mememo">
+                <div>
+                    <h2><u><b>Mean, median and mode:</b></u></h2>
+                    <br>
+
+                    <!-- Central Measures of Tendency selection dropdown -->
+                    <h4>Select the type of central tendency to be calculated:</h4>
+                    <select name="mmm" id="mmm">
+                        <option value="Select">--Select--</option>
+                        <option value="mean">Mean/Average</option>
+                        <option value="median">Median</option>
+                        <option value="mode">Mode</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- Central Tendency calculation div -->
+                <div id="mmmcalc" style="display: none;">
+                    <h4>Calculate <span class="result_label"></span>:</h4>
+                    <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
+                    <div>
+                        <label for="obsinput" id="obsinput">No. of observations(n):
+                            <input type="number" name="obs">
+                        </label>
+                        <br><br>
+                        <label for="numsinput" id="numsinput">Observations/Numbers:
+                            <input type="text" name="nums">
+                        </label>
+                        <br>
+                    </div>
+                    <br>
+                </div>
+
+                <!-- Submission button for calculation of the answer -->
+                <button type="submit" class="btn btn-primary" id="mmmsubmit">Calculate</button>
+            </div>
+
+            <p id="mmmans"></p>
+        </div>
+
+        <script>
+                function clearInputFields() {
+                    $('#obsinput input').val('');
+                    $('#numsinput input').val(''); 
+                    $('#mmmans').text('');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                }
+
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const selectElement =  $('#mmm');
+                const mememoDiv = $('#mmmcalc');
+                const mememoSubmit = $('#mmmsubmit');
+                const mememoAnswer = $('#mmmans');
+                var frequency = $('#obsinput');
+                var observations = $('#numsinput');
+
+                var resultLabel = $('.result_label');
+
+                selectElement.change(function()   {
+                    clearInputFields();
+
+                    // Display the central measures calculation as long as 'Select' option is not selected
+                    var selectValue = selectElement.val();
+                    resultLabel.text(selectValue);
+                    console.log(selectValue);
+                    if(selectValue != 'Select')   {
+                        mememoDiv.show();
+                    }
+                    else    {
+                        mememoDiv.hide();
+                    }
+                })
+
+                mememoSubmit.click(function()   {
+                    var selectValue = selectElement.val();
+                    console.log("The selected option, ",selectValue);
+
+                    var selectedDiv = $('#mmmcalc:visible');
+                    var numberInputs = selectedDiv.find('input[type=number]');
+                    var textInputs = selectedDiv.find('input[type=text]');
+                    
+                    var numberName = numberInputs.attr('name');
+                    var numberValue = numberInputs.val();
+                    var textName = textInputs.attr('name');
+                    var textValue = textInputs.val();
+                    
+                    var data = {
+                        'select_value': selectValue,
+                        'obs': numberValue,
+                        'nums': textValue
+                    }
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "statistics_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#mmmans').text(response.result);
+                            console.log("This is the required result",response.result);
+                        }
+                    })
+                })
+            });
+        </script>
     {% endblock content %}
 </body>
 </html>

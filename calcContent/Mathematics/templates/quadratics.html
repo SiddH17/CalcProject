@@ -1,0 +1,87 @@
+{% extends "mathematics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quadratic Equations{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Roots of Equations -->
+        <div class="container-fluid content" id="roots">
+            <h2><u><b>Roots of Equations:</b></u></h2>
+
+            <!-- Div for calculating roots of Equations -->
+            <div id="equRoots">
+                <br>
+                <h4>Equation: ax^2 + bx + c</h4>
+                <br>
+                <label for="a_value">Enter the value of a:
+                    <input type="number" name="a_value" id="a">
+                </label>
+                <label for="b_value">Enter the value of b:
+                    <input type="number" name="b_value" id="b">
+                </label>
+                <label for="c_value">Enter the value of c:
+                    <input type="number" name="c_value" id="c">
+                </label>
+                <br><br>
+
+                <button type="submit" id="rootsSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="rootsAns"></p>
+            </div>
+        </div>
+
+        <script>
+            function clearInputFields() {
+                $('#a').val('');
+                $('#b').val('');
+                $('#c').val('');
+                $('#rootsAns').text('');
+            }
+
+            $(document).ready(function()    {
+                clearInputFields();
+
+                $('#rootsSubmit').click(function()  {
+                    var inputs = $('#equRoots').find('input[type=number]');
+                    var data = {};
+                    console.log("All the inputs: ", inputs);
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "quadratics_api" %}',
+                        data: data,
+                        success: function(response) {
+                            if (response.error) {
+                                $("#rootsAns").html(`<span style="color: red;">Error: ${response.error} <br>
+                                        Equation: ${response.solution} <br>
+                                        Discriminant: ${response.root}    
+                                    </span>
+                                `);
+                            } else {
+                                $("#rootsAns").html(`
+                                    Equation: ${response.solution} <br>
+                                    Discriminant: ${response.root} <br>
+                                    Root 1: ${response.root1}, ${response.root2}
+                                `);
+                            }
+                        },
+                        error: function() {
+                            $("#rootsAns").text("An unexpected error occurred.").css("color", "red");
+                        }
+                    });
+                });
+            })
+        </script>
+    {% endblock content %}
+</body>
+</html>

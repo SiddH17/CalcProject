@@ -1,0 +1,392 @@
+{% extends "physics.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ray Optics{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <div class="container-fluid content" id="rayopts">
+            <!-- mirror equation -->
+            <div id="mirroreq">
+                <div>
+                    <h2><u><b>Mirror Equation:</b></u></h2>
+                    <h5>**(Note: Please first select the value to be calculated and then the type of mirror)**</h5>
+                    <br>
+
+                    <h4>Select a value to be calculated:</h4>
+                    <select name="mireq" id="mireq">
+                        <option value="Select">--Select--</option>
+                        <option value="focal">Focal Length(f)</option>
+                        <option value="virtual">Image Distance(v)</option>
+                        <option value="real">Object Distance(u)</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- select the type of mirror for sign conventions -->
+                <div>
+                    <h4>Select the type of mirror you're working on:</h4>
+                    <select name="vexcave" id="vexcave">
+                        <option value="Select">--Select--</option>
+                        <option value="convex">Convex Mirror</option>
+                        <option value="concave">Concave Mirror</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- div for Mirror equation -->
+                <div id="sphmir" style="display: none;">
+                    <h4>Calculate <span class="result_label"></span> <span class="type_label"></span> value:</h4>
+                    <div style="display: flex;">
+                        <label for="fl" class="fl">Focal Length(f):
+                            <input type="number" name="fl">
+                        </label>
+                        <label for="imgdist" class="imgdist">Image Distance(v):
+                            <input type="number" name="imgdist">
+                        </label>
+                        <label for="objdist" class="objdist">Object Distance(u):
+                            <input type="number" name="objdist">
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+                <button type="submit" id="mirrorsubmit" style="display: none;" class="btn">Calculate Result</button>
+                <br>
+                <p id="mirrorans"></p>
+            </div>
+            <br>
+            
+            <hr>
+
+            <br>
+            <!-- Lens equation -->
+             <div id="lenseq">
+                <h2><u><b>Lens Equation:</b></u></h2>
+                <h5>**(Note: Please first select the value to be calculated and then the type of lens)**</h5>
+                    <br>
+
+                    <h4>Select a value to be calculated:</h4>
+                    <select name="leneq" id="leneq">
+                        <option value="Select">--Select--</option>
+                        <option value="focal">Focal Length(f)</option>
+                        <option value="virtual">Image Distance(v)</option>
+                        <option value="real">Object Distance(u)</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- select the type of lens for sign conventions -->
+                <div>
+                    <h4>Select the type of lens you're working on:</h4>
+                    <select name="lensvexcave" id="lensvexcave">
+                        <option value="Select">--Select--</option>
+                        <option value="convex">Convex Lens</option>
+                        <option value="concave">Concave Lens</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- div for Lens equation -->
+                <div id="lens" style="display: none;">
+                    <h4>Calculate <span class="lens_result_label"></span> <span class="lens_type_label"></span> value:</h4>
+                    <div style="display: flex;">
+                        <label for="lfl" class="lfl">Focal Length(f):
+                            <input type="number" name="lfl">
+                        </label>
+                        <label for="lensimgdist" class="lensimgdist">Image Distance(v):
+                            <input type="number" name="lensimgdist">
+                        </label>
+                        <label for="lensobjdist" class="lensobjdist">Object Distance(u):
+                            <input type="number" name="lensobjdist">
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+                <button type="submit" id="lenssubmit" style="display: none;" class="btn">Calculate Result</button>
+                <br>
+                <p id="lensans"></p>
+             </div>
+        </div>
+
+        <script>
+            function clearInputFields() {
+                $('.fl input').val('');
+                $('.imgdist input').val('');
+                $('.objdist input').val('');
+                $('#mirrorans').text('');
+
+                $('.lfl input').val('');
+                $('.lensimgdist input').val('');
+                $('.lensobjdist input').val('');
+                $('#lensans').text('');
+            }
+            
+            // Mirror equation jQuery script
+            $(document).ready(function()    {
+                const mirrorSelect = $('#mireq');   //To-be-calculated value dropdown
+                const convexConcave = $('#vexcave');    //Mirror type dropdown
+                const sphericalMirror = $('#sphmir');    //Div for mirror equations
+                const valueText = $('.result_label');   //span for mirror type text
+                const mirrorText = $('.type_label');  //span for value selected text
+
+                const focal = $('.fl');
+                const image = $('.imgdist');
+                const object = $('.objdist');
+
+                const mirrorButton = $('#mirrorsubmit');    //Submit button for mirror equation
+
+                mirrorSelect.change(function()  {
+                    var mirrorValue = mirrorSelect.val();
+                    console.log("The value of mirrorValue: ", mirrorValue);
+                    valueText.text(mirrorValue);
+
+                    if(mirrorValue == 'Select') {
+                        sphericalMirror.hide();
+                        mirrorButton.hide();
+                        clearInputFields();
+                        convexConcave.val('Select');
+                    }
+                    
+                    convexConcave.change(function() {
+                        var cocaValue = convexConcave.val();
+                        console.log("The value of cocaValue: ", cocaValue);
+                        mirrorText.text(cocaValue);
+
+                        // If the value selected within the convex or concave mirror dropdown is 'Select'
+                        if(cocaValue == 'Select')   {
+                            sphericalMirror.hide();
+                            mirrorButton.hide();
+                            clearInputFields();
+                            mirrorSelect.val('Select');
+                        }
+                        else if(cocaValue == 'convex')  {
+                            mirrorButton.show();
+                            sphericalMirror.show();
+                            clearInputFields();
+
+                            if(mirrorValue == 'focal')  {
+                                clearInputFields();
+                                focal.hide();
+                                image.show();
+                                object.show();
+                            }
+                            else if(mirrorValue == 'virtual')   {
+                                clearInputFields();
+                                image.hide();
+                                focal.show();
+                                object.show();
+                            }
+                            else if(mirrorValue == 'real')   {
+                                clearInputFields();
+                                object.hide();
+                                focal.show();
+                                image.show();
+                            }
+                            else    {
+                                sphericalMirror.hide();
+                                mirrorButton.hide();
+                                clearInputFields();
+                            }
+                        }
+                        else if(cocaValue == 'concave') {
+                            clearInputFields();
+                            sphericalMirror.show();
+                            mirrorButton.show();
+
+                            if(mirrorValue == 'focal')  {
+                                clearInputFields();
+                                focal.hide();
+                                image.show();
+                                object.show();
+                            }
+                            else if(mirrorValue == 'virtual')   {
+                                clearInputFields();
+                                image.hide();
+                                focal.show();
+                                object.show();
+                            }
+                            else if(mirrorValue == 'real')   {
+                                clearInputFields();
+                                object.hide();
+                                focal.show();
+                                image.show();
+                            }
+                            else    {
+                                clearInputFields();
+                                sphericalMirror.hide();
+                                mirrorButton.hide();
+                            }
+                        }
+                    })
+                })
+            
+                mirrorButton.click(function()   {
+                    var selectValue = mirrorSelect.val();   //Returns the value to be selected
+                    var mirrorType = convexConcave.val();   //Returns the type of mirror 
+                    console.log(selectValue, mirrorType, "The two values returned");
+
+                    var selectedDiv = $("#sphmir:visible");
+                    var inputs = selectedDiv.find('input[type=number]');
+                    console.log(inputs);
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var amount = parseFloat($(this).val());
+                        data[name] = amount;    //Storing the value of each input wrt name
+                    })
+                    data.select_value = selectValue;    //Adding selectValue to the value returned
+                    data.mirror_type = mirrorType;  //For choosing the mirror type
+                    console.log(data);
+
+                    //Make an ajax call to fetch the answer
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "mirror_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#mirrorans').text(response.result);
+                            console.log("This is the required result",response.result);
+                        }
+                    })
+                })
+            })
+            
+            // Lens equation jQuery script
+            $(document).ready(function()    {
+                const lensSelect = $('#lenseq');    //Returns main div for lens equation
+                const lensValue = $('#leneq');  //Returns dropdown value of lens
+                const lensType = $('#lensvexcave'); //Returns type of lens selected
+                const lensDiv = $('#lens');   //Returns lens-related div
+
+                const valueText = $('.lens_result_label');   //span for lens type text
+                const lensText = $('.lens_type_label');  //span for value selected text
+
+                const lensButton = $('#lenssubmit');    //Submit button for lens equation
+                const lensFocal = $('.lfl');    //Focal length input of lens
+                const imageDistance = $('.lensimgdist');    //Image distance input of lens
+                const objectDistance = $('.lensobjdist');   //Object distance input of lens
+
+                lensValue.change(function() {
+                    var selectedValue = lensValue.val();
+                    console.log("Value of selected value: ", selectedValue);
+                    lensText.text(selectedValue);
+                    
+                    if(selectedValue == 'Select')   {
+                        clearInputFields();
+                        lensDiv.hide();
+                        lensButton.hide();
+                        lensType.val('Select');
+                    }
+
+                    lensType.change(function()  {
+                        var lensTypeValue = lensType.val();
+                        console.log("This is the type of lens: ", lensTypeValue);
+                        valueText.text(lensTypeValue);
+
+                        if(lensTypeValue == 'Select')   {
+                            clearInputFields();
+                            lensDiv.hide();
+                            lensButton.hide();
+                            lensValue.val('Select');
+                        }
+                        else if(lensTypeValue == 'convex')  {
+                            lensDiv.show();
+                            lensButton.show();
+                            clearInputFields();
+
+                            if(selectedValue == 'focal')    {
+                                clearInputFields();
+                                lensFocal.hide();
+                                imageDistance.show();
+                                objectDistance.show();
+                            }
+                            else if(selectedValue == 'virtual') {
+                                clearInputFields();
+                                imageDistance.hide();
+                                lensFocal.show();
+                                objectDistance.show();
+                            }
+                            else if(selectedValue == 'real')    {
+                                clearInputFields();
+                                objectDistance.hide();
+                                imageDistance.show();
+                                lensFocal.show();
+                            }
+                            else    {
+                                clearInputFields();
+                                lensDiv.hide();
+                                lensButton.hide();
+                            }
+                        }
+                        else if(lensTypeValue == 'concave') {
+                            lensDiv.show();
+                            lensButton.show();
+
+                            if(selectedValue == 'focal')    {
+                                clearInputFields();
+                                lensFocal.hide();
+                                imageDistance.show();
+                                objectDistance.show();
+                            }
+                            else if(selectedValue == 'virtual') {
+                                clearInputFields();
+                                imageDistance.hide();
+                                lensFocal.show();
+                                objectDistance.show();
+                            }
+                            else if(selectedValue == 'real')    {
+                                clearInputFields();
+                                objectDistance.hide();
+                                imageDistance.show();
+                                lensFocal.show();
+                            }
+                            else    {
+                                clearInputFields();
+                                lensDiv.hide();
+                                lensButton.hide();
+                            }
+                        }
+                    })
+                })
+
+                lensButton.click(function() {
+                    var lensValueSelected = lensValue.val();
+                    var lensTypeSelected = lensType.val();
+                    console.log(lensTypeSelected, lensValueSelected, "The two values returned");
+
+                    var selectedDiv = $("#lens:visible");
+                    var inputs = selectedDiv.find('input[type=number]');
+                    console.log(inputs);
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var amount = parseFloat($(this).val());
+                        data[name] = amount;    //Storing the value of each input wrt name
+                    })
+                    data.select_value = lensValueSelected;    //Adding selectValue to the value returned
+                    data.lens_type = lensTypeSelected;  //For choosing the mirror type
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "lens_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#lensans').text(response.result);
+                            console.log(response.result, "The lens answer output");
+                        }
+                    })
+                })
+            })
+        </script>
+    {% endblock content %}
+</body>
+</html>
