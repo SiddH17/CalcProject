@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Physics',
     'Chemistry',
     'Mathematics',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,21 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [STATIC_DIR]
+
+REST_FRAMEWORK = {
+    #For authentication purposes
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    #For permissions to be allowed to the user
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    #For Pagination
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

@@ -1,0 +1,146 @@
+{% extends "login.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Register{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <div class="enclosingbox">
+            <form action ="/login/" method="post">
+                {% csrf_token %}
+                <h1>Hello there!</h1>
+                <div class="input-box">
+                    <input type="text" id="name" class="input-field" placeholder="Full Name" autocomplete="off" required>
+                    <i class='bx bx-user' ></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="username" class="input-field" placeholder="Username" autocomplete="off" required>
+                    <i class='bx bx-user' ></i>
+                    <p id="username_p"></p>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="email" class="input-field" placeholder="Email Address" autocomplete="off" required>
+                    <i class='bx bx-envelope' ></i>
+                    <p id="email_p"></p>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" class="input-field" placeholder="Password" autocomplete="off" required>
+                    <i class='bx bx-lock-alt' ></i>
+                    <i class='bx bx-show' id="showPassword" style="cursor: pointer; right: 8%;"></i>
+                    <i class='bx bx-hide' id="hidePassword" style="cursor: pointer; right: 8%; display: none;"></i>
+                </div>
+                         
+                <div class="input-submit">
+                        <button class="submit-btn" id="submit">Sign Up</button>
+                </div>
+                    
+                <div class="Register-page">
+                        <label>Already signed up with us?</label>
+                        <a href="{% url 'login' %}">Login</a>
+                </div>
+                </div>
+            </form>     
+        </div>
+
+        <script>
+
+            $.getCookie = function(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    $.each(cookies, function(i, cookie) {
+                        cookie = $.trim(cookie);
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            return false; // break out of $.each loop
+                        }
+                    });
+                }
+                return cookieValue;
+            };
+
+            const csrftoken = $.getCookie('csrftoken');
+            
+            $(document).ready(function()   {
+                const hidePassword = $('#hidePassword');
+                const showPassword = $('#showPassword');
+
+                //To show the password and change the type and logo
+                showPassword.click(function()   {
+                    const password = $('#password');
+                    password.attr('type', 'text');
+                    showPassword.css('display', 'none');
+                    hidePassword.css('display', 'block');
+                });
+
+                //To hide the password and change the type and logo
+                hidePassword.click(function() {
+                    const password = $('#password');
+                    password.attr('type', 'password');
+                    showPassword.css('display', 'block');
+                    hidePassword.css('display', 'none');
+                });
+
+                //When the button is clicked to submit the data
+                $('#submit').click(function()   {
+                    event.preventDefault();
+                    //All input labels
+                    var inputs = $('.enclosingbox').find('.input-field');
+                    var data = {};
+
+                    //Mapping each field in the data dictionary
+                    inputs.each(function()  {
+                        var name = $(this).attr('id');
+                        var value = $(this).val();
+                        data[name] = value;
+                    });
+
+                    console.log(data, "The current data");
+
+                    $.ajax({
+                        type : 'POST',
+                        url: '{% url "register_api" %}',
+                        headers: {'X-CSRFToken': csrftoken},
+                        mode: 'same-origin', // Do not send CSRF token to another domain.
+                        data: data,
+                        //xhr is used to return all the headers from backend
+                        //xhr.responseJSON returns the message in JSON format 
+                        success: function(response)   {
+                            if (response.status === 'success' || response.status === 201 || response.status === '201')    {
+                                console.log("In the login page now");
+                                console.log(response.status);
+                                debugger;
+                                window.location.href = "{% url 'login' %}";
+                            }
+                            else    {
+                                console.log("In the register page now");
+                                console.log(response.status);
+                                debugger;
+                                window.location.href = "{% url 'register' %}";
+                            }
+                        },
+                        error: function(xhr)    {
+                            const response = xhr.responseJSON;
+                            if(response.errors)  {
+                                if(response.errors.username)    {
+                                    $('#username_p').text(response.errors.username);
+                                }
+                                if(response.errors.email)   {
+                                    $('#email_p').text(response.errors.email);
+                                }
+                            }
+                            else    {
+                                alert(response.message);
+                            }
+                        },
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

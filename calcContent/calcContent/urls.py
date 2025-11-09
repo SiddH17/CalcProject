@@ -25,5 +25,7 @@ urlpatterns = [
     path('Physics/', include('Physics.urls')),
     path('Chemistry/', include('Chemistry.urls')),
     path('Mathematics/', include('Mathematics.urls')),
+    path('api/', include('api.urls')),
     path('login/', views.login, name='login'),
+    path('register/', views.register, name='register'),
 ]
