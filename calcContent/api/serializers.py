@@ -36,3 +36,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         print(user)
 
         return user
+    
+#Serializer for Login API call
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reg_Users
+        fields = ['username', 'password']
+
+    def validate(self, data):
+        username = data.get('username', None)
+        password = data.get('password', None)
+
+        print(username, password)
+
+        if not Reg_Users.objects.filter(username=username, password=password).exists():
+            raise serializers.ValidationError({"username": "Invalid username or password"})
+
+        return data
