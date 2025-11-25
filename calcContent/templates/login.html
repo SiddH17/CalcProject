@@ -43,10 +43,10 @@
                     <p id="loginUsername_p"></p>
                 </div>
                 <div class="input-box">
-                    <input type="password" id="password" class="input-field" placeholder="Password" autocomplete="off" required>
-                    <i class='bx bx-lock-alt' ></i>
-                    <i class='bx bx-show' id="showPassword" style="cursor: pointer; right: 8%;"></i>
-                    <i class='bx bx-hide' id="hidePassword" style="cursor: pointer; right: 8%; display: none;"></i>
+                    <input type="password" id="loginPassword" class="input-field" placeholder="Password" autocomplete="off" required>
+                    <i class='bx bx-lock-alt'></i>
+                    <i class='bx bx-show' id='showPassword' style="cursor: pointer; right: 8%;"></i>
+                    <i class='bx bx-hide' id='hidePassword' style="cursor: pointer; right: 8%; display: none;"></i>
                 </div>
             
                 <div class="otherPages">
@@ -94,20 +94,19 @@
             $(document).ready(function() {
                 const hidePassword = $('#hidePassword');
                 const showPassword = $('#showPassword');
+                const loginPassword = $('#loginPassword');
                
                 //To show the password and change the type and logo
                 showPassword.click(function()   {
                     console.log("In Function showpassword now");
-                    const password = $('#loginPassword');
-                    password.attr('type','text');
+                    loginPassword.attr('type','text');
                     showPassword.css('display', 'none');
                     hidePassword.css('display', 'block');
                 });
 
                 //To hide the password and change the type and logo
                 hidePassword.click(function() {
-                    const password = $('#loginPassword');
-                    password.attr('type', 'password');
+                    loginPassword.attr('type', 'password');
                     showPassword.css('display', 'block');
                     hidePassword.css('display', 'none');
                 });

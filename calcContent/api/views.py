@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 
 from . import models
 from .serializers import *
@@ -27,10 +28,9 @@ def register_api(request):
             'errors': serializer.errors
             }, 
             status=status.HTTP_400_BAD_REQUEST)
-    
-    print(data)
 
     serializer.save()
+    print(serializer.data)
     return Response({
         'status': '201', 
         'message': 'User created successfully'
@@ -55,19 +55,23 @@ def login_api(request):
     #So as a result, authenticate() method cannot be used here
     username = serializer.validated_data['username']
     password = serializer.validated_data['password']
-    user = Reg_Users.objects.filter(username=username, password=password).first()
+
+    #Filter the database value using username
+    user = Reg_Users.objects.filter(username=username).first()
 
     print(user, "The current user")
 
-    if not user:
-        print(user)
+    #If either user does not exist or user's password does not match
+    #check_password(encoded password, original password)
+    if not user or not check_password(password, user.password):
         return Response({
             'status': '401', 
             'message': 'Authentication failed. Please check your username and password.'
             }, 
             status=status.HTTP_401_UNAUTHORIZED)
 
-    token = f"{user.id}_{user.username}" 
+    token = f"{user.id}_{user.username}_{user.password}"
+    print(token)
 
     return Response({
         'status': '200', 

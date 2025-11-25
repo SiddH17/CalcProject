@@ -29,9 +29,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = Reg_Users.objects.create(
             name = validated_data['name'],
             username = validated_data['username'],
-            email = validated_data['email']
-            )
-        validated_data['password'] = make_password(validated_data['password'])
+            email = validated_data['email'],
+            password = make_password(validated_data['password'])
+        )
         user.save()
         print(user)
 
@@ -44,12 +44,13 @@ class LoginSerializer(serializers.ModelSerializer):
         fields = ['username', 'password']
 
     def validate(self, data):
+        #Basically gets the values of username and password from request.data
         username = data.get('username', None)
         password = data.get('password', None)
 
         print(username, password)
 
-        if not Reg_Users.objects.filter(username=username, password=password).exists():
+        if not username or not password:
             raise serializers.ValidationError({"username": "Invalid username or password"})
 
         return data

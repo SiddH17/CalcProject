@@ -125,7 +125,10 @@
                         },
                         error: function(xhr)    {
                             const response = xhr.responseJSON;
+                            console.log("Inside the errors function");
+                            console.log(response);
                             if(response.errors)  {
+                                console.log("Inside the console errors functionality");
                                 if(response.errors.username)    {
                                     $('#username_p').text(response.errors.username);
                                 }
