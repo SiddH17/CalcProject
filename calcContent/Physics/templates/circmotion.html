@@ -1,0 +1,316 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Circular Motion{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Angular displacement, velocity and acceleration -->
+        <div id="angular" class="container-fluid content">
+            <h2><u><b>Angular Displacement/Velocity/Acceleration</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <!-- Dropdown for selecting option -->
+            <select name="angularDropdown" id="angularDropdown">
+                <option value="select" class="select1">--Select--</option>
+                <option value="angular-displacement" id="angdisp">Angular Displacement</option>
+                <option value="angular-velocity" id="angvel">Angular Velocity</option>
+                <option value="angular-acceleration" id="angacc">Angular Acceleration</option>
+            </select>
+            <br><br>
+
+            <h4 id="formulae" style="display: none;">Select a formula to calculate <span id="calcVal"></span></h4>
+
+            <!-- Div for when Angular Displacement is selected -->
+            <div style="display: none;" class="sva" id="angDispDiv">
+                <!-- Angular Displacement formulae selection dropdown -->
+                <select name="dispFormulae" id="dispFormulae">
+                    <option value="select" class="select1">--Select--</option>
+                    <option value="sr" id="sr">Displacement(s)/Radius(r)</option>
+                    <option value="wt" id="wt">ang.velocity(omega)*t</option>
+                </select>
+                <br><br>
+                
+                <!-- Angular Displacement Calculation Div -->
+                <div id="angDisplacement" style="display: none;">
+                    <h4>Calculate Angular Displacement:</h4>
+        
+                    <label for="radius" id="rLabel">Radius(r):
+                        <input type="number" name="radius">
+                    </label>
+                    <label for="disp" id="sLabel">Displacement(s):
+                        <input type="number" name="disp">
+                    </label>
+                    <label for="angularVelocity" id="angVelLabel">Angular Velocity:
+                        <input type="number" name="angularVelocity">
+                    </label>
+                    <label for="time" id="timeLabel">Time(t):
+                        <input type="number" name="time">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Div for when Angular Velocity is selected -->
+            <div style="display: none;" class="sva" id="angVelDiv">
+                <!-- Angular Velocity Formula Selection Div -->
+                <select name="velFormulae" id="velFormulae">
+                    <option value="select" class="select1">--Select--</option>
+                    <option value="thetat" id="thetat">Ang. Displacement/Time(t)</option>
+                    <option value="vr" id="vr">Velocity(v)/Radius(r)</option>
+                </select>
+                <br><br>
+
+                <!-- Angular Velocity Formula Calculation Div -->
+                <div id="angVelocity" style="display: none;">
+                    <h4>Calculate Angular Velocity:</h4>
+
+                    <label for="vel" id="vLabel">Velocity(v):
+                        <input type="number" name="vel">
+                    </label>
+                    <label for="radius" id="rLabel2">Radius(r):
+                        <input type="number" name="radius">
+                    </label>
+                    <label for="theta" id="thetaLabel">Angular Displacement:
+                        <input type="number" name="theta">
+                    </label>
+                    <label for="time" id="tLabel2">Time(t):
+                        <input type="number" name="time">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Div for when Angular Acceleration is selected -->
+            <div style="display: none;" class="sva" id="angAccDiv">
+                <select name="accFormulae" id="accFormulae">
+                    <option value="select" class="select1">--Select--</option>
+                    <option value="ar" id="ar">Acceleration(a)/Radius(r)</option>
+                    <option value="omegat" id="omegat">Ang. Velocity/Time(t)</option>
+                </select>
+                <br><br>
+
+                <div id="angAcceleration" style="display: none;">
+                    <h4>Calculate Angular Acceleration</h4>
+
+                    <label for="acc" id="aLabel">Acceleration(a):
+                        <input type="number" name="acc">
+                    </label>
+                    <label for="radius" id="rLabel3">Radius(r):
+                        <input type="number" name="radius">
+                    </label>
+                    <label for="angularVelocity" id="angvelLabel2">Angular Velocity:
+                        <input type="number" name="angularVelocity">
+                    </label>
+                    <label for="time" id="tLabel3">Time(t):
+                        <input type="number" name="time">
+                    </label>
+                </div>
+            </div>
+
+            <br>
+            <div id="angularButtonAns" style="display: none;">
+                <button id="angularSubmit" class="btn btn-primary" type="submit">Calculate Result</button>
+                <p id="angularAns"></p>
+            </div>
+
+        </div>
+
+        <script>
+            //Clear all the input fields
+            function clearInputFields() {
+                $('input').val('');
+            }
+
+            $(document).ready(function()    {
+                clearInputFields();
+
+                //Event will be triggered whenever the value in the dropdown is changed
+                $('#angularDropdown').change(function() {
+                    //Tracking the value of the dropdown and clearing inputs whenever value is changed
+                    var angularVal = $('#angularDropdown').val();
+                    clearInputFields();
+                    $('#angularButtonAns').hide();
+
+                    //Hide all the calculation divs if dropdown value is 'select'
+                    if(angularVal=='select')    {
+                        $('#angDispDiv').hide();
+                        $('#angVelDiv').hide();
+                        $('#angAccDiv').hide();
+                        $('#formulae').hide();   
+                    }
+                    else    {
+                        //Show the formula calculation header for any value except for 'select'
+                        $('#formulae').show();
+                        console.log(angularVal);
+                        //Insert the dropdown value in the span mentioned above
+                        $('#calcVal').text(angularVal);
+
+                        //Code to handle value of 'angular-displacement'
+                        if(angularVal == 'angular-displacement')    {
+                            //Show only the angular displacement div and hide all others
+                            $('#angVelDiv').hide();
+                            $('#angAccDiv').hide();
+                            $('#angDispDiv').show();
+
+                            //When formula calculation method for angular displacement is changed
+                            $('#dispFormulae').change(function()    {
+                                clearInputFields();
+                                $('#angularButtonAns').hide();
+                                //Store the calculation method value
+                                var angDispVal = $('#dispFormulae').val();
+                                console.log(angDispVal);
+
+                                //Hide div element if 'select' value is chosen
+                                if(angDispVal == 'select')  {
+                                    $('#angDisplacement').hide();  
+                                    $('#angularButtonAns').hide();                               
+                                }
+                                else    {
+                                    //Show the angular displacement div
+                                    $('#angDisplacement').show();
+                                    $('#angularButtonAns').show();
+
+                                    //If displacement/radius formula is chosen
+                                    if (angDispVal == 'sr') {
+                                        $('#angVelLabel').hide();
+                                        $('#timeLabel').hide();
+                                        $('#rLabel').show();
+                                        $('#sLabel').show();
+                                    }
+                                    //If Angular Velocity * time formula is chosen
+                                    else if (angDispVal == 'wt') {
+                                        $('#rLabel').hide();
+                                        $('#sLabel').hide();
+                                        $('#angVelLabel').show();
+                                        $('#timeLabel').show();
+                                    }
+                                }
+                            });
+                        }
+                        //code to handle 'angular-velocity' value
+                        else if(angularVal == 'angular-velocity')   {
+                            //Show only the angular velocity div and hide the rest
+                            $('#angDispDiv').hide();
+                            $('#angAccDiv').hide();
+                            $('#angVelDiv').show();
+
+                            //Code to handle changing angular velocity calculation methods
+                            $('#velFormulae').change(function() {
+                                clearInputFields();
+                                $('#angularButtonAns').hide();
+                                //Storing the value of calculation methods
+                                var angVelVal = $('#velFormulae').val();
+                                console.log(angVelVal);
+
+                                //Hiding the angular velocity div if value is 'select'
+                                if(angVelVal == 'select')   {
+                                    $('#angVelocity').hide();
+                                    $('#angularButtonAns').hide();
+                                }
+                                else    {
+                                    //Show the angular velocity when it is any other value
+                                    $('#angVelocity').show();
+                                    $('#angularButtonAns').show();
+
+                                    //If the formula selected is angular displacement / time
+                                    if(angVelVal == 'thetat')   {
+                                        $('#vLabel').hide();
+                                        $('#rLabel2').hide();
+                                        $('#thetaLabel').show();
+                                        $('#tLabel2').show();
+                                    }
+                                    //If the formula selected is velocity / radius
+                                    else if(angVelVal == 'vr')  {
+                                        $('#thetaLabel').hide();
+                                        $('#tLabel2').hide();
+                                        $('#vLabel').show();
+                                        $('#rLabel2').show();
+                                    }
+                                }
+                            });
+                        }
+                        //Code to handle 'angular-acceleration' value
+                        else if(angularVal == 'angular-acceleration')   {
+                            //Only show angular acceleration div and hide the rest
+                            $('#angDispDiv').hide();
+                            $('#angVelDiv').hide();
+                            $('#angAccDiv').show();
+
+                            //Handling changing angular acceleration dropdown values
+                            $('#accFormulae').change(function() {
+                                clearInputFields();
+                                $('#angularButtonAns').hide();
+                                //Storing the angular acceleration calculation method values
+                                var angAccVal = $('#accFormulae').val();
+                                console.log(angAccVal);
+
+                                //Hide div component if value is 'select'
+                                if(angAccVal == 'select')   {
+                                    $('#angAcceleration').hide();
+                                    $('#angularButtonAns').hide();
+                                }
+                                else    {
+                                    //Show the div component if anything else
+                                    $('#angAcceleration').show();
+                                    $('#angularButtonAns').show();
+
+                                    //If the formula used is acceleration / radius
+                                    if(angAccVal == 'ar')   {
+                                        $('#angvelLabel2').hide();
+                                        $('#tLabel3').hide();
+                                        $('#aLabel').show();
+                                        $('#rLabel3').show();
+                                    }
+                                    //If the formula selected is angular velocity / time
+                                    else if(angAccVal == 'omegat')  {
+                                        $('#aLabel').hide();
+                                        $('#rLabel3').hide();
+                                        $('#angvelLabel2').show();
+                                        $('#tLabel3').show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            
+                //Event handling for clicking the submit button to calculate the final result
+                $('#angularSubmit').click(function()    {
+                    //Select the div with the given class that is visible
+                    var selectedDiv = $('div.sva:visible');
+                    //Find all the inputs within said div that are visible
+                    var inputs = selectedDiv.find('input[type=number]:visible');
+                    var data = {};
+                    //Storing the parent div id value in the data dictionary to be sent to backend
+                    data.selectedDiv = selectedDiv.attr('id');
+                    data.selectValue = selectedDiv.find('select').val();
+                    //Fetch each input value's value and store it in the data variable
+                    inputs.each(function()  {
+                        //Get the name of the input variable
+                        var name = $(this).attr('name');
+                        //Parse the data value entered
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "angular-api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#angularAns').text(response.result);
+                        },
+                        error: function(response)   {
+                            $('#angularAns').text(response.error);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

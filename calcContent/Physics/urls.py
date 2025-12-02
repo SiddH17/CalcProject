@@ -13,6 +13,7 @@ urlpatterns = [
     path('modern-physics/', views.modern_physics, name='modern-physics'),
     path('emi/', views.emi, name='emi'),
     path('wave-optics/', views.wave_optics, name='wave-optics'),
+    path('circular-motion/', views.circular_motion, name='circular-motion'),
     
     # API paths
     path('equations_of_motion_api/', views.equations_of_motion_api, name='equations_of_motion_api'),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('inductance/', views.inductance_api, name='inductance'),
     path('wavelength-frequency/', views.wavelength_frequency, name='wavelength-frequency'),
     path('rydberg-formula/', views.rydberg_formula, name='rydberg-formula'),
+    path('angular-api/', views.angular_api, name='angular-api'),
 ]

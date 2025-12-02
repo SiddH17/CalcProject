@@ -42,6 +42,10 @@ def emi(request):
 def wave_optics(request):
     return render(request, 'waveOptics.html')
 
+#Circular Motion page view
+def circular_motion(request):
+    return render(request, 'circmotion.html')
+
 # APIs
 #Kinematics API views
 def equations_of_motion_api(request):
@@ -567,6 +571,7 @@ def wavelength_frequency(request):
 
     return JsonResponse({'result': result})
 
+#Rydberg Formula API
 def rydberg_formula(request):
     r=1.1e7
     n1=float(request.GET.get('n1'))
@@ -579,3 +584,30 @@ def rydberg_formula(request):
 
     return JsonResponse({'result': result})
 
+#Angular Displacement, Velocity and Acceleration calculation API
+def angular_api(request):
+    #Get the required div value that is active
+    value_div = request.GET.get('selectedDiv')
+    #Get the dropdown formula value from frontend that has been selected
+    value_select = request.GET.get('selectValue')
+    result = None
+
+    if value_div == 'angDispDiv':
+        if value_select == 'sr':
+            result = int(request.GET.get('disp')) / int(request.GET.get('radius'))
+        elif value_select == 'wt':
+            result = int(request.GET.get('angularVelocity')) * int(request.GET.get('time'))
+    elif value_div == 'angVelDiv':
+        if value_select == 'thetat':
+            result = int(request.GET.get('theta')) / int(request.GET.get('time'))
+        elif value_select == 'vr':
+            result = int(request.GET.get('vel')) / int(request.GET.get('radius'))
+    elif value_div == 'angAccDiv':
+        if value_select == 'ar':
+            result = int(request.GET.get('acc')) / int(request.GET.get('radius'))
+        elif value_select == 'omegat':
+            result = int(request.GET.get('angularVelocity')) / request.GET.get('time')
+
+    print(result)
+
+    return JsonResponse({'result': result})
