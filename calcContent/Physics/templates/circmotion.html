@@ -118,6 +118,43 @@
             </div>
 
         </div>
+        <hr>
+
+        <!-- Banking of Roads -->
+        <div id="banking" class="container-fluid content">
+            <h2><u><b>Banking of Roads</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+
+            <!-- Dropdown for selecting value to be calculated -->
+            <select name="bankingDropdown" id="bankingDropdown">
+                <option value="select">--Select--</option>
+                <option value="max_velocity" id="maxVelocity">Maximum Velocity(v)</option>
+                <option value="fric_force" id="fricForce">Frictional Force(Fs)</option>
+                <option value="angle_of_banking" id="angleBanking">Angle of Banking</option>
+            </select>
+
+            <!-- Div to calculate the banking of roads for selected value to be calculated -->
+            <div id="bankingDiv" style="display: none;">
+                <h4>Calculate <span id="result_label_banking"></span></h4>
+
+                <label for="radius" id="radiusLabel">Radius(r):
+                    <input type="number" name="radius">
+                </label>
+                <label for="maxvel" id="maxVelocityLabel">Maximum Velocity(v):
+                    <input type="number" name="maxvel">
+                </label>
+                <label for="angle_banking" id="bankingAngleLabel">Angle of Banking:
+                    <input type="number" name="angle_banking">
+                </label>
+                <label for="mass" id="massLabel">Mass(m):
+                    <input type="number" name="mass">
+                </label>
+                <br><br>
+
+                <button type="submit" id="bankingSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="bankingAns"></p>
+            </div>
+        </div>
 
         <script>
             //Clear all the input fields
@@ -306,6 +343,62 @@
                         },
                         error: function(response)   {
                             $('#angularAns').text(response.error);
+                        }
+                    });
+                });
+            
+                $('#bankingDropdown').change(function() {
+                    clearInputFields();
+                    var dropdownValue = $('#bankingDropdown').val();
+
+                    if(dropdownValue == 'select')   {
+                        $('#bankingDiv').hide();
+                    }
+                    else    {
+                        $('#bankingDiv').show();
+                        $('#result_label_banking').text(dropdownValue);
+
+                        if(dropdownValue == 'max_velocity') {
+                            $('#radiusLabel').show();
+                            $('#bankingAngleLabel').show();
+                            $('#maxVelocityLabel').hide();
+                            $('#massLabel').hide();
+                        }
+                        else if(dropdownValue == 'fric_force')  {
+                            $('#radiusLabel').show();
+                            $('#maxVelocityLabel').show();
+                            $('#massLabel').show();
+                            $('#bankingAngleLabel').hide();
+                        }
+                        else if(dropdownValue == 'angle_of_banking')    {
+                            $('#radiusLabel').show();
+                            $('#maxVelocityLabel').show();
+                            $('#massLabel').hide();
+                            $('#bankingAngleLabel').hide();
+                        }
+                    }
+                });
+
+                $('#bankingSubmit').click(function()    {
+                    var inputs = $('#bankingDiv').find('input');
+                    var dropdownValue = $('#bankingDropdown').val();
+                    console.log(inputs);
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data.selectValue = dropdownValue;
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "banking-api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#bankingAns').text(response.result);
                         }
                     });
                 });

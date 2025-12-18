@@ -611,3 +611,28 @@ def angular_api(request):
     print(result)
 
     return JsonResponse({'result': result})
+
+#Banking of Roads API
+def banking_api(request):
+    valueSelect = request.GET.get('selectValue')
+    m = float(request.GET.get('mass'))
+    r = float(request.GET.get('radius'))
+    v = float(request.GET.get('maxvel'))
+    theta = float(request.GET.get('angle_banking'))
+    theta = math.radians(theta)
+    print(theta)
+    g = 9.8
+
+    result = None
+    
+    if valueSelect == 'max_velocity':
+        result = (r*g*math.tan(theta))**(1/2)
+    elif valueSelect == 'fric_force':
+        result = (m*(v)**2)/r
+    elif valueSelect == 'angle_of_banking':
+        result = (v)**2/(r*g)
+
+    print(result, "The result of the calculation")
+
+    return JsonResponse({'result': result})
+

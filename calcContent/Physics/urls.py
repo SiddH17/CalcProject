@@ -34,4 +34,5 @@ urlpatterns = [
     path('wavelength-frequency/', views.wavelength_frequency, name='wavelength-frequency'),
     path('rydberg-formula/', views.rydberg_formula, name='rydberg-formula'),
     path('angular-api/', views.angular_api, name='angular-api'),
+    path('banking-api/', views.banking_api, name='banking-api'),
 ]
