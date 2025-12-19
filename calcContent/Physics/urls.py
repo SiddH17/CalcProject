@@ -35,4 +35,6 @@ urlpatterns = [
     path('rydberg-formula/', views.rydberg_formula, name='rydberg-formula'),
     path('angular-api/', views.angular_api, name='angular-api'),
     path('banking-api/', views.banking_api, name='banking-api'),
+    path('vertical-circular-motion-api/', views.vertical_circular_motion_api, name='vertical-circular-motion-api'),
+    
 ]

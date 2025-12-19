@@ -636,3 +636,31 @@ def banking_api(request):
 
     return JsonResponse({'result': result})
 
+#Vertical Circular Motion
+def vertical_circular_motion_api(request):
+    valueSelect = request.GET.get('valueSelect')
+    posSelect = request.GET.get('posSelect')
+
+    v = float(request.GET.get('velocity-vertical'))
+    l = float(request.GET.get('length'))
+    g = 9.8
+    result = None
+
+    if valueSelect == 'vertical-velocity':
+        if posSelect == 'top':
+            result = (g*l)**(1/2)
+        elif posSelect == 'middle':
+            result = (3*g*l)**(1/2)
+        elif posSelect == 'bottom':
+            result = (5*g*l)**(1/2)
+    elif valueSelect == 'length':
+        if posSelect == 'top':
+            result = ((v)**2)/g
+        elif posSelect == 'middle':
+            result = ((v)**2)/(3*g)
+        elif posSelect == 'bottom':
+            result = ((v)**2)/(5*g)
+
+    return JsonResponse({'result': result})
+        
+

@@ -155,11 +155,51 @@
                 <p id="bankingAns"></p>
             </div>
         </div>
+        <hr>
+
+        <!-- Vertical Circular Motion -->
+        <div id="vcm" class="container-fluid content">
+            <h2><u><b>Vertical Circular Motion</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+
+            <select name="vcmDropdown" id="vcmDropdown">
+                <option value="select">--Select--</option>
+                <option value="vertical-velocity" id="vVelocity">Velocity(v)</option>
+                <option value="length" id="length">Length(l)</option>
+            </select>
+            <br>
+
+            <div id="position" style="display: none;">
+                <h4>Select position of particle:</h4>
+                <select name="posDropdown" id="posDropdown">
+                    <option value="select1">--Select--</option>
+                    <option value="top" id="verticalTop">Top Point</option>
+                    <option value="middle" id="verticalMiddle">Middle Point</option>
+                    <option value="bottom" id="verticalBottom">Bottom Point</option>
+                </select>
+            </div>
+
+            <div id="verticalDiv" style="display: none;">
+                <h4>Calculate <span id="vertical_result_label"></span>:</h4>
+
+                <label for="velocity-vertical" id="verticalVelocityLabel">Velocity(v):
+                    <input type="number" name="velocity-vertical">
+                </label>
+                <label for="length" id="lengthLabel">Length(l):
+                    <input type="number" name="length">
+                </label>
+                <br><br>
+
+                <button type="submit" id="verticalSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="verticalAns"></p>
+            </div>
+        </div>
 
         <script>
             //Clear all the input fields
             function clearInputFields() {
                 $('input').val('');
+                $('p').text('');
             }
 
             $(document).ready(function()    {
@@ -399,6 +439,61 @@
                         data: data,
                         success: function(response) {
                             $('#bankingAns').text(response.result);
+                        }
+                    });
+                });
+            
+                $('#vcmDropdown').change(function()    {
+                    clearInputFields();
+                    var dropdownValue = $('#vcmDropdown').val();
+
+                    if(dropdownValue == 'select')   {
+                        $('#position').hide();
+                    }
+                    else    {
+                        $('#position').show();
+
+                        if (dropdownValue == 'vertical-velocity') {
+                            $('#lengthLabel').show();
+                            $('#verticalVelocityLabel').hide();
+                        }
+                        else if (dropdownValue == 'length') {
+                            $('#verticalVelocityLabel').show();
+                            $('#lengthLabel').hide();
+                        }
+                    }
+                });
+
+                $('#posDropdown').change(function() {
+                    clearInputFields();
+                    var posValue = $('#posDropdown').val();
+
+                    if(posValue == 'select1')   {
+                        $('#verticalDiv').hide();
+                    }
+                    else    {
+                        $('#verticalDiv').show();
+                    }
+                })
+
+                $('#verticalSubmit').click(function()   {
+                    var inputs = $('#verticalDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data.valueSelect = $('#vcmDropdown').val();
+                    data.posSelect = $('#posDropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "vertical-circular-motion-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#verticalAns').text(response.result);
                         }
                     });
                 });
