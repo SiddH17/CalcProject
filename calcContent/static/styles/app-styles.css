@@ -103,6 +103,10 @@ hr  {
     margin-top: 80px;
 }
 
+.form-select    {
+    width: auto !important;
+}
+
 /* IDs */
 #signin:hover   {
     background-color: black;

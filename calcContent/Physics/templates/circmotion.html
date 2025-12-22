@@ -16,7 +16,7 @@
             <br>
 
             <!-- Dropdown for selecting option -->
-            <select name="angularDropdown" id="angularDropdown">
+            <select class="form-select" name="angularDropdown" id="angularDropdown">
                 <option value="select" class="select1">--Select--</option>
                 <option value="angular-displacement" id="angdisp">Angular Displacement</option>
                 <option value="angular-velocity" id="angvel">Angular Velocity</option>
@@ -58,7 +58,7 @@
             <!-- Div for when Angular Velocity is selected -->
             <div style="display: none;" class="sva" id="angVelDiv">
                 <!-- Angular Velocity Formula Selection Div -->
-                <select name="velFormulae" id="velFormulae">
+                <select class="form-select" name="velFormulae" id="velFormulae">
                     <option value="select" class="select1">--Select--</option>
                     <option value="thetat" id="thetat">Ang. Displacement/Time(t)</option>
                     <option value="vr" id="vr">Velocity(v)/Radius(r)</option>
@@ -86,7 +86,7 @@
 
             <!-- Div for when Angular Acceleration is selected -->
             <div style="display: none;" class="sva" id="angAccDiv">
-                <select name="accFormulae" id="accFormulae">
+                <select class="form-select" name="accFormulae" id="accFormulae">
                     <option value="select" class="select1">--Select--</option>
                     <option value="ar" id="ar">Acceleration(a)/Radius(r)</option>
                     <option value="omegat" id="omegat">Ang. Velocity/Time(t)</option>
@@ -124,9 +124,10 @@
         <div id="banking" class="container-fluid content">
             <h2><u><b>Banking of Roads</b></u></h2>
             <h4>Select a value to be calculated:</h4>
+            <br>
 
             <!-- Dropdown for selecting value to be calculated -->
-            <select name="bankingDropdown" id="bankingDropdown">
+            <select class="form-select" name="bankingDropdown" id="bankingDropdown">
                 <option value="select">--Select--</option>
                 <option value="max_velocity" id="maxVelocity">Maximum Velocity(v)</option>
                 <option value="fric_force" id="fricForce">Frictional Force(Fs)</option>
@@ -161,8 +162,9 @@
         <div id="vcm" class="container-fluid content">
             <h2><u><b>Vertical Circular Motion</b></u></h2>
             <h4>Select a value to be calculated:</h4>
+            <br>
 
-            <select name="vcmDropdown" id="vcmDropdown">
+            <select class="form-select" name="vcmDropdown" id="vcmDropdown">
                 <option value="select">--Select--</option>
                 <option value="vertical-velocity" id="vVelocity">Velocity(v)</option>
                 <option value="length" id="length">Length(l)</option>
@@ -171,7 +173,7 @@
 
             <div id="position" style="display: none;">
                 <h4>Select position of particle:</h4>
-                <select name="posDropdown" id="posDropdown">
+                <select class="form-select" name="posDropdown" id="posDropdown">
                     <option value="select1">--Select--</option>
                     <option value="top" id="verticalTop">Top Point</option>
                     <option value="middle" id="verticalMiddle">Middle Point</option>
@@ -446,6 +448,7 @@
                 $('#vcmDropdown').change(function()    {
                     clearInputFields();
                     var dropdownValue = $('#vcmDropdown').val();
+                    $('#vertical_result_label').text(dropdownValue);
 
                     if(dropdownValue == 'select')   {
                         $('#position').hide();

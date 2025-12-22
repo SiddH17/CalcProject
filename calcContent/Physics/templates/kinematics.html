@@ -16,7 +16,7 @@
                     <h2><u><b>Equations of Motion:</b></u></h2>
                     <h4>Select the value to be calculated</h4>
                     <!-- Selecting value to be found -->
-                    <select name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
+                    <select class="form-select" name="eqsmtn" id="eqsmtn" onchange="showMethods(this.value)">
                         <option value="Select" id="blank1">---Select---</option>
                         <option value="disp" id="disp">Displacement(s)</option>
                         <option value="time" id="time">Time(t)</option>
@@ -30,32 +30,32 @@
                     <h4 id="eqmtnid" style="display: none;">Select the method to be used for calculation</h4>
                     <div id="kinmethod1">
                         <!-- Displacement is selected -->
-                        <select name="dispbtn" id="dispbtn" style="display: none;" onchange="methodChange(this.value, 'disp')">
+                        <select class="form-select" name="dispbtn" id="dispbtn" style="display: none;" onchange="methodChange(this.value, 'disp')">
                             <option value="Select">---Select---</option>
                             <option value="second" id="dispsecond">s = ut + (1/2)a(t)^2</option>
                             <option value="third" id="dispthird">v^2 = u^2 + 2*a*s</option>
                         </select>
                         <!-- Time is selected -->
-                        <select name="timebtn" id="timebtn" style="display: none;" onchange="methodChange(this.value, 'time')">
+                        <select class="form-select" name="timebtn" id="timebtn" style="display: none;" onchange="methodChange(this.value, 'time')">
                             <option value="Select">---Select---</option>
                             <option value="first" id="timefirst">v = u + a*t</option>
                             <option value="second" id="timesecond">s = ut + (1/2)a(t)^2</option>
                         </select>
                         <!-- Initial Velocity is selected -->
-                        <select name="initvelbtn" id="initvelbtn" style="display: none;" onchange="methodChange(this.value, 'u')">
+                        <select class="form-select" name="initvelbtn" id="initvelbtn" style="display: none;" onchange="methodChange(this.value, 'u')">
                             <option value="Select">---Select---</option>
                             <option value="first" id="initvelfirst">v = u + a*t</option>
                             <option value="second" id="initvelsecond">s = ut + (1/2)a(t)^2</option>
                             <option value="third" id="initvelthird">v^2 = u^2 + 2*a*s</option>
                         </select>
                         <!-- Final Velocity is selected -->
-                        <select name="finvelbtn" id="finvelbtn" style="display: none;" onchange="methodChange(this.value, 'v')">
+                        <select class="form-select" name="finvelbtn" id="finvelbtn" style="display: none;" onchange="methodChange(this.value, 'v')">
                             <option value="Select">---Select---</option>
                             <option value="first" id="finvelfirst">v = u + a*t</option>
                             <option value="third" id="finvelthird">v^2 = u^2 + 2*a*s</option>
                         </select>
                         <!-- Acceleration is selected -->
-                        <select name="accbtn" id="accbtn" style="display: none;" onchange="methodChange(this.value, 'acc')">
+                        <select class="form-select" name="accbtn" id="accbtn" style="display: none;" onchange="methodChange(this.value, 'acc')">
                             <option value="Select">---Select---</option>
                             <option value="first" id="accfirst">v = u + a*t</option>
                             <option value="second" id="accsecond">s = ut + (1/2)a(t)^2</option>
@@ -265,7 +265,7 @@
                     <!-- projectile motion -->
                 <h2 id="prjmtn"><u><b>Projectile Motion</b></u></h2>
                 <h4>Select the value to be calculated</h4>
-                <select name="proj" id="proj" onchange="projMethods(this.value)">
+                <select class="form-select" name="proj" id="proj" onchange="projMethods(this.value)">
                     <option value="Select" id="blank2">---Select---</option>
                     <option value="range" id="range">Range(R)</option>
                     <option value="maxheight" id="maxheight">Maximum Height(H)</option>
@@ -281,28 +281,28 @@
                 <h4 id="projid" style="display: none;">Select method used for calculation</h4>
                 <div id="kinmethod2">
                     <!-- Range is selected -->
-                    <select name="rangebtn" id="rangebtn" style="display: none;" onchange="ProjChange(this.value, 'range')">
+                    <select class="form-select" name="rangebtn" id="rangebtn" style="display: none;" onchange="ProjChange(this.value, 'range')">
                         <option value="Select">---Select---</option>
                         <option value="third" id="rangethird">R = u^2(sin(2x))/g</option>
                     </select>
                     <!-- Maximum height is selected -->
-                    <select name="heightbtn" id="heightbtn" style="display: none;" onchange="ProjChange(this.value, 'maxheight')">
+                    <select class="form-select" name="heightbtn" id="heightbtn" style="display: none;" onchange="ProjChange(this.value, 'maxheight')">
                         <option value="Select">---Select---</option> 
                         <option value="second" id="heightsecond">H = (u^2)Sin^2(x)/(2*g)</option>
                     </select>
                     <!-- Time of Flight is selected -->
-                    <select name="tofbtn" id="tofbtn" style="display: none;" onchange="ProjChange(this.value, 'tof')">
+                    <select class="form-select" name="tofbtn" id="tofbtn" style="display: none;" onchange="ProjChange(this.value, 'tof')">
                         <option value="Select">---Select---</option>
                         <option value="first" id="toffirst">T = 2*u*sin(x)/g</option>
                     </select>
                     <!-- Horizontal and Vertical components of Velocity is selected -->
-                    <select name="horverbtn" id="horverbtn" style="display: none;" onchange="ProjChange(this.value, 'velcomps')">
+                    <select class="form-select" name="horverbtn" id="horverbtn" style="display: none;" onchange="ProjChange(this.value, 'velcomps')">
                         <option value="Select">---Select---</option>
                         <option value="fourth" id="horverfourth">Horizontal component(u*cos(x))</option>
                         <option value="fifth" id="horverfifth">Vertical component(u*sin(x))</option>
                     </select>
                     <!-- Angle of projection is selected -->
-                    <select name="projangbtn" id="projangbtn" style="display: none;" onchange="ProjChange(this.value, 'projang')">
+                    <select class="form-select" name="projangbtn" id="projangbtn" style="display: none;" onchange="ProjChange(this.value, 'projang')">
                         <option value="Select">---Select---</option>
                         <option value="first" id="projangfirst">T = 2*u*sin(x)/g</option>
                         <option value="second" id="projangsecond">H = (u^2)Sin^2(x)/(2*g)</option>
@@ -310,14 +310,14 @@
                         <option value="seventh" id="projangseventh">x = tan^-1(Uy/Ux)</option>
                     </select>
                     <!-- Initial Velocity is selected -->
-                    <select name="projvelbtn" id="projvelbtn" style="display: none;" onchange="ProjChange(this.value, 'projinitvel')">
+                    <select class="form-select" name="projvelbtn" id="projvelbtn" style="display: none;" onchange="ProjChange(this.value, 'projinitvel')">
                         <option value="Select">---Select---</option>
                         <option value="first" id="projvelfirst">T = 2*u*sin(x)/g</option>
                         <option value="second" id="projvelsecond">H = (u^2)Sin^2(x)/(2*g)</option>
                         <option value="third" id="projvelthird">R = u^2(sin(2x))/g</option>
                     </select>
                     <!-- Time of ascent and descent are selected -->
-                    <select name="tadbtn" id="tadbtn" style="display: none;" onchange="ProjChange(this.value, 'tad')">
+                    <select class="form-select" name="tadbtn" id="tadbtn" style="display: none;" onchange="ProjChange(this.value, 'tad')">
                         <option value="Select">---Select---</option>
                         <option value="eighth" id="tadeighth">T(a) = u*sin(x)/g</option>
                         <option value="ninth" id="tadeighth">T(a) = sqrt(2*h/g)</option>

@@ -15,7 +15,7 @@
             <h4>Select a value to be calculated:</h4>
             <br>
 
-            <select name="ohmDropdown" id="ohmDropdown">
+            <select class="form-select" class="form-select" name="ohmDropdown" id="ohmDropdown">
                 <option value="Select" id="blank1">--Select--</option>
                 <option value="voltage" id="v">Potential Difference/Voltage</option>
                 <option value="current" id="i">Current(I)</option>
@@ -49,7 +49,7 @@
             <h4>Select a value to be calculated:</h4>
             <br>
 
-            <select name="powerDropdown" id="powerDropdown">
+            <select class="form-select" name="powerDropdown" id="powerDropdown">
                 <option value="Select" id="blank2">--Select--</option>
                 <option value="power" id="p">Power(P)</option>
                 <option value="resistance" id="r2">Resistance(R)</option>
@@ -61,7 +61,7 @@
                 <h4>Select a formula to calculate power:</h4>
                 <br>
     
-                <select name="pformulae" id="pformulae">
+                <select class="form-select" name="pformulae" id="pformulae">
                     <option value="Select" id="blank3">--Select--</option>
                     <option value="f1" id="vi">P = V * I</option>
                     <option value="f2" id="ir">P = I^2 * R</option>
@@ -74,7 +74,7 @@
                 <h4>Select a formula to calculate resistance:</h4>
                 <br>
     
-                <select name="rformulae" id="rformulae">
+                <select class="form-select" name="rformulae" id="rformulae">
                     <option value="Select" id="blank4">--Select--</option>
                     <option value="f4" id="ir">R = I^2 / P</option>
                     <option value="f5" id="vr">R = V^2 * P</option>
@@ -111,7 +111,7 @@
         <h4>Select a value to be calculated:</h4>
         <br>
 
-        <select name="resistivity" id="resDropdown">
+        <select class="form-select" name="resistivity" id="resDropdown">
             <option value="Select" id="blank5">--Select--</option>
             <option value="resistivity" id="res">Resistivity</option>
             <option value="resistance" id="rest">Resistance(R)</option>
@@ -149,7 +149,7 @@
             <h4>Select a value to be calculated:</h4>
             <br>
 
-            <select name="heatandenergy" id="heatenergy">
+            <select class="form-select" name="heatandenergy" id="heatenergy">
                 <option value="Select" id="blank6">--Select--</option>
                 <option value="energy" id="energy">Energy</option>
                 <option value="heat" id="heat">Heat</option>
@@ -159,7 +159,7 @@
             <div id="heatDropdown" style="display: none;">
                 <h4>Select a method to calculate heat:</h4>
 
-                <select name="heatDropdown" id="heatSelect">
+                <select class="form-select" name="heatDropdown" id="heatSelect">
                     <option value="Select" id="blank7">--Select--</option>
                     <option value="heat1" id="firstForm">H = (V^2*t)/R</option>
                     <option value="heat2" id="secondForm">H = I^2*R*T</option>
