@@ -26,6 +26,7 @@ def quadratics(request):
     return render(request, 'quadratics.html')
 
 # APIs
+#API call for different trigonometric identities
 def trigonometry_api(request):
     valueSelected = request.GET.get('select_value')
     a = float(request.GET.get('angle1'))
@@ -54,6 +55,7 @@ def trigonometry_api(request):
     }
     return JsonResponse(context)
 
+#API call for finding eccentricity in ellipse
 def ellipse_api(request):
     a = float(request.GET.get('ecc2a'))
     b = float(request.GET.get('ecc2b'))
@@ -71,6 +73,7 @@ def ellipse_api(request):
 
     return JsonResponse(context)
 
+#API call for finding eccentricity in hyperbola
 def hyperbola_api(request):
     a = float(request.GET.get('ecc2a'))
     b = float(request.GET.get('ecc2b'))
@@ -84,6 +87,7 @@ def hyperbola_api(request):
 
     return JsonResponse(context)
 
+#API call for mean/median/mode part of statistics
 def statistics_api(request):
     valueSelected = request.GET.get('select_value')
     n = int(request.GET.get('obs'))
@@ -115,6 +119,7 @@ def statistics_api(request):
 
     return JsonResponse(context)
 
+#API call for Quadratic roots
 def quadratics_api(request):
     #Defining values obtained from frontend
     a = int(request.GET.get('a_value'))
@@ -144,4 +149,36 @@ def quadratics_api(request):
     }
 
     return JsonResponse(context)
+
+#API call for measures of spread in statistics
+def spread_api(request):
+    selectedValue = request.GET.get('selectedValue')
+    numbers = request.GET.get('obsLabel', '').strip()
+    numbers = [float(num) for num in numbers.split()]
+    print(numbers)
+
+    result = None
+    print(selectedValue)
+
+    if selectedValue == 'coefficient':
+        maximum = max(numbers)
+        minimum = min(numbers)
+        result = (maximum-minimum)/(maximum+minimum)
+    else:
+        n = int(request.GET.get('numberLabel'))
+        mean = (sum(numbers))/n
+        variance = ((sum(x*x for x in numbers) / n)) - (mean)**2
+        sd = (variance)**(1/2)
+        print("The variance, ", variance, " and the SD, ", sd)
+
+        if selectedValue == 'variance':
+            result = variance
+        elif selectedValue == 'sd':
+            result = sd
+        elif selectedValue == 'coeffvar':
+            result = (sd/mean)*100
+    
+    return JsonResponse({'result': result})
+        
+
 

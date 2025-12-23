@@ -16,4 +16,5 @@ urlpatterns = [
     path('hyperbola_api/', views.hyperbola_api, name='hyperbola_api'),
     path('statistics_api/', views.statistics_api, name='statistics_api'),
     path('quadratics_api/', views.quadratics_api, name='quadratics_api'),
+    path('spread_api', views.spread_api, name='spread_api'),
 ]

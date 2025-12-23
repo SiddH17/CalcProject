@@ -51,12 +51,47 @@
 
             <p id="mmmans"></p>
         </div>
+        <hr>
+
+        <!-- To calculate measures of spread -->
+        <div class="container-fluid content" id="spread">
+            <h2><u><b>Measures of Spread:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <!-- Dropdown to select the spread value -->
+            <select name="spreadDropdown" id="spreadDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="coefficient" id="coeff">Co-efficient of Range</option>
+                <option value="variance" id="variance">Variance</option>
+                <option value="sd" id="sd">Standard Deviation</option>
+                <option value="coeffvar" id="coeffvar">Co-efficient of Variance</option>
+            </select>
+
+            <!-- Div to calculate the spread value chosen -->
+            <div id="spreadDiv" style="display: none;">
+                <h4>Calculate <span id="spread_result_label"></span>:</h4>
+                <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
+                <div>
+                    <label for="numberLabel" id="numberLabel">No. of observations(n):
+                        <input type="number" name="numberLabel">
+                    </label>
+                    <br>
+                    <label for="obsLabel" id="obsLabel">Observations/Numbers:
+                        <input type="text" name="obsLabel">
+                    </label>
+                    <br>
+                </div>
+
+                <button type="submit" id="spreadSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="spreadAns"></p>
+            </div>
+        </div>
 
         <script>
                 function clearInputFields() {
-                    $('#obsinput input').val('');
-                    $('#numsinput input').val(''); 
-                    $('#mmmans').text('');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                    $('input').val('');
+                    $('p').text('');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                 }
 
             $(document).ready(function()    {
@@ -86,6 +121,7 @@
                     }
                 })
 
+                //When clicking on the button to submit final result for mean/median/mode
                 mememoSubmit.click(function()   {
                     var selectValue = selectElement.val();
                     console.log("The selected option, ",selectValue);
@@ -116,6 +152,52 @@
                         }
                     })
                 })
+            
+                //On changing the dropdown values
+                $('#spreadDropdown').change(function()  {
+                    clearInputFields();
+                    var dropdownValue = $('#spreadDropdown').val();
+                    $('#spread_result_label').text(dropdownValue);
+
+                    if(dropdownValue == 'select')   {
+                        $('#spreadDiv').hide();
+                    }
+                    else    {
+                        $('#spreadDiv').show();
+                        $('#obsLabel').show();
+
+                        if(dropdownValue == 'coefficient')  {
+                            $('#numberLabel').hide();
+                        }
+                        else    {
+                            $('#numberLabel').show();
+                        }
+                    }
+                });
+
+                //When user clicks on the button to calculate the final result
+                $('#spreadSubmit').click(function() {
+                    var numInput = $('#spreadDiv').find('input[type=number]');
+                    var textInput = $('#spreadDiv').find('input[type=text]');
+                    console.log(numInput, textInput);
+                    var data = {};
+
+                    if(numInput.val())    {
+                        data.numberLabel = numInput.val();
+                    }
+                    data.obsLabel = textInput.val();
+                    data.selectedValue = $('#spreadDropdown').val();
+                    console.log(data);
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "spread_api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#spreadAns').text(response.result);
+                        }
+                    });
+                });
             });
         </script>
     {% endblock content %}
