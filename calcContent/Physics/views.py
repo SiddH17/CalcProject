@@ -636,7 +636,7 @@ def banking_api(request):
 
     return JsonResponse({'result': result})
 
-#Vertical Circular Motion
+#Vertical Circular Motion API
 def vertical_circular_motion_api(request):
     valueSelect = request.GET.get('valueSelect')
     posSelect = request.GET.get('posSelect')
@@ -663,4 +663,19 @@ def vertical_circular_motion_api(request):
 
     return JsonResponse({'result': result})
         
+#Snell's Law API
+def snells_law_api(request):
+    dropdown_value = request.GET.get('snell_value')
+    formula_value = request.GET.get('snell_formula')
+
+    v1 = float(request.GET.get('v1Value'))
+    v2 = float(request.GET.get('v2Value'))
+    n1 = float(request.GET.get('n1Value'))
+    n2 = float(request.GET.get('n2Value'))
+    inc = float(request.GET.get('aoiValue'))
+    ref = float(request.GET.get('aorValue'))
+
+    result = None
+    
+
 

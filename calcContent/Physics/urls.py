@@ -36,5 +36,5 @@ urlpatterns = [
     path('angular-api/', views.angular_api, name='angular-api'),
     path('banking-api/', views.banking_api, name='banking-api'),
     path('vertical-circular-motion-api/', views.vertical_circular_motion_api, name='vertical-circular-motion-api'),
-    
+    path('snells-law-api/', views.snells_law_api, name='snells-law-api'),
 ]

@@ -392,6 +392,10 @@
                 $('#bankingDropdown').change(function() {
                     clearInputFields();
                     var dropdownValue = $('#bankingDropdown').val();
+                    $('#radiusLabel').show();
+                    $('#bankingAngleLabel').show();
+                    $('#maxVelocityLabel').show();
+                    $('#massLabel').show();
 
                     if(dropdownValue == 'select')   {
                         $('#bankingDiv').hide();
@@ -401,20 +405,13 @@
                         $('#result_label_banking').text(dropdownValue);
 
                         if(dropdownValue == 'max_velocity') {
-                            $('#radiusLabel').show();
-                            $('#bankingAngleLabel').show();
                             $('#maxVelocityLabel').hide();
                             $('#massLabel').hide();
                         }
                         else if(dropdownValue == 'fric_force')  {
-                            $('#radiusLabel').show();
-                            $('#maxVelocityLabel').show();
-                            $('#massLabel').show();
                             $('#bankingAngleLabel').hide();
                         }
                         else if(dropdownValue == 'angle_of_banking')    {
-                            $('#radiusLabel').show();
-                            $('#maxVelocityLabel').show();
                             $('#massLabel').hide();
                             $('#bankingAngleLabel').hide();
                         }

@@ -111,20 +111,68 @@
                 <button type="submit" id="lenssubmit" style="display: none;" class="btn">Calculate Result</button>
                 <br>
                 <p id="lensans"></p>
-             </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container-fluid content" id="snell">
+            <h2><u><b>Snell's Law</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <select name="snellDropdown" class="form-select" id="snellDropdown">
+                <option value="select">--Select--</option>
+                <option value="n1" id="firstn">First Medium Refractive Index(n1)</option>
+                <option value="n2" id="secondn">Second Medium Refractive Index(n2)</option>
+                <option value="incidence" id="aoi">Angle of Incidence(i)</option>
+                <option value="refraction" id="aor">Angle of Refraction(r)</option>
+                <option value="v1" id="firstv">First Medium Speed of Light(v1)</option>
+                <option value="v2" id="secondv">Second Medium Speed of Light(v2)</option>
+            </select>
+            <br>
+
+            <div id="snellFormulaDiv" style="display: none;">
+                <h4>Select a formula to calculate <span id="dropdown_value"></span>:</h4>
+                <select name="snellFormula" id="snellFormula" class="form-select">
+                    <option value="select1">--Select--</option>
+                    <option value="refractive" id="refractiveindex">n1*sin(i) = n2*sin(r)</option>
+                    <option value="velocity" id="speedoflight">v1/v2 = n1/n2</option>
+                </select>
+            </div>
+            <br>
+
+            <div id="snellDiv" style="display: none;">
+                <h4>Calculate <span id="snell_result_label"></span>:</h4>
+
+                <label for="n1Value" id="n1Label">First Medium Refractive Index:
+                    <input type="number" name="n1Value">
+                </label>
+                <label for="n2Value" id="n2Label">Second Medium Refractive Index:
+                    <input type="number" name="n2Value">
+                </label>
+                <label for="angleofincidence" id="aoiLabel">Angle of Incidence:
+                    <input type="number" name="angleofincidence">
+                </label>
+                <label for="angleofrefraction" id="aorLabel">Angle of Refraction:
+                    <input type="number" name="angleofrefraction">
+                </label>
+                <label for="v1Value" id="v1Label">First Medium Speed of Light (in terms of 10^8 power):
+                    <input type="number" name="v1Value">
+                </label>
+                <label for="v2Value" id="v2Label">Second Medium Speed of Light (in terms of 10^8 power):
+                    <input type="number" name="v2Value">
+                </label>
+                <br><br>
+
+                <button type="submit" id="snellSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="snellAns"></p>
+            </div>
         </div>
 
         <script>
             function clearInputFields() {
-                $('.fl input').val('');
-                $('.imgdist input').val('');
-                $('.objdist input').val('');
-                $('#mirrorans').text('');
-
-                $('.lfl input').val('');
-                $('.lensimgdist input').val('');
-                $('.lensobjdist input').val('');
-                $('#lensans').text('');
+                $('input').val('');
+                $('p').text('');
             }
             
             // Mirror equation jQuery script
@@ -386,6 +434,142 @@
                     })
                 })
             })
+        
+            //jQuery for the rest of the ray optics topics
+            $(document).ready(function()    {
+                clearInputFields();
+
+                //For Snell's law, when dropdown value is changed
+                $('#snellDropdown').change(function()   {
+                    clearInputFields();
+                    var snellValue = $('#snellDropdown').val();
+                    $('#snell_result_label').text(snellValue);
+                    $('#dropdown_value').text(snellValue);
+
+                    $('#v1Label').show();
+                    $('#v2Label').show();
+                    $('#n1Label').show();
+                    $('#n2Label').show();
+                    $('#aoiLabel').show();
+                    $('#aorLabel').show();
+
+                    if(snellValue == 'select')  {
+                        $('#snellFormulaDiv').hide();
+                        $('#snellDiv').hide();
+                    }
+                    else if(snellValue == 'n1')    {
+                        $('#snellFormulaDiv').show();
+
+                        $('#snellFormula').change(function()    {
+                            clearInputFields();
+                            var snellFormulaValue = $('#snellFormula').val();
+                            console.log(snellFormulaValue);
+
+                            $('#n1Label').hide();
+                            $('#v1Label').show();
+                            $('#v2Label').show();
+                            $('#n2Label').show();
+                            $('#aoiLabel').show();
+                            $('#aorLabel').show();
+
+                            if (snellFormulaValue == 'select1') {
+                                $('#snellDiv').hide();
+                            }
+                            else {
+                                $('#snellDiv').show();
+
+                                if (snellFormulaValue == 'refractive') {
+                                    $('#v1Label').hide();
+                                    $('#v2Label').hide();
+                                }
+                                else if (snellFormulaValue == 'velocity') {
+                                    $('#aoiLabel').hide();
+                                    $('#aorLabel').hide();
+                                }
+                            }
+                        });
+                    }
+                    else if (snellValue == 'n2') {
+                        $('#snellFormulaDiv').show();
+
+                        $('#snellFormula').change(function () {
+                            clearInputFields();
+                            var snellFormulaValue = $('#snellFormula').val();
+                            console.log(snellFormulaValue);
+
+                            $('#n2Label').hide();
+                            $('#v1Label').show();
+                            $('#v2Label').show();
+                            $('#n1Label').show();
+                            $('#aoiLabel').show();
+                            $('#aorLabel').show();
+
+                            if (snellFormulaValue == 'select1') {
+                                $('#snellDiv').hide();
+                            }
+                            else {
+                                $('#snellDiv').show();
+                                $('#n2Label').hide();
+
+                                if (snellFormulaValue == 'refractive') {
+                                    $('#v1Label').hide();
+                                    $('#v2Label').hide();
+                                }
+                                else if (snellFormulaValue == 'velocity') {
+                                    $('#aoiLabel').hide();
+                                    $('#aorLabel').hide();
+                                }
+                            }
+                        });
+                    }
+                    else    {
+                        $('#snellDiv').show();
+
+                        if(snellValue == 'v1')  {
+                            $('#v1Label').hide();
+                            $('#aoiLabel').hide();
+                            $('#aorLabel').hide();
+                        }
+                        else if(snellValue == 'v2') {
+                            $('#v1Label').hide();
+                            $('#aoiLabel').hide();
+                            $('#aorLabel').hide();
+                        }
+                        else if(snellValue == 'incidence')  {
+                            $('#aoiLabel').hide();
+                            $('#v1Label').hide();
+                            $('#v2Label').hide();
+                        }
+                        else if(snellValue == 'refraction') {
+                            $('#aorLabel').hide();
+                            $('#v1Label').hide();
+                            $('#v2Label').hide();
+                        }
+                    }
+                });
+
+                $('#snellSubmit').click(function()  {
+                    var inputs = $('#snellDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data.snell_dropdown = $('#snellDropdown').val();
+                    data.snell_formula = $('#snellFormula').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "snells-law-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#snellAns').text(response.result);
+                        }
+                    });
+                });
+            });
         </script>
     {% endblock content %}
 </body>
