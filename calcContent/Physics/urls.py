@@ -14,6 +14,7 @@ urlpatterns = [
     path('emi/', views.emi, name='emi'),
     path('wave-optics/', views.wave_optics, name='wave-optics'),
     path('circular-motion/', views.circular_motion, name='circular-motion'),
+    path('gravitation/', views.gravitation, name='gravitation'),
     
     # API paths
     path('equations_of_motion_api/', views.equations_of_motion_api, name='equations_of_motion_api'),
@@ -37,4 +38,5 @@ urlpatterns = [
     path('banking-api/', views.banking_api, name='banking-api'),
     path('vertical-circular-motion-api/', views.vertical_circular_motion_api, name='vertical-circular-motion-api'),
     path('snells-law-api/', views.snells_law_api, name='snells-law-api'),
+    path('newton-gravitation/', views.newton_gravitation, name='newton-gravitation'),
 ]

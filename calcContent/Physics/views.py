@@ -46,6 +46,9 @@ def wave_optics(request):
 def circular_motion(request):
     return render(request, 'circmotion.html')
 
+def gravitation(request):
+    return render(request, 'gravitation.html')
+
 # APIs
 #Kinematics API views
 def equations_of_motion_api(request):
@@ -677,5 +680,25 @@ def snells_law_api(request):
 
     result = None
     
+def newton_gravitation(request):
+    valueSelected = request.GET.get('selected_value')
+    f = float(request.GET.get('gravitationForce'))
+    m1 = float(request.GET.get('firstMass'))
+    m2 = float(request.GET.get('secondMass'))
+    r = float(request.GET.get('objDistance'))
+
+    g = 6.67 * (10)**-11
+    result = None
+
+    if valueSelected == 'force':
+        result = (g*m1*m2)/(r)**2
+    elif valueSelected == 'first-mass':
+        result = (f*(r)**2)/(g*m2)
+    elif valueSelected == 'second-mass':
+        result = (f*(r)**2)/(g*m1)
+    elif valueSelected == 'distance':
+        result = ((g*m1*m2)/f)**(1/2)
+
+    return JsonResponse({'result': result})
 
 
