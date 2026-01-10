@@ -39,4 +39,5 @@ urlpatterns = [
     path('vertical-circular-motion-api/', views.vertical_circular_motion_api, name='vertical-circular-motion-api'),
     path('snells-law-api/', views.snells_law_api, name='snells-law-api'),
     path('newton-gravitation/', views.newton_gravitation, name='newton-gravitation'),
+    path('gravitational-field-api/', views.gravitational_field_api, name='gravitational-field-api'),
 ]

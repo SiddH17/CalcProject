@@ -46,6 +46,50 @@
                 <p id="gravitationAns"></p>
             </div>
         </div>
+        <hr>
+
+        <div id="gfield" class="container-fluid content">
+            <h2>Gravitational Field in different shapes:</h2>
+
+            <h4>Select a shape to find gravitational field in:</h4>
+            <select id="gfieldDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="quarter-ring" id="qring">Quarter Ring</option>
+                <option value="semi-circular-ring" id="sring">Semi-Circular Ring</option>
+                <option value="hollow-solid-sphere" id="hssphere">Hollow/Solid Sphere (External)</option>
+            </select>
+            <br>
+
+            <div id="gfieldDiv" style="display: none;">
+                <h4>Calculate gravitational field in <span class="gfield_result_label"></span>:</h4>
+                <br>
+
+                <h4 style="display: none;">Select which variable you would like to use:</h4>
+                <select name="variableDropdown" id="variableDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="linear-density" id="linDensity">Linear Density</option>
+                    <option value="mass-length" id="massLength">Mass & Length</option>
+                </select>
+                <br>
+
+                <label for="g-mass" id="gMassLabel">Mass(M):
+                    <input type="number" name="g-mass">
+                </label>
+                <label for="g-radius" id="gRadiusLabel">Radius(r):
+                    <input type="number" name="g-radius">
+                </label>
+                <label for="g-length" id="gLengthLabel">Length(l):
+                    <input type="number" name="g-length">
+                </label>
+                <label for="g-linear-density" id="gLinDensityLabel">Linear Density:
+                    <input type="number" name="g-linear-density">
+                </label>
+                <br><br>
+
+                <button type="submit" id="gfieldSubmit" class="btn btn-primary">Calculate Result:</button>
+                <p id="gfieldAns"></p>
+            </div>
+        </div>
 
         <script>
             function clearInputFields() {
@@ -54,6 +98,7 @@
             }
 
             $(document).ready(function()    {
+                // Change function logic for Newton's law of gravitation
                 $('#gravitationDropdown').change(function()  {
                     clearInputFields();
                     var gravitationValue = $('#gravitationDropdown').val();
@@ -83,6 +128,7 @@
                     }
                 });
 
+                //Submit button function logic for Newton's law of gravitation
                 $('#gravitationSubmit').click(function()    {
                     var inputs = $('#gravitationDiv').find('input');
                     var data = {};
@@ -100,6 +146,71 @@
                         'data': data,
                         'success': function(response)   {
                             $('#gravitationAns').text(response.result);
+                        }
+                    });
+                });
+            
+                $('#gfieldDropdown').change(function()  {
+                    var gfieldVal = $('#gfieldDropdown').val();
+                    clearInputFields();
+                    $('.gfield_result_label').text(gfieldVal);
+                    $('#variableDropdown').val('select');
+
+                    if(gfieldVal == 'select')   {
+                        $('gfieldDiv').hide();
+                    }
+                    else    {
+                        $('#gfieldDiv').show();
+                        $('#variableDropdown').show();
+                        $('#gMassLabel').show();
+                        $('#gLengthLabel').show();
+                        $('#gRadiusLabel').show();
+                        $('#gLinDensityLabel').show();
+
+                        if(gfieldVal == 'quarter-ring' || gfieldVal == 'semi-circular-ring')    {
+                            $('#variableDropdown').change(function()    {
+                                var gVariableValue = $('#variableDropdown').val();
+                                $('#gMassLabel').show();
+                                $('#gLengthLabel').show();
+                                $('#gRadiusLabel').show();
+                                $('#gLinDensityLabel').show();
+                                
+                                if (gVariableValue == 'linear-density') {
+                                    $('#gMassLabel').hide();
+                                    $('#gLengthLabel').hide();
+                                }
+                                else if (gVariableValue == 'mass-length') {
+                                    $('#gLinDensityLabel').hide();
+                                }
+                            });
+                        }
+                        else if(gfieldVal == 'hollow-solid-sphere')    {
+                            $('#gLengthLabel').hide();
+                            $('#gLinDensityLabel').hide();
+                            $('#variableDropdown').hide();
+                        }
+                    }
+                });
+
+                //Submit button function logic for Gravitational field in different objects
+                $('#gfieldSubmit').click(function() {
+                    var inputs = $('#gfieldDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['gfield_selected_value'] = $('#gfieldDropdown').val();
+                    data['variable_value'] = $('#variableDropdown').val();
+                
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "gravitational-field-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#gfieldAns').text(response.result);
                         }
                     });
                 });

@@ -679,7 +679,8 @@ def snells_law_api(request):
     ref = float(request.GET.get('aorValue'))
 
     result = None
-    
+
+#Newton's Law of Gravitation API    
 def newton_gravitation(request):
     valueSelected = request.GET.get('selected_value')
     f = float(request.GET.get('gravitationForce'))
@@ -701,4 +702,33 @@ def newton_gravitation(request):
 
     return JsonResponse({'result': result})
 
+#Gravitational Field in objects API
+def gravitational_field_api(request):
+    variable_val = request.GET.get('variable_value')
+    select_value = request.GET.get('gfield_selected_value')
+
+    m = float(request.GET.get('g-mass'))
+    l = float(request.GET.get('g-length'))
+    r = float(request.GET.get('g-radius'))
+    linden = float(request.GET.get('g-linear-density'))
+
+    g = 6.67*(10)**-11
+    result = None
+
+    if select_value == 'quarter-ring':
+        if variable_val == 'linear-density':
+            result = (g*linden)/r
+        elif variable_val == 'mass-length':
+            result = (g*m)/(l*r)
+    elif select_value == 'semi-circular-ring':
+        if variable_val == 'linear-density':
+            result = 2*((g*linden)/r)
+        elif variable_val == 'mass-length':
+            result = 2*((g*m)(l*r))
+    elif select_value == 'hollow-solid-sphere':
+        result = (g*m)/(r**2)
+
+    print(result)
+
+    return JsonResponse({'result': result})
 
