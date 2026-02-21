@@ -131,6 +131,7 @@ def equations_of_motion_api(request):
         }
         return JsonResponse(context)
 
+#Projectile Motion API
 def proj_motion_api(request):
     if request.method == 'GET':
         result1 = None
@@ -241,6 +242,7 @@ def electrostatics_api(request):
     }
     return JsonResponse(context)
 
+#Mirror Equation API
 def mirror_api(request):
     f = float(request.GET.get('fl'))
     v = float(request.GET.get('imgdist'))
@@ -278,6 +280,7 @@ def mirror_api(request):
     }
     return JsonResponse(context)
 
+#Lens Equation API
 def lens_api(request):
     f = float(request.GET.get('lfl'))
     v = float(request.GET.get('lensimgdist'))
@@ -344,6 +347,7 @@ def ohms_law_api(request):
 
     return JsonResponse(context)
 
+#Power API
 def power_api(request):
     valueSelected = request.GET.get('select_value')
     rSelect = request.GET.get('resistance_select')
@@ -378,6 +382,7 @@ def power_api(request):
 
     return JsonResponse(context)
 
+#Resistivity API
 def resistivity_api(request):
     valueSelected = request.GET.get('select_value')
 
@@ -407,6 +412,7 @@ def resistivity_api(request):
 
     return JsonResponse(context)
 
+#Electrical heat and energy API
 def heat_and_energy_api(request):
     valueSelected = request.GET.get('select_value')
     heatValue = request.GET.get('heat_select')
@@ -476,6 +482,7 @@ def debroglie_wavelength(request):
 
     return JsonResponse({'result': result})
 
+#eV to Joule conversion API
 def ev_joule_conversion(request):
     selectedValue = request.GET.get('value_select')
 
@@ -494,6 +501,7 @@ def ev_joule_conversion(request):
 
     return JsonResponse({'result': result})
 
+#Bohr's Model API
 def bohr_model(request):
     selectedValue = request.GET.get('value_select')
 
@@ -512,6 +520,7 @@ def bohr_model(request):
 
     return JsonResponse({'result': result})
 
+#Binding Energy and Mass Defect API
 def be_md(request):
     valueSelected = request.GET.get('value_select')
 
@@ -702,7 +711,7 @@ def newton_gravitation(request):
 
     return JsonResponse({'result': result})
 
-#Gravitational Field in objects API
+#Gravitational Field in different objects API
 def gravitational_field_api(request):
     variable_val = request.GET.get('variable_value')
     select_value = request.GET.get('gfield_selected_value')
@@ -731,4 +740,25 @@ def gravitational_field_api(request):
     print(result)
 
     return JsonResponse({'result': result})
+
+#Gravitational Potential in different objects API
+def gravitational_potential_api(request):
+    selected_value = request.GET.get('select_value')
+    selected_side = request.GET.get('side_select')
+
+    m = float(request.GET.get('mass'))
+    r = float(request.GET.get('distance'))
+    x = float(request.GET.get('radius'))
+    result = None
+    g = 6.67*(10)**-11
+
+    if selected_value != 'solid-sphere' and selected_side != 'internal':
+        result = -((g*m)/r)
+    else:
+        result = -((g*m)/r)*(3*((r)**2)-((x)**2))
+
+    print(result)
+
+    return JsonResponse({'result': result})
+
 

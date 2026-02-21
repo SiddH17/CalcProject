@@ -48,8 +48,9 @@
         </div>
         <hr>
 
+        <!-- Gravitational field in different shapes -->
         <div id="gfield" class="container-fluid content">
-            <h2>Gravitational Field in different shapes:</h2>
+            <h2><u><b>Gravitational Field in different shapes:</b></u></h2>
 
             <h4>Select a shape to find gravitational field in:</h4>
             <select id="gfieldDropdown" class="form-select">
@@ -88,6 +89,49 @@
 
                 <button type="submit" id="gfieldSubmit" class="btn btn-primary">Calculate Result:</button>
                 <p id="gfieldAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Gravitational Potential in different shapes -->
+        <div id="gpotential" class="container-fluid content">
+            <h2>Gravitational Potential in different shapes:</h2>
+
+            <h4>Select a shape:</h4>
+            <select name="gpotdropdown" id="gpotdropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="ring" id="gpotring">Ring</option>
+                <option value="hollow-sphere" id="gpothollowsphere">Hollow Sphere</option>
+                <option value="solid-sphere" id="gpotsolidsphere">Solid Sphere</option>
+            </select>
+            <br><br>
+
+            <div id="gpotside" style="display: none;">
+                <h4>Select a surface of the solid sphere:</h4>
+                <select name="gpotintext" id="gpotintext" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="internal" id="gpotinternal">Internal</option>
+                    <option value="external" id="gpotexternal">External</option>
+                </select>
+            </div>
+
+            <div id="gpotdiv" style="display: none;">
+                <h4><u><b>Calculate <span id="gpot_result_label"></span>:</b></u></h4>
+                <br>
+
+                <label for="mass" id="gpotmasslabel">Mass(M):
+                    <input type="number" name="mass">
+                </label>
+                <label for="distance" id="gpotdistlabel">Distance(R):
+                    <input type="number" name="distance">
+                </label>
+                <label for="radius" id="gpotradlabel">Radius of Sphere(X):
+                    <input type="number" name="radius">
+                </label>
+                <br><br>
+
+                <button type="submit" id="gpotsubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="gpotans"></p>
             </div>
         </div>
 
@@ -150,6 +194,7 @@
                     });
                 });
             
+                //Gravitational Field change function logic for different objects
                 $('#gfieldDropdown').change(function()  {
                     var gfieldVal = $('#gfieldDropdown').val();
                     clearInputFields();
@@ -211,6 +256,64 @@
                         'data': data,
                         'success': function(response)   {
                             $('#gfieldAns').text(response.result);
+                        }
+                    });
+                });
+            
+                //Change function logic in Gravitational Potential in different objects
+                $('#gpotdropdown').change(function()    {
+                    var gpotvalue = $('#gpotdropdown').val();
+                    clearInputFields();
+                    $('#gpot_result_label').text(gpotvalue);
+
+                    if(gpotvalue == 'select')   {
+                        clearInputFields();
+                        $('#gpotdiv').hide();
+                    }
+                    else    {
+                        $('#gpotside').hide();
+                        $('#gpotdiv').show();
+                        $('#gpotmasslabel').show();
+                        $('#gpotradlabel').show();
+                        $('#gpotdistlabel').show();
+                        var gpotsidevalue = $('#gpotintext').val();
+
+                        if(gpotvalue == 'solid-sphere') {
+                            $('#gpotside').show();
+
+                            if(gpotsidevalue == 'external') {
+                                $('#gpotradlabel').hide();
+                            }
+                        }
+
+                        while(gpotvalue != 'solid-sphere' && gpotsidevalue != 'internal')   {
+                            console.log("Successfully reached the while loop");
+                            $('#gpotradlabel').hide();
+                            break;
+                        }
+                    }
+                });
+
+                //Submit button function for Gravitational Potential in different objects
+                $('#gpotsubmit').click(function()   {
+                    var inputs = $('#gpotdiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    })
+                    console.log(data, "The data that needs to be checked");
+                    data['select_value'] = $('#gpotdropdown').val();
+                    data['side_select'] = $('#gpotintext').val();
+
+                    $.ajax({
+                        'url': '{% url "gravitational-potential-api" %}',
+                        'type': 'GET',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#gpotans').text(response.result);
                         }
                     });
                 });
