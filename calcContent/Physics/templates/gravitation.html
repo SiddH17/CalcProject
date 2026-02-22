@@ -266,31 +266,42 @@
                     clearInputFields();
                     $('#gpot_result_label').text(gpotvalue);
 
+                    console.log(gpotvalue, "The upper dropdown");
+
                     if(gpotvalue == 'select')   {
                         clearInputFields();
                         $('#gpotdiv').hide();
-                    }
-                    else    {
                         $('#gpotside').hide();
+                    }
+                    else if(gpotvalue == 'ring' || gpotvalue == 'hollow-sphere')    {
+                        console.log("Inside the else function now");
+                        $('#gpotside').hide();
+                        $('#gpotradlabel').hide();
                         $('#gpotdiv').show();
                         $('#gpotmasslabel').show();
-                        $('#gpotradlabel').show();
                         $('#gpotdistlabel').show();
-                        var gpotsidevalue = $('#gpotintext').val();
+                    }
+                    else if (gpotvalue == 'solid-sphere') {
+                        $('#gpotside').show();
 
-                        if(gpotvalue == 'solid-sphere') {
-                            $('#gpotside').show();
+                        $('#gpotintext').change(function()   {
+                            var gpotsidevalue = $('#gpotintext').val();
+                            $('#gpotdiv').show();
 
-                            if(gpotsidevalue == 'external') {
-                                $('#gpotradlabel').hide();
+                            if (gpotsidevalue == 'select') {
+                                $('#gpotdiv').hide();
                             }
-                        }
+                            else {
+                                $('#gpotradlabel').show();
+                                $('#gpotdiv').show();
+                                $('#gpotmasslabel').show();
+                                $('#gpotdistlabel').show();
 
-                        while(gpotvalue != 'solid-sphere' && gpotsidevalue != 'internal')   {
-                            console.log("Successfully reached the while loop");
-                            $('#gpotradlabel').hide();
-                            break;
-                        }
+                                if (gpotsidevalue == 'external') {
+                                    $('#gpotradlabel').hide();
+                                }
+                            }
+                        });
                     }
                 });
 
