@@ -761,4 +761,34 @@ def gravitational_potential_api(request):
 
     return JsonResponse({'result': result})
 
+#Orbital and Escape Velocity API
+def orb_esc_api(request):
+    select_value = request.GET.get('select_value')
+    vel_select = request.GET.get('vel_select')
+
+    vo = float(request.GET.get('orbital'))
+    ve = float(request.GET.get('escape'))
+    m = float(request.GET.get('mass'))
+    r = float(request.GET.get('distance'))
+    result = None
+    g = 6.67*(10)**-11
+
+    if select_value == 'orbital-velocity':
+        result = math.sqrt((g*m)/r)
+    elif select_value == 'escape-velocity':
+        result = math.sqrt(2*((g*m)/r))
+    elif select_value == 'mass':
+        if vel_select == 'orbital':
+            result = ((vo**2)*r)/g
+        elif vel_select == 'escape':
+            result = ((ve**2)*r)/(2*g)
+    elif select_value == 'distance':
+        if vel_select == 'orbital':
+            result = (g*m)/(vo**2)
+        elif vel_select == 'escape':
+            result = (2*g*m)/(ve**2)
+    
+    return JsonResponse({'result': result})
+
+
 

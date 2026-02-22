@@ -50,7 +50,7 @@
 
         <!-- Gravitational field in different shapes -->
         <div id="gfield" class="container-fluid content">
-            <h2><u><b>Gravitational Field in different shapes:</b></u></h2>
+            <h2><b><u>Gravitational Field in different shapes:</u></b></h2>
 
             <h4>Select a shape to find gravitational field in:</h4>
             <select id="gfieldDropdown" class="form-select">
@@ -95,7 +95,7 @@
 
         <!-- Gravitational Potential in different shapes -->
         <div id="gpotential" class="container-fluid content">
-            <h2>Gravitational Potential in different shapes:</h2>
+            <h2><u><b>Gravitational Potential in different shapes:</b></u></h2>
 
             <h4>Select a shape:</h4>
             <select name="gpotdropdown" id="gpotdropdown" class="form-select">
@@ -132,6 +132,55 @@
 
                 <button type="submit" id="gpotsubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="gpotans"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Orbital and Escape Velocity -->
+        <div id="orbescvel" class="container-fluid content">
+            <h2><u><b>Orbital and Escape Velocity</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="orbescdropdown" id="orbescdropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="orbital-velocity" id="orbvelocity">Orbital Velocity(Vo)</option>
+                <option value="escape-velocity" id="escvelocity">Escape Velocity(Ve)</option>
+                <option value="mass" id="orbescmass">Mass(M)</option>
+                <option value="distance" id="orbescdistance">Distance(R)</option>
+            </select>
+            <br>
+
+            <div id="orbescselect" style="display: none;">
+                <h4>Select the type of velocity avaiable:</h4>
+
+                <select name="orbescselectdropdown" id="orbescselectdropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="orbital" id="orbitalvel">Orbital Velocity(Vo)</option>
+                    <option value="escape" id="escapevel">Escape Velocity(Ve)</option>
+                </select>
+            </div>
+            <br>
+
+            <div id="orbescdiv" style="display: none;">
+                <h4>Calculate <span id="orbesc_result_label"></span>:</h4>
+                <br>
+
+                <label for="orbital" id="orbitallabel">Orbital Velocity(Vo):
+                    <input type="number" name="orbital">
+                </label>
+                <label for="escape" id="escapelabel">Escape Velocity(Ve):
+                    <input type="number" name="escape">
+                </label>
+                <label for="mass" id="masslabel">Mass(M):
+                    <input type="number" name="mass">
+                </label>
+                <label for="distance" id="distlabel">Distance(R):
+                    <input type="number" name="distance">
+                </label>
+                <br><br>
+
+                <button type="submit" id="orbescsubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="orbescans"></p>
             </div>
         </div>
 
@@ -325,6 +374,93 @@
                         'data': data,
                         'success': function(response)   {
                             $('#gpotans').text(response.result);
+                        }
+                    });
+                });
+           
+                //Orbital and Escape velocity change function logic
+                $('#orbescdropdown').change(function()  {
+                    var orbescvalue = $('#orbescdropdown').val();
+                    clearInputFields();
+                    $('#orbesc_result_label').text(orbescvalue);
+
+                    if(orbescvalue == 'select') {
+                        clearInputFields();
+                        $('#orbescdiv').hide();
+                    }
+                    else    {
+                        $('#orbescselect').hide();
+                        $('#orbescdiv').show();
+                        $('#orbitallabel').show();
+                        $('#escapelabel').show();
+                        $('#masslabel').show();
+                        $('#distlabel').show();
+
+                        if(orbescvalue == 'orbital-velocity')   {
+                            $('#orbitallabel').hide();
+                        }
+                        else if(orbescvalue == 'escape-velocity')   {
+                            $('#escapelabel').hide();
+                        }
+                        else    {
+                            $('#orbescdiv').hide();
+                            $('#orbescselect').show();
+                            $('#orbescselectdropdown').change(function()    {
+                                var velselect = $('#orbescselectdropdown').val();
+                                clearInputFields();
+                                $('#orbescdiv').show();
+                                $('#orbitallabel').show();
+                                $('#escapelabel').show();
+                                $('#masslabel').show();
+                                $('#distlabel').show();
+
+                                if(velselect == 'select')   {
+                                    $('#orbescdiv').hide();
+                                }
+                                else if(orbescvalue == 'mass' && velselect == 'orbital') {
+                                    $('#orbescdiv').show();
+                                    $('#escapelabel').hide();
+                                    $('#masslabel').hide();
+                                }
+                                else if (orbescvalue == 'distance' && velselect == 'orbital') {
+                                    $('#orbescdiv').show();
+                                    $('#escapelabel').hide();
+                                    $('#distlabel').hide();
+                                }
+                                else if(orbescvalue == 'mass' && velselect == 'escape')  {
+                                    $('#orbescdiv').show();
+                                    $('#orbitallabel').hide();
+                                    $('#masslabel').hide();
+                                }
+                                else if (orbescvalue == 'distance' && velselect == 'escape') {
+                                    $('#orbescdiv').show();
+                                    $('#orbitallabel').hide();
+                                    $('#distlabel').hide();
+                                }
+                            });
+                        }
+                    }
+                });
+            
+                //Submit functionality for orbital and escape velocity
+                $('#orbescsubmit').click(function() {
+                    var inputs = $('#orbescdiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['select_value'] = $('#orbescdropdown').val();
+                    data['vel_select'] = $('#orbescselectdropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "orb-esc-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#orbescans').text(response.result);
                         }
                     });
                 });

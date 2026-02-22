@@ -41,4 +41,5 @@ urlpatterns = [
     path('newton-gravitation/', views.newton_gravitation, name='newton-gravitation'),
     path('gravitational-field-api/', views.gravitational_field_api, name='gravitational-field-api'),
     path('gravitational-potential-api/', views.gravitational_potential_api, name='gravitational-potential-api'),
+    path('orb-esc-api/', views.orb_esc_api, name='orb-esc-api'),
 ]
