@@ -46,8 +46,13 @@ def wave_optics(request):
 def circular_motion(request):
     return render(request, 'circmotion.html')
 
+#Gravitation page view
 def gravitation(request):
     return render(request, 'gravitation.html')
+
+#Simple Harmonic Motion page view
+def shm(request):
+    return render(request, 'shm.html')
 
 # APIs
 #Kinematics API views
@@ -788,6 +793,43 @@ def orb_esc_api(request):
         elif vel_select == 'escape':
             result = (2*g*m)/(ve**2)
     
+    return JsonResponse({'result': result})
+
+#Time Period of SHM API
+def time_period_shm_api(request):
+    dropdown = request.GET.get('dropdown_value')
+    formula = request.GET.get('formula_value')
+    t = float(request.GET.get('time'))
+    w = float(request.GET.get('angfrequency'))
+    f = float(request.GET.get('frequency'))
+    l = float(request.GET.get('length'))
+    m = float(request.GET.get('mass'))
+    k = float(request.GET.get('k'))
+
+    g = 9.8
+    x = math.tau
+    result = None
+
+    if dropdown == 'time-period':
+        if formula == 'formula1':
+            result = x/w
+        elif formula == 'formula2':
+            result = 1/f
+        elif formula == 'formula3':
+            result = x*math.sqrt(l/g)
+        elif formula == 'formula4':
+            result = x*math.sqrt(m/k)
+    elif dropdown == 'angular-frequency':
+        result = x/t
+    elif dropdown == 'frequency':
+        result = 1/t
+    elif dropdown == 'length':
+        result = ((t/x)**2)*g
+    elif dropdown == 'mass':
+        result = ((t/x)**2)*k
+    elif dropdown == 'spring-constant':
+        result = ((x/t)**2)*m
+
     return JsonResponse({'result': result})
 
 

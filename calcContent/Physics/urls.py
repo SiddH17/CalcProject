@@ -15,6 +15,7 @@ urlpatterns = [
     path('wave-optics/', views.wave_optics, name='wave-optics'),
     path('circular-motion/', views.circular_motion, name='circular-motion'),
     path('gravitation/', views.gravitation, name='gravitation'),
+    path('shm/', views.shm, name='shm'),
     
     # API paths
     path('equations_of_motion_api/', views.equations_of_motion_api, name='equations_of_motion_api'),
@@ -42,4 +43,5 @@ urlpatterns = [
     path('gravitational-field-api/', views.gravitational_field_api, name='gravitational-field-api'),
     path('gravitational-potential-api/', views.gravitational_potential_api, name='gravitational-potential-api'),
     path('orb-esc-api/', views.orb_esc_api, name='orb-esc-api'),
+    path('time-period-shm-api/', views.time_period_shm_api, name='time-period-shm-api'),
 ]

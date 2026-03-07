@@ -1,0 +1,194 @@
+{% extends "physics.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Simple Harmonic Motion(SHM){% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Time Period of SHM -->
+        <div id="timeperiodshm" class="container-fluid content">
+            <h2><u><b>Time Period of SHM:</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="timeperioddropdown" id="timeperioddropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="time-period" id="timeperiod">Time Period(T)</option>
+                <option value="angular-frequency" id="angularfreq">Angular Frequency(w)</option>
+                <option value="frequency" id="frequency">Frequency(F)</option>
+                <option value="length" id="length">Length(l)</option>
+                <option value="mass" id="mass">Mass(m)</option>
+                <option value="spring-constant" id="springconst">Spring Constant(k)</option>
+            </select>
+            <br>
+
+            <div id="timeperiodformula" style="display: none;">
+                <h4>Select a formula to calculate time period:</h4>
+                <select name="timeperiodformdropdown" id="timeperiodformdropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="formula1" id="timeperiodform1">T=(2*pi)/w</option>
+                    <option value="formula2" id="timeperiodform2">T=1/F</option>
+                    <option value="formula3" id="timeperiodform3">T=(2*pi)*sqrt(l/g)</option>
+                    <option value="formula4" id="timeperiodform4">T=(2*pi)*sqrt(m/k)</option>
+                </select>
+            </div>
+
+            <div id="timeperioddiv" style="display: none;">
+                <h4>Calculate <span id="timeperiod_result_label"></span>:</h4>
+                <br>
+
+                <label for="time" id="timelabel">Time Period(T):
+                    <input type="number" name="time">
+                </label>
+                <label for="angfrequency" id="angfreqlabel">Angular Frequency(w):
+                    <input type="number" name="angfrequency">
+                </label>
+                <label for="frequency" id="frequencylabel">Frequency(F):
+                    <input type="number" name="frequency">
+                </label>
+                <label for="length" id="lengthlabel">Length(l):
+                    <input type="number" name="length">
+                </label>
+                <label for="mass" id="masslabel">Mass(m):
+                    <input type="number" name="mass">
+                </label>
+                <label for="k" id="springconstlabel">Spring Constant(k):
+                    <input type="number" name="k">
+                </label>
+                <br><br>
+
+                <button type="submit" id="timeperiodsubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="timeperiodans"></p>
+            </div>
+        </div>
+
+        <script>
+            function clearInputFields() {
+                $('input').text('');
+                $('p').text('');
+            }
+
+            $(document).ready(function() {
+                //Change function logic for Time Period Dropdown
+                $('#timeperioddropdown').change(function()  {
+                    var tpDropdown = $('#timeperioddropdown').val();
+                    $('#timeperiod_result_label').text(tpDropdown);
+                    console.log(tpDropdown);
+                    clearInputFields();
+
+                    if(tpDropdown == 'Select')  {
+                        clearInputFields();
+                        $('#timeperiodformula').hide();
+                        $('#timeperioddiv').hide();
+                    }
+                    else    {
+                        $('#timeperiodformula').hide();
+                        $('#timeperioddiv').show();
+                        $('#timelabel').show();
+                        $('#angfreqlabel').show();
+                        $('#frequencylabel').show();
+                        $('#lengthlabel').show();
+                        $('#masslabel').show();
+                        $('#springconstlabel').show();
+
+                        if(tpDropdown == 'time-period') {
+                            $('#timeperiodformula').show();
+                            $('#timeperioddiv').hide();
+
+                            $('#timeperiodformdropdown').change(function()   {
+                                clearInputFields();
+                                var tpFormula = $('#timeperiodformdropdown').val();
+                                $('#timelabel').hide();
+
+                                if(tpFormula == 'select')   {
+                                    $('timeperioddiv').hide();
+                                    clearInputFields();
+                                }
+                                else    {
+                                    $('#timeperioddiv').show();
+                                    $('#angfreqlabel').show();
+                                    $('#frequencylabel').show();
+                                    $('#lengthlabel').show();
+                                    $('#masslabel').show();
+                                    $('#springconstlabel').show();
+                                    
+                                    if(tpFormula == 'formula1') {
+                                        $('#frequencylabel').hide();
+                                        $('#lengthlabel').hide();
+                                        $('#masslabel').hide();
+                                        $('#springconstlabel').hide();
+                                    }
+                                    else if(tpFormula == 'formula2')    {
+                                        $('#angfreqlabel').hide();
+                                        $('#lengthlabel').hide();
+                                        $('#masslabel').hide();
+                                        $('#springconstlabel').hide();   
+                                    }
+                                    else if (tpFormula == 'formula3') {
+                                        $('#angfreqlabel').hide();
+                                        $('#frequencylabel').hide();
+                                        $('#masslabel').hide();
+                                        $('#springconstlabel').hide();
+                                    }
+                                    else if (tpFormula == 'formula4') {
+                                        $('#angfreqlabel').hide();
+                                        $('#lengthlabel').hide();
+                                        $('#frequencylabel').hide();
+                                    }
+                                }
+                            });
+                        }
+                        else if(tpDropdown == 'mass')  {
+                            $('#angfreqlabel').hide();
+                            $('#frequencylabel').hide();
+                            $('#lengthlabel').hide();
+                            $('#masslabel').hide();
+                        }
+                        else if(tpDropdown == 'spring-constant')    {
+                            $('#angfreqlabel').hide();
+                            $('#frequencylabel').hide();
+                            $('#lengthlabel').hide();
+                            $('#springconstlabel').hide();
+                        }
+                        else    {
+                            $('#angfreqlabel').hide();
+                            $('#frequencylabel').hide();
+                            $('#lengthlabel').hide();
+                            $('#masslabel').hide();
+                            $('#springconstlabel').hide();
+                            
+                        }
+                    }
+                });
+
+                //Time period submit button click logic
+                $('#timeperiodsubmit').click(function() {
+                    var inputs = $('#timeperioddiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['dropdown_value'] = $('#timeperioddropdown').val();
+                    data['formula_value'] = $('#timeperiodformdropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "time-period-shm-api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#timeperiodans').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>
