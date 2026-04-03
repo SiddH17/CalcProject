@@ -1,0 +1,172 @@
+{% extends "mathematics.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sequence and Series{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Arithmetic Progression -->
+        <div class="container-fluid content">
+            <h2><u><b>Arithmetic Progression:</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="apDropdown" id="apDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="nth-term" id="nth">Nth Term (An)</option>
+                <option value="first-term" id="a1">First Term (A0)</option>
+                <option value="difference" id="difference">Difference (d)</option>
+                <option value="num" id="num">Sequence Count (n)</option>
+                <option value="sum" id="sum">Sum of sequence (Sn)</option>
+            </select>
+            <br>
+
+            <div style="display: none;" id="apFormula">
+                <h4>Select a formula to be used:</h4>
+                <select name="apFormulaDropdown" id="apFormulaDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="nTerms" id="nTerm">An = A0 + (n-1)*d </option>
+                    <option value="sumSequence" id="sumSeq">Sn = (n/2)*(2*a + (n-1)*d)</option>
+                </select>
+            </div>
+            <br>
+
+            <div id="apDiv" style="display: none;">
+                <h4>Calculate <span id="ap_result_label"></span>:</h4>
+
+                <label for="a1Label" id="a1Label">First Term (A0):
+                    <input type="number" name="a1Label">
+                </label>
+                <label for="nLabel" id="nLabel">No. of terms in sequence (n):
+                    <input type="number" name="nLabel">
+                </label>
+                <label for="dLabel" id="dLabel">Difference (d):
+                    <input type="number" name="dLabel">
+                </label>
+                <label for="anLabel" id="anLabel">Nth Term (An):
+                    <input type="number" name="anLabel">
+                </label>
+                <label for="sumLabel" id="sumLabel">Sum of Sequences (Sn):
+                    <input type="number" name="sumLabel">
+                </label>
+                <br><br>
+
+                <button type="submit" class="btn btn-primary" id="apSubmit">Calculate Result</button>
+                <p id="apAns"></p>
+            </div>
+        </div>
+
+        <script>
+            function clearInputFields() {
+                $('input').val('');
+                $('p').text('');
+            }
+
+            //Change function logic for AP dropdown
+            $(document).ready(function()    {
+                clearInputFields();
+
+                $('#apDropdown').change(function()  {
+                    clearInputFields();
+                    var apDropdownValue = $('#apDropdown').val();
+                    $('#ap_result_label').text(apDropdownValue);
+                    $('#apFormulaDropdown').val('select');
+
+                    if (apDropdownValue == 'select') {
+                        $('#apDiv').hide();
+                        $('#apFormula').hide();
+                        clearInputFields();
+                    }
+                    else {
+                        if (apDropdownValue == 'nth-term' || apDropdownValue == 'sum') {
+                            $('#apDiv').show();
+                            $('#apFormula').hide();
+                            $('#anLabel').hide();
+                            $('#sumLabel').hide();
+                            $('#nLabel').show();
+                            $('#a1Label').show();
+                            $('#dLabel').show();
+                        }
+                        else {
+                            $('#apFormula').show();
+                            $('#apDiv').hide();
+
+                            $('#apFormulaDropdown').change(function () {
+                                clearInputFields();
+                                var apFormulaValue = $('#apFormulaDropdown').val();
+                                $('#nLabel').show();
+                                $('#a1Label').show();
+                                $('#dLabel').show();
+                                $('#apDiv').show();
+                                $('#anLabel').show();
+                                $('#sumLabel').show();
+
+                                if(apFormulaValue == 'select')  {
+                                    $('#apDiv').hide();
+                                }
+                                else if (apDropdownValue == 'first-term') {
+                                    $('#a1Label').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                                else if (apDropdownValue == 'difference') {
+                                    $('#dLabel').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                                else if (apDropdownValue == 'num') {
+                                    $('#nLabel').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                //AP submit button logic
+                $('#apSubmit').click(function() {
+                    var inputs = $('#apDiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['dropdown_val'] = $('#apDropdown').val();
+                    data['formula_val'] = $('#apFormulaDropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "ap-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#apAns').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

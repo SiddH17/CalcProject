@@ -8,7 +8,8 @@ urlpatterns = [
     path('ellipse/', views.ellipse, name='ellipse'),
     path('hyperbola/', views.hyperbola, name='hyperbola'),
     path('stats/', views.stats, name='stats'),
-    path('quadratics', views.quadratics, name='quadratics'),
+    path('quadratics/', views.quadratics, name='quadratics'),
+    path('sequence-series/', views.sequence_series, name='sequence-series'),
 
     # APIs
     path('trigonometry_api/', views.trigonometry_api, name='trigonometry_api'),
@@ -17,4 +18,5 @@ urlpatterns = [
     path('statistics_api/', views.statistics_api, name='statistics_api'),
     path('quadratics_api/', views.quadratics_api, name='quadratics_api'),
     path('spread_api', views.spread_api, name='spread_api'),
+    path('ap-api/', views.ap_api, name='ap-api'),
 ]

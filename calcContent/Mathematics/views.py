@@ -25,6 +25,9 @@ def stats(request):
 def quadratics(request):
     return render(request, 'quadratics.html')
 
+def sequence_series(request):
+    return render(request, 'sequenceseries.html')
+
 # APIs
 #API call for different trigonometric identities
 def trigonometry_api(request):
@@ -179,6 +182,38 @@ def spread_api(request):
             result = (sd/mean)*100
     
     return JsonResponse({'result': result})
-        
 
+#API call to handle AP logic in sequence and series
+def ap_api(request):
+    dropdown_val = request.GET['dropdown_val']
+    formula_val = request.GET['formula_val']
+    an = float(request.GET['anLabel'])
+    a1 = float(request.GET['a1Label'])
+    n = float(request.GET['nLabel'])
+    d = float(request.GET['dLabel'])
+    sum = float(request.GET['sumLabel'])
+
+    result = None
+
+    if dropdown_val == 'nth-term':
+        result = a1+(n-1)*d
+    elif dropdown_val == 'sum':
+        result = (n/2)*(2*a1+(n-1)*d)
+    elif dropdown_val == 'difference':
+        if formula_val == 'nTerms':
+            result = (an-a1)/(n-1)
+        elif formula_val == 'sumSequence':
+            result = (((2*sum)/n)-(2*a1))/(n-1)
+    elif dropdown_val == 'first-term':
+        if formula_val == 'nTerms':
+            result = an-((n-1)*d)
+        elif formula_val == 'sumSequence':
+            result = ((2*sum)/n)-((n-1)*d)
+    elif dropdown_val == 'num':
+        if formula_val == 'nTerms':
+            result = ((an-a1)/d)+1
+        elif formula_val == 'sumSequence':
+            result = (-(2*a1-d)+((2*a1-d)**2+(8*d*sum))**(1/2))/(2*d)
+    
+    return JsonResponse({'result': result})
 
