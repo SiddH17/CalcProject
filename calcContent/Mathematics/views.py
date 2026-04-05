@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib import messages
 import numpy as np
 import math, statistics
 
@@ -216,4 +217,53 @@ def ap_api(request):
             result = (-(2*a1-d)+((2*a1-d)**2+(8*d*sum))**(1/2))/(2*d)
     
     return JsonResponse({'result': result})
+
+#API call to handle GP logic in sequence and series
+def gp_api(request):
+    gdropdown_val = request.GET['g_dropdown_val']
+    gformula_val = request.GET['g_formula_val']
+    print(gdropdown_val, gformula_val)
+
+    gn = float(request.GET['gnLabel'])
+    g1 = float(request.GET['g1Label'])
+    gnum = float(request.GET['gnumLabel'])
+    r = float(request.GET['rLabel'])
+    gsum = float(request.GET['gsumLabel'])
+    print('gn: ',gn, 'g1: ',g1, 'gnum: ',gnum, 'r: ',r, 'gsum: ',gsum)
+
+    result = None
+
+    if gdropdown_val == 'nth-term':
+        result = g1*(r**(gnum-1))
+    elif gdropdown_val == 'sum':
+        if r>1:
+            result = g1*(((r**gnum)-1)/(r-1))
+        elif r<1:
+            result = g1((1-(r**gnum))/(1-r))
+        else:
+            pass
+            # messages.error(request, "Error! Common Difference cannot be zero")
+    elif gdropdown_val == 'difference':
+        result = (gn/g1)**(1/(gnum-1))
+    elif gdropdown_val == 'first-term':
+        if gformula_val == 'nTerms':
+            result = gn/(r**(gnum-1))
+        elif gformula_val == 'sumSequence':
+            if r>1:
+                result = gsum*((r-1)/((r**gnum)-1))
+            elif r<1:
+                result = gsum*((1-r)/(1-(r**gnum)))
+    elif gdropdown_val == 'num':
+        if gformula_val == 'nTerms':
+            result = (math.log(gn/g1)/math.log(r))+1
+        elif gformula_val == 'sumSequence':
+            if r>1:
+                result = math.log(((gsum*(r-1))/g1)+1)/math.log(r)
+            elif r<1:
+                result = math.log((1-(gsum*(1-r))/g1))/math.log(r)
+
+    print(result)
+    
+    return JsonResponse({'result': result})
+
 

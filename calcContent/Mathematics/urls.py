@@ -19,4 +19,5 @@ urlpatterns = [
     path('quadratics_api/', views.quadratics_api, name='quadratics_api'),
     path('spread_api', views.spread_api, name='spread_api'),
     path('ap-api/', views.ap_api, name='ap-api'),
+    path('gp-api/', views.gp_api, name='gp-api'),
 ]
