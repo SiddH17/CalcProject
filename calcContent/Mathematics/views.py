@@ -232,6 +232,11 @@ def gp_api(request):
     print('gn: ',gn, 'g1: ',g1, 'gnum: ',gnum, 'r: ',r, 'gsum: ',gsum)
 
     result = None
+    error_message = None
+
+    if r:
+        if r == 1 and (gformula_val == 'sumSequence' or gdropdown_val == 'sum'):
+            error_message = "Error! You cannot write r=1 in this case"
 
     if gdropdown_val == 'nth-term':
         result = g1*(r**(gnum-1))
@@ -240,9 +245,6 @@ def gp_api(request):
             result = g1*(((r**gnum)-1)/(r-1))
         elif r<1:
             result = g1((1-(r**gnum))/(1-r))
-        else:
-            pass
-            # messages.error(request, "Error! Common Difference cannot be zero")
     elif gdropdown_val == 'difference':
         result = (gn/g1)**(1/(gnum-1))
     elif gdropdown_val == 'first-term':
@@ -264,6 +266,6 @@ def gp_api(request):
 
     print(result)
     
-    return JsonResponse({'result': result})
+    return JsonResponse({'result': result, 'error': error_message})
 
 

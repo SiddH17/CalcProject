@@ -88,28 +88,27 @@
             
                 <div id="gpDiv" style="display: none;">
                     <h4>Calculate <span id="gp_result_label"></span>:</h4>
-            
-                    <label for="g1Label" id="g1Label">First Term (G0):
-                        <input type="number" name="g1Label">
-                    </label>
-                    <label for="gnumLabel" id="gnumLabel">No. of terms in sequence (n):
-                        <input type="number" name="gnumLabel">
-                    </label>
-                    <label for="rLabel" id="rLabel">Difference (r):
-                        <input type="number" name="rLabel">
-                    </label>
-                    <label for="gnLabel" id="gnLabel">Nth Term (Gn):
-                        <input type="number" name="gnLabel">
-                    </label>
-                    <label for="gsumLabel" id="gsumLabel">Sum of Sequences (Sn):
-                        <input type="number" name="gsumLabel">
-                    </label>
-                    <br><br>
-            
+                    
+                    <div class="gridbox">
+                        <label for="g1Label" id="g1Label">First Term (G0):
+                            <br><input type="number" name="g1Label">
+                        </label>
+                        <label for="gnumLabel" id="gnumLabel">No. of terms in sequence (n):
+                            <br><input type="number" name="gnumLabel">
+                        </label>
+                        <label for="rLabel" id="rLabel">Difference (r):
+                            <br><input type="number" name="rLabel">
+                        </label>
+                        <label for="gnLabel" id="gnLabel">Nth Term (Gn):
+                            <br><input type="number" name="gnLabel">
+                        </label>
+                        <label for="gsumLabel" id="gsumLabel">Sum of Sequences (Sn):
+                            <br><input type="number" name="gsumLabel">
+                        </label>
+                    </div>
+                    <br>
+        
                     <button type="submit" class="btn btn-primary" id="gpSubmit">Calculate Result</button>
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
                     <p id="gpAns"></p>
                 </div>
             </div>
@@ -316,7 +315,14 @@
                         'url': '{% url "gp-api" %}',
                         'data': data,
                         'success': function (response) {
-                            $('#gpAns').text(response.result);
+                            if(response.error)  {
+                                $('#gpAns').text(response.error);
+                                $('#gpAns').css('color', 'red');
+                            }
+                            else    {
+                                $('#gpAns').text(response.result);
+                            }
+
                         }
                     });
                 });

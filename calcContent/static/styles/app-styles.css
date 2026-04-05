@@ -106,6 +106,16 @@ hr  {
 .form-select    {
     width: auto !important;
 }
+.gridbox    {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+}
+.gridbox label  {
+    margin: 2%;
+}
+.gridbox input  {
+    width: stretch;
+}
 
 /* IDs */
 #signin:hover   {
