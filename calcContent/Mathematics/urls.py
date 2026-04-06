@@ -20,4 +20,5 @@ urlpatterns = [
     path('spread_api', views.spread_api, name='spread_api'),
     path('ap-api/', views.ap_api, name='ap-api'),
     path('gp-api/', views.gp_api, name='gp-api'),
+    path('compound-angle-api/', views.compound_angle_api, name='compound-angle-api'),
 ]

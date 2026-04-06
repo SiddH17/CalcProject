@@ -11,7 +11,7 @@
     {% block content %}
         <div class="container-fluid content" id="trigonometry">
             <div id="trigId">
-                <h2><u><b>Trigonometric Identities</b></u></h2>
+                <h2><u><b>Trigonometric Identities:</b></u></h2>
                 <h4>Select the value to be calculated:</h4>
 
                 <select class="form-select" name="trigIds" id="Identities">
@@ -25,10 +25,9 @@
                 </select>
                 <br><br>
 
-                {% csrf_token %}
                 <div id="trigoIdentities" style="display: none;">
                     <h4>Calculate <span id="result_label"></span></h4>
-                    <div>
+                    <div class="gridbox">
                         <label for="ang1" id="angle1">First angle(in deg.):
                             <input type="number" name="angle1">
                         </label>
@@ -37,9 +36,41 @@
                         </label>
                         <br>
                     </div>
+                    <br><br>
+
                     <button type="submit" id="trigIdSubmit" class="btn btn-primary">Calculate Result</button>
+                    <p id="trigIdAns"></p>
                 </div>
-                <p id="trigIdAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Trigonometric identities of compound angles -->
+        <div id="trigoCompound" class="container-fluid content">
+            <h2><u><b>Trigonometric Identities of Compound Angles:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+
+            <select name="trigoCompoundDropdown" id="trigoCompoundDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="sin2x" id="sin2x">sin(2x)</option>
+                <option value="cos2x" id="cos2x">cos(2x)</option>
+                <option value="tan2x" id="tan2x">tan(2x)</option>
+                <option value="sin3x" id="sin3x">sin(3x)</option>
+                <option value="cos3x" id="cos3x">cos(3x)</option>
+            </select>
+            <br><br>
+
+            <div id="trigoCompoundDiv" style="display: none;">
+                <h4>Calculate <span id="compound_result_label"></span>:</h4>
+
+                <div class="gridbox">
+                    <label for="angleLabel" id="angleLabel">Angle(x):
+                        <input type="number" name="angleLabel" id="angleInput">
+                    </label>
+                </div>
+
+                <button id="trigoCompoundSubmit" type="submit" class="btn btn-primary">Calculate Result</button>
+                <p id="trigoCompoundAns"></p>
             </div>
         </div>
 
@@ -47,9 +78,8 @@
             $(document).ready(function()    {
                 // Clear all input fields on load
                 function clearInputFields() {
-                    $('[name="angle1"]').val('');
-                    $('[name="angle2"]').val('');
-                    $('#trigIdAns').text('');
+                    $('input').val('');
+                    $('p').text('');
                 }
                 clearInputFields();
 
@@ -74,8 +104,8 @@
                         selectDiv.css('display', 'none');
                     }
                 });        
-                $('#trigIdSubmit').click(function()  {
-                    
+
+                $('#trigIdSubmit').click(function()  {    
                     const inputs = selectDiv.find('input[type=number]');
                     const data = {};
                     inputs.each(function()  {
@@ -96,7 +126,36 @@
                             console.log(response.result, "the response result");
                         }
                     })
-                })
+                });
+
+                $('#trigoCompoundDropdown').change(function()   {
+                    clearInputFields();
+                    var trigoCompoundValue = $('#trigoCompoundDropdown').val();
+                    $('#compound_result_label').text(trigoCompoundValue);
+                    $('#trigoCompoundDiv').show();
+
+                    if(trigoCompoundValue == 'select')  {
+                        $('#trigoCompoundDiv').hide();
+                        clearInputFields();
+                    }
+                });
+
+                // Logic for trigo identities for compound angles submit function
+                $('#trigoCompoundSubmit').click(function()  {
+                    var data = {};
+                    data['angleLabel'] = $('#angleInput').val();
+                    data['dropdown_value'] = $('#trigoCompoundDropdown').val();
+                    console.log(data);
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "compound-angle-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#trigoCompoundAns').text(response.result);
+                        }
+                    });
+                });
             })
         </script>
     {% endblock content %}

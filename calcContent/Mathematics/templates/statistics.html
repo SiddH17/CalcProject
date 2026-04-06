@@ -32,24 +32,22 @@
                 <div id="mmmcalc" style="display: none;">
                     <h4>Calculate <span class="result_label"></span>:</h4>
                     <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
-                    <div>
+                    
+                    <div class="gridbox">
                         <label for="obsinput" id="obsinput">No. of observations(n):
                             <input type="number" name="obs">
                         </label>
-                        <br><br>
                         <label for="numsinput" id="numsinput">Observations/Numbers:
                             <input type="text" name="nums">
                         </label>
-                        <br>
                     </div>
-                    <br>
+                    <br><br>
+
+                    <!-- Submission button for calculation of the answer -->
+                    <button type="submit" class="btn btn-primary" id="mmmsubmit">Calculate</button>
+                    <p id="mmmans"></p>
                 </div>
-
-                <!-- Submission button for calculation of the answer -->
-                <button type="submit" class="btn btn-primary" id="mmmsubmit">Calculate</button>
             </div>
-
-            <p id="mmmans"></p>
         </div>
         <hr>
 
@@ -72,16 +70,15 @@
             <div id="spreadDiv" style="display: none;">
                 <h4>Calculate <span id="spread_result_label"></span>:</h4>
                 <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
-                <div>
+                <div class="gridbox">
                     <label for="numberLabel" id="numberLabel">No. of observations(n):
                         <input type="number" name="numberLabel">
                     </label>
-                    <br>
                     <label for="obsLabel" id="obsLabel">Observations/Numbers:
                         <input type="text" name="obsLabel">
                     </label>
-                    <br>
                 </div>
+                <br><br>
 
                 <button type="submit" id="spreadSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="spreadAns"></p>

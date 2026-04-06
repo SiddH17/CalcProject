@@ -268,4 +268,22 @@ def gp_api(request):
     
     return JsonResponse({'result': result, 'error': error_message})
 
+#API call for trigonometric identities for compound angles
+def compound_angle_api(request):
+    dropdown_val = request.GET['dropdown_value']
+    x = float(request.GET['angleLabel'])
 
+    result = None
+
+    if dropdown_val == 'sin2x':
+        result = 2*math.sin(x)*math.cos(x)
+    elif dropdown_val == 'cos2x':
+        result = (math.cos(x))**2 - (math.sin(x))**2
+    elif dropdown_val == 'tan2x':
+        result = (2*math.tan(x))/(1-((math.tan(x))**2))
+    elif dropdown_val == 'sin3x':
+        result = 3*math.sin(x) - 4*((math.sin(x))**3)
+    elif dropdown_val == 'cos3x':
+        result = 4*((math.cos(x))**3) - 3*math.cos(x)
+
+    return JsonResponse({'result': result})
