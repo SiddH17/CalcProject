@@ -39,27 +39,28 @@
 
             <div id="timeperioddiv" style="display: none;">
                 <h4>Calculate <span id="timeperiod_result_label"></span>:</h4>
-                <br>
 
-                <label for="time" id="timelabel">Time Period(T):
-                    <input type="number" name="time">
-                </label>
-                <label for="angfrequency" id="angfreqlabel">Angular Frequency(w):
-                    <input type="number" name="angfrequency">
-                </label>
-                <label for="frequency" id="frequencylabel">Frequency(F):
-                    <input type="number" name="frequency">
-                </label>
-                <label for="length" id="lengthlabel">Length(l):
-                    <input type="number" name="length">
-                </label>
-                <label for="mass" id="masslabel">Mass(m):
-                    <input type="number" name="mass">
-                </label>
-                <label for="k" id="springconstlabel">Spring Constant(k):
-                    <input type="number" name="k">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="time" id="timelabel">Time Period(T):
+                        <input type="number" name="time">
+                    </label>
+                    <label for="angfrequency" id="angfreqlabel">Angular Frequency(w):
+                        <input type="number" name="angfrequency">
+                    </label>
+                    <label for="frequency" id="frequencylabel">Frequency(F):
+                        <input type="number" name="frequency">
+                    </label>
+                    <label for="length" id="lengthlabel">Length(l):
+                        <input type="number" name="length">
+                    </label>
+                    <label for="mass" id="masslabel">Mass(m):
+                        <input type="number" name="mass">
+                    </label>
+                    <label for="k" id="springconstlabel">Spring Constant(k):
+                        <input type="number" name="k">
+                    </label>
+                </div>
+                <br>
 
                 <button type="submit" id="timeperiodsubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="timeperiodans"></p>

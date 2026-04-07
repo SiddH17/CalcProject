@@ -11,7 +11,7 @@
     {% block content %}
         <!-- Wavelength-Frequency conversion -->
         <div id="wavefreq" class="container-fluid content">
-            <h2><u><b>Wavelength & Frequency conversion:</b></u></h2>
+            <h2><u><b>Wavelength and Frequency conversion:</b></u></h2>
             <h4>Select a unit to be converted:</h4>
 
             <select class="form-select" id="wavefreqDropdown">
@@ -19,19 +19,21 @@
                 <option value="wavelength">Wavelength</option>
                 <option value="frequency">Frequency</option>
             </select>
+            <br>
 
             <div id="wavefreqDiv" style="display: none;">
                 <h4>Calculate <span id="wavefreq_result_label"></span>:</h4>
+                
+                <div class="gridbox">
+                    <label for="w" id="wavelengthLabel">Wavelength:
+                        <input type="number" name="w">
+                    </label>
+                    
+                    <label for="f" id="freqLabel">Frequency:
+                        <input type="number" name="f">
+                    </label>
+                </div>
                 <br>
-
-                <label for="w" id="wavelengthLabel">Wavelength:
-                    <input type="number" name="w">
-                </label>
-
-                <label for="f" id="freqLabel">Frequency:
-                    <input type="number" name="f">
-                </label>
-                <br><br>
 
                 <button type="submit" id="wavefreqSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="wavefreqAns"></p>
@@ -39,26 +41,25 @@
         </div>
         <hr>
 
-
-
         <script>
             //Clearing input fields of Wavelength-Frequency conversion function
-            function clearWavefreqInputFields() {
-                $('#wavelengthLabel input, #freqLabel input').val('');
-                $('#wavefreqAns').text('');
+            function clearInputFields() {
+                $('input').val('');
+                $('p').text('');
             }
 
             //Wavelength-Frequency conversion JS
             $(document).ready(function()    {
-                clearWavefreqInputFields();
+                clearInputFields();
                
                 $('#wavefreqDropdown').change(function()    {
-                    clearWavefreqInputFields();
+                    clearInputFields();
                     var wavefreqValue = $('#wavefreqDropdown').val();
                     $('#wavefreq_result_label').text(wavefreqValue);
 
                     if(wavefreqValue=='Select') {
                         $('#wavefreqDiv').hide();
+                        clearInputFields();
                     }
                     else    {
                         $('#wavefreqDiv').show();

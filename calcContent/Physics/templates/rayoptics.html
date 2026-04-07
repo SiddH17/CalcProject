@@ -41,7 +41,8 @@
                 <!-- div for Mirror equation -->
                 <div id="sphmir" style="display: none;">
                     <h4>Calculate <span class="result_label"></span> <span class="type_label"></span> value:</h4>
-                    <div style="display: flex;">
+                    
+                    <div class="gridbox">
                         <label for="fl" class="fl">Focal Length(f):
                             <input type="number" name="fl">
                         </label>
@@ -52,20 +53,16 @@
                             <input type="number" name="objdist">
                         </label>
                     </div>
-                </div>
-                <br>
+                    <br>
 
-                <button type="submit" id="mirrorsubmit" style="display: none;" class="btn">Calculate Result</button>
-                <br>
-                <p id="mirrorans"></p>
-            </div>
-            <br>
-            
+                    <button type="submit" id="mirrorsubmit" style="display: none;" class="btn">Calculate Result</button>
+                    <p id="mirrorans"></p>
+                </div>
+            </div>            
             <hr>
 
-            <br>
             <!-- Lens equation -->
-             <div id="lenseq">
+            <div id="lenseq">
                 <h2><u><b>Lens Equation:</b></u></h2>
                 <h5>**(Note: Please first select the value to be calculated and then the type of lens)**</h5>
                     <br>
@@ -94,7 +91,7 @@
                 <!-- div for Lens equation -->
                 <div id="lens" style="display: none;">
                     <h4>Calculate <span class="lens_result_label"></span> <span class="lens_type_label"></span> value:</h4>
-                    <div style="display: flex;">
+                    <div class="gridbox">
                         <label for="lfl" class="lfl">Focal Length(f):
                             <input type="number" name="lfl">
                         </label>
@@ -105,12 +102,10 @@
                             <input type="number" name="lensobjdist">
                         </label>
                     </div>
-                </div>
-                <br>
 
-                <button type="submit" id="lenssubmit" style="display: none;" class="btn">Calculate Result</button>
-                <br>
-                <p id="lensans"></p>
+                    <button type="submit" id="lenssubmit" style="display: none;" class="btn">Calculate Result</button>
+                    <p id="lensans"></p>
+                </div>
             </div>
         </div>
         <hr>
@@ -144,25 +139,27 @@
             <div id="snellDiv" style="display: none;">
                 <h4>Calculate <span id="snell_result_label"></span>:</h4>
 
-                <label for="n1Value" id="n1Label">First Medium Refractive Index:
-                    <input type="number" name="n1Value">
-                </label>
-                <label for="n2Value" id="n2Label">Second Medium Refractive Index:
-                    <input type="number" name="n2Value">
-                </label>
-                <label for="angleofincidence" id="aoiLabel">Angle of Incidence:
-                    <input type="number" name="angleofincidence">
-                </label>
-                <label for="angleofrefraction" id="aorLabel">Angle of Refraction:
-                    <input type="number" name="angleofrefraction">
-                </label>
-                <label for="v1Value" id="v1Label">First Medium Speed of Light (in terms of 10^8 power):
-                    <input type="number" name="v1Value">
-                </label>
-                <label for="v2Value" id="v2Label">Second Medium Speed of Light (in terms of 10^8 power):
-                    <input type="number" name="v2Value">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="n1Value" id="n1Label">First Medium Refractive Index:
+                        <input type="number" name="n1Value">
+                    </label>
+                    <label for="n2Value" id="n2Label">Second Medium Refractive Index:
+                        <input type="number" name="n2Value">
+                    </label>
+                    <label for="angleofincidence" id="aoiLabel">Angle of Incidence:
+                        <input type="number" name="angleofincidence">
+                    </label>
+                    <label for="angleofrefraction" id="aorLabel">Angle of Refraction:
+                        <input type="number" name="angleofrefraction">
+                    </label>
+                    <label for="v1Value" id="v1Label">First Medium Speed of Light (in terms of 10^8 power):
+                        <input type="number" name="v1Value">
+                    </label>
+                    <label for="v2Value" id="v2Label">Second Medium Speed of Light (in terms of 10^8 power):
+                        <input type="number" name="v2Value">
+                    </label>
+                    <br>
+                </div>
 
                 <button type="submit" id="snellSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="snellAns"></p>

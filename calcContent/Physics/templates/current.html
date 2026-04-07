@@ -21,21 +21,23 @@
                 <option value="current" id="i">Current(I)</option>
                 <option value="resistance" id="r">Resistance(R)</option>
             </select>
-            <br><br>
+            <br>
 
             <div id="ohmDiv" style="display: none;">
                 <h4>Calculate <span id="result_label"></span>:</h4>
 
-                <label for="voltage" id="voltageLabel">Potential Difference/Voltage:
-                    <input type="number" name="voltage">
-                </label>
-                <label for="current" id="currentLabel">Current(I):
-                    <input type="number" name="current">
-                </label>
-                <label for="resistance" id="resistanceLabel">Resistance(R):
-                    <input type="number" name="resistance">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="voltage" id="voltageLabel">Potential Difference/Voltage:
+                        <input type="number" name="voltage">
+                    </label>
+                    <label for="current" id="currentLabel">Current(I):
+                        <input type="number" name="current">
+                    </label>
+                    <label for="resistance" id="resistanceLabel">Resistance(R):
+                        <input type="number" name="resistance">
+                    </label>
+                </div>
+                <br>
 
                 <button type="submit" id="ohmSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="ohmAns"></p>
@@ -85,18 +87,20 @@
                 <h4>Calculate <span id="result_label2"></span>:</h4>
                 <br><br>
 
-                <label for="power" id="pwr">Power:
-                    <input type="number" name="power">
-                </label>
-                <label for="voltage" id="vltg">Potential Difference/Voltage:
-                    <input type="number" name="voltage">
-                </label>
-                <label for="current" id="irnt">Current(I):
-                    <input type="number" name="current">
-                </label>
-                <label for="resistance" id="rstnc">Resistance(R):
-                    <input type="number" name="resistance">
-                </label>
+                <div class="gridbox">
+                    <label for="power" id="pwr">Power:
+                        <input type="number" name="power">
+                    </label>
+                    <label for="voltage" id="vltg">Potential Difference/Voltage:
+                        <input type="number" name="voltage">
+                    </label>
+                    <label for="current" id="irnt">Current(I):
+                        <input type="number" name="current">
+                    </label>
+                    <label for="resistance" id="rstnc">Resistance(R):
+                        <input type="number" name="resistance">
+                    </label>
+                </div>
                 <br><br>
 
                 <button type="submit" id="powerSubmit" class="btn btn-primary">Calculate Result</button>
@@ -123,18 +127,20 @@
             <h4>Calculate <span id="result_label3"></span>:</h4>
             <br><br>
 
-            <label for="rho" id="resLabel">Resistivity:
-                <input type="number" name="rho">
-            </label>
-            <label for="rest" id="rstncLabel">Resistance(R):
-                <input type="number" name="rest">
-            </label>
-            <label for="length" id="lengthLabel">Length(in metres):
-                <input type="number" name="length">
-            </label>
-            <label for="area" id="areaLabel">Area(in metre squared):
-                <input type="number" name="area">
-            </label>
+            <div class="gridbox">
+                <label for="rho" id="resLabel">Resistivity:
+                    <input type="number" name="rho">
+                </label>
+                <label for="rest" id="rstncLabel">Resistance(R):
+                    <input type="number" name="rest">
+                </label>
+                <label for="length" id="lengthLabel">Length(in metres):
+                    <input type="number" name="length">
+                </label>
+                <label for="area" id="areaLabel">Area(in metre squared):
+                    <input type="number" name="area">
+                </label>
+            </div>
             <br><br>
 
             <button type="submit" id="resSubmit" class="btn btn-primary">Calculate Result</button>
@@ -171,18 +177,20 @@
                 <h4>Calculate <span id="hande_result_label"></span>:</h4>
                 <br>
 
-                <label for="v" id="volts">Potential Difference/Voltage:
-                    <input type="number" name="v">
-                </label>
-                <label for="i" id="amperes">Current(I):
-                    <input type="number" name="i">
-                </label>
-                <label for="r" id="ohm">Resistance(R):
-                    <input type="number" name="r">
-                </label>
-                <label for="t" id="secs">Time(t):
-                    <input type="number" name="t">
-                </label>
+                <div class="gridbox">
+                    <label for="v" id="volts">Potential Difference/Voltage:
+                        <input type="number" name="v">
+                    </label>
+                    <label for="i" id="amperes">Current(I):
+                        <input type="number" name="i">
+                    </label>
+                    <label for="r" id="ohm">Resistance(R):
+                        <input type="number" name="r">
+                    </label>
+                    <label for="t" id="secs">Time(t):
+                        <input type="number" name="t">
+                    </label>
+                </div>
                 <br><br>
 
                 <button type="submit" id="handeSubmit" class="btn btn-primary">Calculate Result</button>

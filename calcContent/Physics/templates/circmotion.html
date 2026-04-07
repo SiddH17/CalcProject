@@ -29,7 +29,7 @@
             <!-- Div for when Angular Displacement is selected -->
             <div style="display: none;" class="sva" id="angDispDiv">
                 <!-- Angular Displacement formulae selection dropdown -->
-                <select name="dispFormulae" id="dispFormulae">
+                <select name="dispFormulae" class="form-select" id="dispFormulae">
                     <option value="select" class="select1">--Select--</option>
                     <option value="sr" id="sr">Displacement(s)/Radius(r)</option>
                     <option value="wt" id="wt">ang.velocity(omega)*t</option>
@@ -40,18 +40,20 @@
                 <div id="angDisplacement" style="display: none;">
                     <h4>Calculate Angular Displacement:</h4>
         
-                    <label for="radius" id="rLabel">Radius(r):
-                        <input type="number" name="radius">
-                    </label>
-                    <label for="disp" id="sLabel">Displacement(s):
-                        <input type="number" name="disp">
-                    </label>
-                    <label for="angularVelocity" id="angVelLabel">Angular Velocity:
-                        <input type="number" name="angularVelocity">
-                    </label>
-                    <label for="time" id="timeLabel">Time(t):
-                        <input type="number" name="time">
-                    </label>
+                    <div class="gridbox">
+                        <label for="radius" id="rLabel">Radius(r):
+                            <input type="number" name="radius">
+                        </label>
+                        <label for="disp" id="sLabel">Displacement(s):
+                            <input type="number" name="disp">
+                        </label>
+                        <label for="angularVelocity" id="angVelLabel">Angular Velocity:
+                            <input type="number" name="angularVelocity">
+                        </label>
+                        <label for="time" id="timeLabel">Time(t):
+                            <input type="number" name="time">
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -69,18 +71,20 @@
                 <div id="angVelocity" style="display: none;">
                     <h4>Calculate Angular Velocity:</h4>
 
-                    <label for="vel" id="vLabel">Velocity(v):
-                        <input type="number" name="vel">
-                    </label>
-                    <label for="radius" id="rLabel2">Radius(r):
-                        <input type="number" name="radius">
-                    </label>
-                    <label for="theta" id="thetaLabel">Angular Displacement:
-                        <input type="number" name="theta">
-                    </label>
-                    <label for="time" id="tLabel2">Time(t):
-                        <input type="number" name="time">
-                    </label>
+                    <div class="gridbox">
+                        <label for="vel" id="vLabel">Velocity(v):
+                            <input type="number" name="vel">
+                        </label>
+                        <label for="radius" id="rLabel2">Radius(r):
+                            <input type="number" name="radius">
+                        </label>
+                        <label for="theta" id="thetaLabel">Angular Displacement:
+                            <input type="number" name="theta">
+                        </label>
+                        <label for="time" id="tLabel2">Time(t):
+                            <input type="number" name="time">
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -96,18 +100,20 @@
                 <div id="angAcceleration" style="display: none;">
                     <h4>Calculate Angular Acceleration</h4>
 
-                    <label for="acc" id="aLabel">Acceleration(a):
-                        <input type="number" name="acc">
-                    </label>
-                    <label for="radius" id="rLabel3">Radius(r):
-                        <input type="number" name="radius">
-                    </label>
-                    <label for="angularVelocity" id="angvelLabel2">Angular Velocity:
-                        <input type="number" name="angularVelocity">
-                    </label>
-                    <label for="time" id="tLabel3">Time(t):
-                        <input type="number" name="time">
-                    </label>
+                    <div class="gridbox">
+                        <label for="acc" id="aLabel">Acceleration(a):
+                            <input type="number" name="acc">
+                        </label>
+                        <label for="radius" id="rLabel3">Radius(r):
+                            <input type="number" name="radius">
+                        </label>
+                        <label for="angularVelocity" id="angvelLabel2">Angular Velocity:
+                            <input type="number" name="angularVelocity">
+                        </label>
+                        <label for="time" id="tLabel3">Time(t):
+                            <input type="number" name="time">
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -133,23 +139,26 @@
                 <option value="fric_force" id="fricForce">Frictional Force(Fs)</option>
                 <option value="angle_of_banking" id="angleBanking">Angle of Banking</option>
             </select>
+            <br>
 
             <!-- Div to calculate the banking of roads for selected value to be calculated -->
             <div id="bankingDiv" style="display: none;">
                 <h4>Calculate <span id="result_label_banking"></span></h4>
 
-                <label for="radius" id="radiusLabel">Radius(r):
-                    <input type="number" name="radius">
-                </label>
-                <label for="maxvel" id="maxVelocityLabel">Maximum Velocity(v):
-                    <input type="number" name="maxvel">
-                </label>
-                <label for="angle_banking" id="bankingAngleLabel">Angle of Banking:
-                    <input type="number" name="angle_banking">
-                </label>
-                <label for="mass" id="massLabel">Mass(m):
-                    <input type="number" name="mass">
-                </label>
+                <div class="gridbox">
+                    <label for="radius" id="radiusLabel">Radius(r):
+                        <input type="number" name="radius">
+                    </label>
+                    <label for="maxvel" id="maxVelocityLabel">Maximum Velocity(v):
+                        <input type="number" name="maxvel">
+                    </label>
+                    <label for="angle_banking" id="bankingAngleLabel">Angle of Banking:
+                        <input type="number" name="angle_banking">
+                    </label>
+                    <label for="mass" id="massLabel">Mass(m):
+                        <input type="number" name="mass">
+                    </label>
+                </div>
                 <br><br>
 
                 <button type="submit" id="bankingSubmit" class="btn btn-primary">Calculate Result</button>

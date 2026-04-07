@@ -25,16 +25,18 @@
                 <h4>Calculate de-broglie wavelength:</h4>
                 <br>
 
-                <label for="p" id="momentum">Momentum(p):
-                    <input type="number" name="p">
-                </label>
-                <label for="ma" id="mass">Mass(m):
-                    <input type="number" name="ma">
-                </label>
-                <label for="vel" id="velocity">Velocity(v):
-                    <input type="number" name="vel">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="p" id="momentum">Momentum(p):
+                        <input type="number" name="p">
+                    </label>
+                    <label for="ma" id="mass">Mass(m):
+                        <input type="number" name="ma">
+                    </label>
+                    <label for="vel" id="velocity">Velocity(v):
+                        <input type="number" name="vel">
+                    </label>
+                </div>
+                <br>
 
                 <button type="submit" id="dbwSubmit" class="btn btn-primary">Calculate Result:</button>
                 <p id="dbwAns"></p>
@@ -61,13 +63,15 @@
                 <h4>Convert <span id="evj_result_label"></span>:</h4>
                 <br>
 
-                <label for="ev" id="evLabel">electron Volt(eV):
-                    <input type="number" name="ev">
-                </label>
-                <label for="j" id="jouleLabel">Joules(J):
-                    <input type="number" name="j">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="ev" id="evLabel">electron Volt(eV):
+                        <input type="number" name="ev">
+                    </label>
+                    <label for="j" id="jouleLabel">Joules(J):
+                        <input type="number" name="j">
+                    </label>
+                    <br>
+                </div>
 
                 <button type="submit" id="evjSubmit" class="btn btn-primary">Convert</button>
                 <p id="evjAns"></p>
@@ -119,19 +123,21 @@
                 <h4>Calculate <span id="bemd_result_label"></span>:</h4>
                 <br>
 
-                <label for="z" id="atomicLabel">Atomic number(z):
-                    <input type="number" name="z">
-                </label>
-                <label for="n" id="principalLabel">No. of neutrons(n):
-                    <input type="number" name="n">
-                </label>
-                <label for="ma" id="massAtomLabel">Nucleus Mass:
-                    <input type="number" name="ma">
-                </label>
-                <label for="a" id="nucleonsLabel">No. of nucleons:
-                    <input type="number" name="a">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="z" id="atomicLabel">Atomic number(z):
+                        <input type="number" name="z">
+                    </label>
+                    <label for="n" id="principalLabel">No. of neutrons(n):
+                        <input type="number" name="n">
+                    </label>
+                    <label for="ma" id="massAtomLabel">Nucleus Mass:
+                        <input type="number" name="ma">
+                    </label>
+                    <label for="a" id="nucleonsLabel">No. of nucleons:
+                        <input type="number" name="a">
+                    </label>
+                    <br>
+                </div>
 
                 <button type="submit" id="bemdSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="bemdAns"></p>
@@ -142,11 +148,10 @@
         <!-- Rydbergy Formula -->
         <div id="rydberg" class="container-fluid content">
             <h2><u><b>Rydberg Formula:</b></u></h2>
+            <h4>Calculate Spectral Wavelength:</h4>
+            <br>
 
-            <div id="rydbergDiv">
-                <h4>Calculate Spectral Wavelength:</h4>
-                <br>
-
+            <div id="rydbergDiv" class="gridbox">
                 <label for="n1" id="n1Label">N1 Value:
                     <input type="number" name="n1">
                 </label>
@@ -154,11 +159,11 @@
                 <label for="n2" id="n2Label">N2 Value:
                     <input type="number" name="n2">
                 </label>
-                <br><br>
-
-                <button type="submit" id="rydbergSubmit" class="btn btn-primary">Calculate Result</button>
-                <p id="rydbergAns"></p>
+                <br>
             </div>
+
+            <button type="submit" id="rydbergSubmit" class="btn btn-primary">Calculate Result</button>
+            <p id="rydbergAns"></p>
         </div>
         <hr>
 
@@ -166,21 +171,8 @@
         <script>
             //Function to clear all input fields
             function clearInputFields() {
-                //De Broglie wavelength labels
-                $('#p input, #ma input, #vel input').val('');
-                $('#dbwAns').text('');
-
-                //Bohr's model labels
-                $('#evLabel input, #jouleLabel input, #zLabel input, #nLabel input').val('');
-                $('#evjAns, #bohrAns').text('');
-
-                //Binding Energy and Mass Defect Labels
-                $('#atomicLabel input, #principalLabel input, #massAtomLabel input, #nucleonsLabel input').val('');
-                $('#bemdAns').text('');
-
-                //Rydbergy Formula Labels
-                $('#n1Label input, n2Label input').val('');
-                $('#rydbergAns').text('');
+                $('input').val('');
+                $('p').text('');
             }
 
             //De-Broglie wavelength JS

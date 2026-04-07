@@ -17,19 +17,21 @@
                 <h4>Calculate Inductance:</h4>
                 <br>
 
-                <label for="perm" id="permLabel">Permeability Value:
-                    <input type="number" name="perm">
-                </label>
-                <label for="turns" id="turnsLabel">No. of turns(N):
-                    <input type="number" name="turns">
-                </label>
-                <label for="length" id="lengthLabel">Coil Length(l):
-                    <input type="number" name="length">
-                </label>
-                <label for="area" id="areaLabel">Area encircled by coil:
-                    <input type="number" name="area">
-                </label>
-                <br><br>
+                <div class="gridbox">
+                    <label for="perm" id="permLabel">Permeability Value:
+                        <input type="number" name="perm">
+                    </label>
+                    <label for="turns" id="turnsLabel">No. of turns(N):
+                        <input type="number" name="turns">
+                    </label>
+                    <label for="length" id="lengthLabel">Coil Length(l):
+                        <input type="number" name="length">
+                    </label>
+                    <label for="area" id="areaLabel">Area encircled by coil:
+                        <input type="number" name="area">
+                    </label>
+                </div>
+                <br>
 
                 <button type="submit" id="indSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="indAns"></p>
