@@ -22,62 +22,47 @@
                 <option value="temperature" id="t">Temperature(T)</option>
                 <option value="mole" id="n">No. of moles(n)</option>
             </select>
-            <br><br>
+            <br>
 
-            {% csrf_token %}
             <div id="gasEquation" style="display: none;">
                 <h4>Calculate <span id="result_label"></span> </h4>
-                <div>
-                    <!-- Pressure -->
+                
+                <div class="gridbox">
                     <label for="pressure" id="pressure">Pressure(P):
                         <input type="number" name="P">
-
-                        <select class="form-select" name="pascal_atm" id="paatm">
-                            <option value="atm" id="atm">Atmospheric Pressure(atm)</option>
-                            <option value="pascal" id="pa">Pascal(Pa)</option>
-                        </select>
+                        <span>
+                            <select class="form-select" name="pascal_atm" id="paatm">
+                                <option value="atm" id="atm">Atmospheric Pressure(atm)</option>
+                                <option value="pascal" id="pa">Pascal(Pa)</option>
+                            </select>   
+                        </span>
                     </label>
-
-                    <!-- Volume -->
                     <label for="volume" id="volume">Volume(V):
                         <input type="number" name="V">
-
-                        <select class="form-select" name="litre_m3" id="km">
-                            <option value="litre" id="k">Litres(L)</option>
-                            <option value="m3" id="m">Meter cubed(m^3)</option>
-                        </select>
+                        <span>
+                            <select class="form-select" name="litre_m3" id="km">
+                                <option value="litre" id="k">Litres(L)</option>
+                                <option value="m3" id="m">Meter cubed(m^3)</option>
+                            </select>
+                        </span>
                     </label>
-                    
-                    <!-- Moles -->
                     <label for="mole" id="mole">No. of moles(n):
                         <input type="number" name="n">
                     </label>
-
-                    <!-- Temperature -->
                     <label for="temperature" id="temperature">Temperature(T):
                         <input type="number" name="T">
-                        
-                        <select class="form-select" name="kelvin_celsius" id="kc">
-                            <option value="kelvin" id="k">Kelvin</option>
-                            <option value="celsius" id="c">Celsius</option>
-                        </select>
+                        <span>
+                            <select class="form-select" name="kelvin_celsius" id="kc">
+                                <option value="kelvin" id="k">Kelvin</option>
+                                <option value="celsius" id="c">Celsius</option>
+                            </select>
+                        </span>
                     </label>
-                    <br>
                 </div>
 
                 <br>
                 <button type="submit" id="igesubmit" class="btn btn-primary">Calculate Result</button>
-                <br>
-                <p id="igeans">
-                    {% if error %}
-                    <div class="alert alert-danger">
-                        {{ error }}
-                    </div>
-                    {% endif %}
-                    {% if r %}
-                        {{ result }}
-                    {% endif %}
-                </p>
+                <p id="igeans"></p>
             </div>
         </div>
         <hr>
@@ -93,30 +78,31 @@
                 <option value="moles" id="n">No. of moles(n)</option>
                 <option value="temp" id="t">Temperature(T)</option>
             </select>
-            <br><br>
+            <br>
 
-            {% csrf_token %}
             <div id="kineticDiv" style="display: none;">
                 <h4>Calculate <span id="result_label2"></span>:</h4>
-                <label for="kineticEnergy" id="kinetic-energy">Kinetic Energy(KE):
-                    <input type="number" name="ke">
-                </label>
                 
-                <label for="moles" id="moles">No. of moles(n):
-                    <input type="number" name="n">
-                </label>
-                
-                <label for="temperature" id="temperature2">Temperature(T):
-                    <input type="number" name="t">
-                </label>
-                <select class="form-select" name="kelvin_celsius" id="kc2">
-                    <option value="kelvin" id="k2">Kelvin(K)</option>
-                    <option value="celsius" id="c2">Celsius(C)</option>
-                </select>
-                <br><br>
+                <div class="gridbox">
+                    <label for="kineticEnergy" id="kinetic-energy">Kinetic Energy(KE):
+                        <input type="number" name="ke">
+                    </label>
+                    <label for="moles" id="moles">No. of moles(n):
+                        <input type="number" name="n">
+                    </label>
+                    <label for="temperature" id="temperature2">Temperature(T):
+                        <input type="number" name="t">
+                        <span>
+                            <select class="form-select" name="kelvin_celsius" id="kc2">
+                                <option value="kelvin" id="k2">Kelvin(K)</option>
+                                <option value="celsius" id="c2">Celsius(C)</option>
+                            </select>
+                        </span>
+                    </label>
+                </div>
+                <br>
 
                 <button type="submit" id="kineticTheorySubmit" class="btn btn-primary">Calculate Result</button>
-                <br>
                 <p id="kineticTheoryAns"></p>
             </div>
         </div>
@@ -137,26 +123,27 @@
             {% csrf_token %}
             <div id="rmsDiv" style="display: none;">
                 <h4>Calculate <span id="result_label3"></span>:</h4>
-                <br>
-                <label for="rms" id="rmsVelocity">RMS Velocity:
-                    <input type="number" name="rms">
-                </label>
-                
-                <label for="t3" id="temperature3">Temperature(T):
-                    <input type="number" name="t3">
-                </label>
-                <select class="form-select" name="kelvin_celsius" id="kc3">
-                    <option value="kelvin" id="k3">Kelvin(K)</option>
-                    <option value="celsius" id="c3">Celsius(C)</option>
-                </select>
 
-                <label for="mm" id="molarMass">Molar Mass(M):
-                    <input type="number" name="mm">
-                </label>
-                <br>
+                <div class="gridbox">
+                    <label for="rms" id="rmsVelocity">RMS Velocity:
+                        <input type="number" name="rms">
+                    </label>
+                    <label for="t3" id="temperature3">Temperature(T):
+                        <input type="number" name="t3">
+                        <span>
+                            <select class="form-select" name="kelvin_celsius" id="kc3">
+                                <option value="kelvin" id="k3">Kelvin(K)</option>
+                                <option value="celsius" id="c3">Celsius(C)</option>
+                            </select>
+                        </span>
+                    </label>
+                    <label for="mm" id="molarMass">Molar Mass(M):
+                        <input type="number" name="mm">
+                    </label>
+                    <br>
+                </div>
 
                 <button type="submit" id="rmsSubmit" class="btn btn-primary">Calculate Result</button>
-                <br>
                 <p id="rmsAns"></p>
             </div>
          </div>

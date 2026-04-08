@@ -15,24 +15,26 @@
             
             <div id="internalDiv">
                 <h4>Calculate Internal Energy:</h4>
+
+                <div class="gridbox">
+                    <label for="temperature" id="internalTempLabel">Temperature(T)
+                        <input type="number" name="temperature">
+                        <span>
+                            <select class="form-select" id="int_kc">
+                                <option value="kelvin">Kelvin(K)</option>
+                                <option value="celsius">Celsius(C)</option>
+                            </select>
+                        </span>
+                    </label>
+                    <label for="moles" id="internalMolesLabel">No. of moles(n):
+                        <input type="number" name="moles">
+                    </label>
+                    
+                    <label for="dof" id="degreesLabel">Degrees of Freedom:
+                        <input type="number" name="dof">
+                    </label>
+                </div>
                 <br>
-
-                <label for="temperature" id="internalTempLabel">Temperature(T)
-                    <input type="number" name="temperature">
-                </label>
-                <select class="form-select" id="int_kc">
-                    <option value="kelvin">Kelvin(K)</option>
-                    <option value="celsius">Celsius(C)</option>
-                </select>
-
-                <label for="moles" id="internalMolesLabel">No. of moles(n):
-                    <input type="number" name="moles">
-                </label>
-
-                <label for="dof" id="degreesLabel">Degrees of Freedom:
-                    <input type="number" name="dof">
-                </label>
-                <br><br>
             
                 <button type="submit" id="internalSubmit" class="btn btn-primary">Calculate Result</button>
                 <p id="internalAns"></p>
