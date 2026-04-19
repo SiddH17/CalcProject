@@ -1,0 +1,202 @@
+{% extends "mathematics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Statistics{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <div class="container-fluid content" id="stats">
+            
+            <!-- mean, median and mode code -->
+            <div id="mememo">
+                <div>
+                    <h2><u><b>Mean, median and mode:</b></u></h2>
+                    <br>
+
+                    <!-- Central Measures of Tendency selection dropdown -->
+                    <h4>Select the type of central tendency to be calculated:</h4>
+                    <select class="form-select" name="mmm" id="mmm">
+                        <option value="Select">--Select--</option>
+                        <option value="mean">Mean/Average</option>
+                        <option value="median">Median</option>
+                        <option value="mode">Mode</option>
+                    </select>
+                </div>
+                <br>
+
+                <!-- Central Tendency calculation div -->
+                <div id="mmmcalc" style="display: none;">
+                    <h4>Calculate <span class="result_label"></span>:</h4>
+                    <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
+                    
+                    <div class="gridbox">
+                        <label for="obsinput" id="obsinput">No. of observations(n):
+                            <input type="number" name="obs">
+                        </label>
+                        <label for="numsinput" id="numsinput">Observations/Numbers:
+                            <input type="text" name="nums">
+                        </label>
+                    </div>
+                    <br><br>
+
+                    <!-- Submission button for calculation of the answer -->
+                    <button type="submit" class="btn btn-primary" id="mmmsubmit">Calculate</button>
+                    <p id="mmmans"></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <!-- To calculate measures of spread -->
+        <div class="container-fluid content" id="spread">
+            <h2><u><b>Measures of Spread:</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+
+            <!-- Dropdown to select the spread value -->
+            <select name="spreadDropdown" id="spreadDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="coefficient" id="coeff">Co-efficient of Range</option>
+                <option value="variance" id="variance">Variance</option>
+                <option value="sd" id="sd">Standard Deviation</option>
+                <option value="coeffvar" id="coeffvar">Co-efficient of Variance</option>
+            </select>
+
+            <!-- Div to calculate the spread value chosen -->
+            <div id="spreadDiv" style="display: none;">
+                <h4>Calculate <span id="spread_result_label"></span>:</h4>
+                <h5>**(Note: Please make sure you correctly specify the numbers by giving the appropriate space between different numbers)**</h5>
+                <div class="gridbox">
+                    <label for="numberLabel" id="numberLabel">No. of observations(n):
+                        <input type="number" name="numberLabel">
+                    </label>
+                    <label for="obsLabel" id="obsLabel">Observations/Numbers:
+                        <input type="text" name="obsLabel">
+                    </label>
+                </div>
+                <br><br>
+
+                <button type="submit" id="spreadSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="spreadAns"></p>
+            </div>
+        </div>
+
+        <script>
+                function clearInputFields() {
+                    $('input').val('');
+                    $('p').text('');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                }
+
+            $(document).ready(function()    {
+                clearInputFields();
+
+                const selectElement =  $('#mmm');
+                const mememoDiv = $('#mmmcalc');
+                const mememoSubmit = $('#mmmsubmit');
+                const mememoAnswer = $('#mmmans');
+                var frequency = $('#obsinput');
+                var observations = $('#numsinput');
+
+                var resultLabel = $('.result_label');
+
+                selectElement.change(function()   {
+                    clearInputFields();
+
+                    // Display the central measures calculation as long as 'Select' option is not selected
+                    var selectValue = selectElement.val();
+                    resultLabel.text(selectValue);
+                    console.log(selectValue);
+                    if(selectValue != 'Select')   {
+                        mememoDiv.show();
+                    }
+                    else    {
+                        mememoDiv.hide();
+                    }
+                })
+
+                //When clicking on the button to submit final result for mean/median/mode
+                mememoSubmit.click(function()   {
+                    var selectValue = selectElement.val();
+                    console.log("The selected option, ",selectValue);
+
+                    var selectedDiv = $('#mmmcalc:visible');
+                    var numberInputs = selectedDiv.find('input[type=number]');
+                    var textInputs = selectedDiv.find('input[type=text]');
+                    
+                    var numberName = numberInputs.attr('name');
+                    var numberValue = numberInputs.val();
+                    var textName = textInputs.attr('name');
+                    var textValue = textInputs.val();
+                    
+                    var data = {
+                        'select_value': selectValue,
+                        'obs': numberValue,
+                        'nums': textValue
+                    }
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "statistics_api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#mmmans').text(response.result);
+                            console.log("This is the required result",response.result);
+                        }
+                    })
+                })
+            
+                //On changing the dropdown values
+                $('#spreadDropdown').change(function()  {
+                    clearInputFields();
+                    var dropdownValue = $('#spreadDropdown').val();
+                    $('#spread_result_label').text(dropdownValue);
+
+                    if(dropdownValue == 'select')   {
+                        $('#spreadDiv').hide();
+                    }
+                    else    {
+                        $('#spreadDiv').show();
+                        $('#obsLabel').show();
+
+                        if(dropdownValue == 'coefficient')  {
+                            $('#numberLabel').hide();
+                        }
+                        else    {
+                            $('#numberLabel').show();
+                        }
+                    }
+                });
+
+                //When user clicks on the button to calculate the final result
+                $('#spreadSubmit').click(function() {
+                    var numInput = $('#spreadDiv').find('input[type=number]');
+                    var textInput = $('#spreadDiv').find('input[type=text]');
+                    console.log(numInput, textInput);
+                    var data = {};
+
+                    if(numInput.val())    {
+                        data.numberLabel = numInput.val();
+                    }
+                    data.obsLabel = textInput.val();
+                    data.selectedValue = $('#spreadDropdown').val();
+                    console.log(data);
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "spread_api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#spreadAns').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

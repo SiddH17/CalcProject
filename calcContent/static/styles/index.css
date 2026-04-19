@@ -1,0 +1,96 @@
+/* tags */
+body    {
+    color: whitesmoke;
+    background-color: #071952;
+}
+nav {
+    position: fixed;
+    top: 0;
+    background-color: #071952;
+    border: 1px solid whitesmoke;
+}
+h5  {
+    color: #D71313;
+}
+form   {
+    margin: auto;
+}
+a   {
+    font-size: 16px;
+    background-color: #071952 !important;
+    color: whitesmoke !important;
+}
+a:link   {
+    color: whitesmoke !important;
+    text-decoration: none;
+}
+a:visited   {
+    color: whitesmoke !important;
+    text-decoration: none;
+}
+a:hover {
+    background-color: whitesmoke !important;
+    color: #071952 !important;
+}
+li  {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+button  {
+    background-color: #071952 !important;
+    color: whitesmoke !important;
+}
+button:hover    {
+    background-color: whitesmoke !important;
+    color: #071952 !important;
+}
+
+/* classes */
+.topic    {
+    text-align: center;
+}
+.btn  {
+    font-size: 20px;
+    border: 10px;
+    border-color: white;
+}
+.dropdown-menu  {
+    background-color: #071952 !important;
+}
+.mlcalculator   {
+    margin: auto;
+}
+.navbar-nav {
+    width: 100%;
+}
+.navbar-nav a, .navbar-nav li   {
+    margin: auto;
+}
+
+/* IDs */
+#signin {
+    margin: 0 !important;
+}
+#searchlogin    {
+    display: flex;
+    justify-content: flex-end;
+    width: 56%;
+}
+#searchLogo {
+    display: flex;
+    align-items: center;
+    background-color: whitesmoke;
+    color: #071952;
+}
+#searchBar  {
+    border: 0px;
+    border-radius: 0%;
+    background-color: whitesmoke;
+}
+
+/* Other styles */
+button[type="submit"]   {
+    border: 1px solid whitesmoke;
+}

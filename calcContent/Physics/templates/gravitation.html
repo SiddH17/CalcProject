@@ -1,0 +1,491 @@
+{% extends "physics.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gravitation{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Newton's law of Gravitation -->
+        <div id="newtonGravitation" class="container-fluid content">
+            <h2><u><b>Newton's Law of Gravitation</b></u></h2>
+            <h4>Select a value to be calculated:</h4>
+            <br>
+            
+            <select name="gravitationDropdown" id="gravitationDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="force" id="newtonForce">Force (F)</option>
+                <option value="first-mass" id="mass1">Mass of first object (m1)</option>
+                <option value="second-mass" id="mass2">Mass of second object (m2)</option>
+                <option value="distance" id="objectDistance">Distance (r)</option>
+            </select>
+            <br>
+
+            <div id="gravitationDiv" style="display: none;">
+                <h4>Calculate <span id="newton_gravitation_result_label"></span>:</h4>
+
+                <div class="gridbox">
+                    <label for="gravitationForce" id="forceLabel">Force (F):
+                        <input type="number" name="gravitationForce">
+                    </label>
+                    <label for="firstMass" id="mass1Label">First Object Mass (m1):
+                        <input type="number" name="firstMass">
+                    </label>
+                    <label for="secondMass" id="mass2Label">Second Object Mass (m2):
+                        <input type="number" name="secondMass">
+                    </label>
+                    <label for="objDistance" id="distanceLabel">Distance (r):
+                        <input type="number" name="objDistance">
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" id="gravitationSubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="gravitationAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Gravitational field in different shapes -->
+        <div id="gfield" class="container-fluid content">
+            <h2><b><u>Gravitational Field in different shapes:</u></b></h2>
+
+            <h4>Select a shape to find gravitational field in:</h4>
+            <select id="gfieldDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="quarter-ring" id="qring">Quarter Ring</option>
+                <option value="semi-circular-ring" id="sring">Semi-Circular Ring</option>
+                <option value="hollow-solid-sphere" id="hssphere">Hollow/Solid Sphere (External)</option>
+            </select>
+            <br>
+
+            <div id="gVariablesDropdown" style="display: none;">
+                <h4>Select which variable you would like to use:</h4>
+                <select name="variableDropdown" id="variableDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="linear-density" id="linDensity">Linear Density</option>
+                    <option value="mass-length" id="massLength">Mass & Length</option>
+                </select>
+            </div>
+            <br>
+
+
+            <div id="gfieldDiv" style="display: none;">
+                <h4>Calculate gravitational field in <span class="gfield_result_label"></span>:</h4>
+                <br>
+
+                <div class="gridbox">
+                    <label for="g-mass" id="gMassLabel">Mass(M):
+                        <input type="number" name="g-mass">
+                    </label>
+                    <label for="g-radius" id="gRadiusLabel">Radius(r):
+                        <input type="number" name="g-radius">
+                    </label>
+                    <label for="g-length" id="gLengthLabel">Length(l):
+                        <input type="number" name="g-length">
+                    </label>
+                    <label for="g-linear-density" id="gLinDensityLabel">Linear Density:
+                        <input type="number" name="g-linear-density">
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" id="gfieldSubmit" class="btn btn-primary">Calculate Result:</button>
+                <p id="gfieldAns"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Gravitational Potential in different shapes -->
+        <div id="gpotential" class="container-fluid content">
+            <h2><u><b>Gravitational Potential in different shapes:</b></u></h2>
+
+            <h4>Select a shape:</h4>
+            <select name="gpotdropdown" id="gpotdropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="ring" id="gpotring">Ring</option>
+                <option value="hollow-sphere" id="gpothollowsphere">Hollow Sphere</option>
+                <option value="solid-sphere" id="gpotsolidsphere">Solid Sphere</option>
+            </select>
+            <br><br>
+
+            <div id="gpotside" style="display: none;">
+                <h4>Select a surface of the solid sphere:</h4>
+                <select name="gpotintext" id="gpotintext" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="internal" id="gpotinternal">Internal</option>
+                    <option value="external" id="gpotexternal">External</option>
+                </select>
+            </div>
+
+            <div id="gpotdiv" style="display: none;">
+                <h4><u><b>Calculate <span id="gpot_result_label"></span>:</b></u></h4>
+                <br>
+
+                <div class="gridbox">
+                    <label for="mass" id="gpotmasslabel">Mass(M):
+                        <input type="number" name="mass">
+                    </label>
+                    <label for="distance" id="gpotdistlabel">Distance(R):
+                        <input type="number" name="distance">
+                    </label>
+                    <label for="radius" id="gpotradlabel">Radius of Sphere(X):
+                        <input type="number" name="radius">
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" id="gpotsubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="gpotans"></p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- Orbital and Escape Velocity -->
+        <div id="orbescvel" class="container-fluid content">
+            <h2><u><b>Orbital and Escape Velocity</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="orbescdropdown" id="orbescdropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="orbital-velocity" id="orbvelocity">Orbital Velocity(Vo)</option>
+                <option value="escape-velocity" id="escvelocity">Escape Velocity(Ve)</option>
+                <option value="mass" id="orbescmass">Mass(M)</option>
+                <option value="distance" id="orbescdistance">Distance(R)</option>
+            </select>
+            <br>
+
+            <div id="orbescselect" style="display: none;">
+                <h4>Select the type of velocity avaiable:</h4>
+
+                <select name="orbescselectdropdown" id="orbescselectdropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="orbital" id="orbitalvel">Orbital Velocity(Vo)</option>
+                    <option value="escape" id="escapevel">Escape Velocity(Ve)</option>
+                </select>
+            </div>
+            <br>
+
+            <div id="orbescdiv" style="display: none;">
+                <h4>Calculate <span id="orbesc_result_label"></span>:</h4>
+                <br>
+
+                <div class="gridbox">
+                    <label for="orbital" id="orbitallabel">Orbital Velocity(Vo):
+                        <input type="number" name="orbital">
+                    </label>
+                    <label for="escape" id="escapelabel">Escape Velocity(Ve):
+                        <input type="number" name="escape">
+                    </label>
+                    <label for="mass" id="masslabel">Mass(M):
+                        <input type="number" name="mass">
+                    </label>
+                    <label for="distance" id="distlabel">Distance(R):
+                        <input type="number" name="distance">
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" id="orbescsubmit" class="btn btn-primary">Calculate Result</button>
+                <p id="orbescans"></p>
+            </div>
+        </div>
+
+        <script>
+            function clearInputFields() {
+                $('input').val('');
+                $('p').text('');
+            }
+
+            $(document).ready(function()    {
+                // Change function logic for Newton's law of gravitation
+                $('#gravitationDropdown').change(function()  {
+                    clearInputFields();
+                    var gravitationValue = $('#gravitationDropdown').val();
+                    $('#forceLabel').show();
+                    $('#mass1Label').show();
+                    $('#mass2Label').show();
+                    $('#distanceLabel').show();
+
+                    if(gravitationValue == 'select')    {
+                        $('#gravitationDiv').hide();
+                    }
+                    else    {
+                        $('#gravitationDiv').show();
+
+                        if(gravitationValue == 'force') {
+                            $('#forceLabel').hide();
+                        }
+                        else if(gravitationValue == 'first-mass')   {
+                            $('#mass1Label').hide();
+                        }
+                        else if (gravitationValue == 'second-mass') {
+                            $('#mass2Label').hide();
+                        }
+                        else if(gravitationValue == 'distance') {
+                            $('#distanceLabel').hide();
+                        }
+                    }
+                });
+
+                //Submit button function logic for Newton's law of gravitation
+                $('#gravitationSubmit').click(function()    {
+                    var inputs = $('#gravitationDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data.selected_value = $('#gravitationDropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "newton-gravitation" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#gravitationAns').text(response.result);
+                        }
+                    });
+                });
+            
+                //Gravitational Field change function logic for different objects
+                $('#gfieldDropdown').change(function()  {
+                    var gfieldVal = $('#gfieldDropdown').val();
+                    clearInputFields();
+                    $('.gfield_result_label').text(gfieldVal);
+                    $('#gVariablesDropdown').val('select');
+                    $('#gVariablesDropdown').hide();
+                    console.log($('#gVariablesDropdown').val(), gfieldVal);
+
+                    if(gfieldVal == 'select')   {
+                        $('#gfieldDiv').hide();
+                    }
+                    else    {
+                        if(gfieldVal == 'quarter-ring' || gfieldVal == 'semi-circular-ring')    {
+                            $('#gVariablesDropdown').show();
+
+                            $('#variableDropdown').change(function()    {
+                                var gVariableValue = $('#variableDropdown').val();
+
+                                if(gVariableValue == 'select')  {
+                                    $('#gfieldDiv').hide();
+                                    clearInputFields();
+                                }
+                                else    {
+                                    $('#gfieldDiv').show();
+                                    $('#gMassLabel').show();
+                                    $('#gLengthLabel').show();
+                                    $('#gRadiusLabel').show();
+                                    $('#gLinDensityLabel').show();
+
+                                    if (gVariableValue == 'linear-density') {
+                                        $('#gMassLabel').hide();
+                                        $('#gLengthLabel').hide();
+                                    }
+                                    else if (gVariableValue == 'mass-length') {
+                                        $('#gLinDensityLabel').hide();
+                                    }
+                                } 
+                                
+                            });
+                        }
+                        else if(gfieldVal == 'hollow-solid-sphere')    {
+                            $('#gfieldDiv').show();
+                            $('#gRadiusLabel').show();
+                            $('#gMassLabel').show();
+                            $('#gLengthLabel').hide();
+                            $('#gLinDensityLabel').hide();
+                            $('#variableDropdown').hide();
+                        }
+                    }
+                });
+
+                //Submit button function logic for Gravitational field in different objects
+                $('#gfieldSubmit').click(function() {
+                    var inputs = $('#gfieldDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['gfield_selected_value'] = $('#gfieldDropdown').val();
+                    data['variable_value'] = $('#variableDropdown').val();
+                
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "gravitational-field-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#gfieldAns').text(response.result);
+                        }
+                    });
+                });
+            
+                //Change function logic in Gravitational Potential in different objects
+                $('#gpotdropdown').change(function()    {
+                    var gpotvalue = $('#gpotdropdown').val();
+                    clearInputFields();
+                    $('#gpot_result_label').text(gpotvalue);
+
+                    console.log(gpotvalue, "The upper dropdown");
+
+                    if(gpotvalue == 'select')   {
+                        clearInputFields();
+                        $('#gpotdiv').hide();
+                        $('#gpotside').hide();
+                    }
+                    else if(gpotvalue == 'ring' || gpotvalue == 'hollow-sphere')    {
+                        console.log("Inside the else function now");
+                        $('#gpotside').hide();
+                        $('#gpotradlabel').hide();
+                        $('#gpotdiv').show();
+                        $('#gpotmasslabel').show();
+                        $('#gpotdistlabel').show();
+                    }
+                    else if (gpotvalue == 'solid-sphere') {
+                        $('#gpotside').show();
+
+                        $('#gpotintext').change(function()   {
+                            var gpotsidevalue = $('#gpotintext').val();
+                            $('#gpotdiv').show();
+
+                            if (gpotsidevalue == 'select') {
+                                $('#gpotdiv').hide();
+                            }
+                            else {
+                                $('#gpotradlabel').show();
+                                $('#gpotdiv').show();
+                                $('#gpotmasslabel').show();
+                                $('#gpotdistlabel').show();
+
+                                if (gpotsidevalue == 'external') {
+                                    $('#gpotradlabel').hide();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                //Submit button function for Gravitational Potential in different objects
+                $('#gpotsubmit').click(function()   {
+                    var inputs = $('#gpotdiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    })
+                    console.log(data, "The data that needs to be checked");
+                    data['select_value'] = $('#gpotdropdown').val();
+                    data['side_select'] = $('#gpotintext').val();
+
+                    $.ajax({
+                        'url': '{% url "gravitational-potential-api" %}',
+                        'type': 'GET',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#gpotans').text(response.result);
+                        }
+                    });
+                });
+           
+                //Orbital and Escape velocity change function logic
+                $('#orbescdropdown').change(function()  {
+                    var orbescvalue = $('#orbescdropdown').val();
+                    clearInputFields();
+                    $('#orbesc_result_label').text(orbescvalue);
+
+                    if(orbescvalue == 'select') {
+                        clearInputFields();
+                        $('#orbescdiv').hide();
+                    }
+                    else    {
+                        $('#orbescselect').hide();
+                        $('#orbescdiv').show();
+                        $('#orbitallabel').show();
+                        $('#escapelabel').show();
+                        $('#masslabel').show();
+                        $('#distlabel').show();
+
+                        if(orbescvalue == 'orbital-velocity')   {
+                            $('#orbitallabel').hide();
+                        }
+                        else if(orbescvalue == 'escape-velocity')   {
+                            $('#escapelabel').hide();
+                        }
+                        else    {
+                            $('#orbescdiv').hide();
+                            $('#orbescselect').show();
+                            $('#orbescselectdropdown').change(function()    {
+                                var velselect = $('#orbescselectdropdown').val();
+                                clearInputFields();
+                                $('#orbescdiv').show();
+                                $('#orbitallabel').show();
+                                $('#escapelabel').show();
+                                $('#masslabel').show();
+                                $('#distlabel').show();
+
+                                if(velselect == 'select')   {
+                                    $('#orbescdiv').hide();
+                                }
+                                else if(orbescvalue == 'mass' && velselect == 'orbital') {
+                                    $('#orbescdiv').show();
+                                    $('#escapelabel').hide();
+                                    $('#masslabel').hide();
+                                }
+                                else if (orbescvalue == 'distance' && velselect == 'orbital') {
+                                    $('#orbescdiv').show();
+                                    $('#escapelabel').hide();
+                                    $('#distlabel').hide();
+                                }
+                                else if(orbescvalue == 'mass' && velselect == 'escape')  {
+                                    $('#orbescdiv').show();
+                                    $('#orbitallabel').hide();
+                                    $('#masslabel').hide();
+                                }
+                                else if (orbescvalue == 'distance' && velselect == 'escape') {
+                                    $('#orbescdiv').show();
+                                    $('#orbitallabel').hide();
+                                    $('#distlabel').hide();
+                                }
+                            });
+                        }
+                    }
+                });
+            
+                //Submit functionality for orbital and escape velocity
+                $('#orbescsubmit').click(function() {
+                    var inputs = $('#orbescdiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['select_value'] = $('#orbescdropdown').val();
+                    data['vel_select'] = $('#orbescselectdropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "orb-esc-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#orbescans').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

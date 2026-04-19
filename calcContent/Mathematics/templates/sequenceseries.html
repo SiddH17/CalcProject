@@ -1,0 +1,335 @@
+{% extends "mathematics.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sequence and Series{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Arithmetic Progression -->
+        <div class="container-fluid content">
+            <h2><u><b>Arithmetic Progression:</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="apDropdown" id="apDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="nth-term" id="nth">Nth Term (An)</option>
+                <option value="first-term" id="a1">First Term (A0)</option>
+                <option value="difference" id="difference">Difference (d)</option>
+                <option value="num" id="num">Sequence Count (n)</option>
+                <option value="sum" id="sum">Sum of sequence (Sn)</option>
+            </select>
+            <br>
+
+            <div style="display: none;" id="apFormula">
+                <h4>Select a formula to be used:</h4>
+                <select name="apFormulaDropdown" id="apFormulaDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="nTerms" id="nTerm">An = A0 + (n-1)*d </option>
+                    <option value="sumSequence" id="sumSeq">Sn = (n/2)*(2*a + (n-1)*d)</option>
+                </select>
+            </div>
+            <br>
+
+            <div id="apDiv" style="display: none;">
+                <h4>Calculate <span id="ap_result_label"></span>:</h4>
+
+                <div class="gridbox">
+                    <label for="a1Label" id="a1Label">First Term (A0):
+                        <input type="number" name="a1Label">
+                    </label>
+                    <label for="nLabel" id="nLabel">No. of terms in sequence (n):
+                        <input type="number" name="nLabel">
+                    </label>
+                    <label for="dLabel" id="dLabel">Difference (d):
+                        <input type="number" name="dLabel">
+                    </label>
+                    <label for="anLabel" id="anLabel">Nth Term (An):
+                        <input type="number" name="anLabel">
+                    </label>
+                    <label for="sumLabel" id="sumLabel">Sum of Sequences (Sn):
+                        <input type="number" name="sumLabel">
+                    </label>
+                </div>
+                <br><br>
+
+                <button type="submit" class="btn btn-primary" id="apSubmit">Calculate Result</button>
+                <p id="apAns"></p>
+            </div>
+        </div>
+        <hr>
+
+            <!-- Geometric Progression -->
+            <div class="container-fluid content">
+                <h2><u><b>Geometric Progression:</b></u></h2>
+            
+                <h4>Select a value to be calculated:</h4>
+                <select name="gpDropdown" id="gpDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="nth-term" id="gn">Nth Term (Gn)</option>
+                    <option value="first-term" id="g0">First Term (G0)</option>
+                    <option value="difference" id="rDifference">Common Difference (r)</option>
+                    <option value="num" id="gnum">Sequence Count (n)</option>
+                    <option value="sum" id="gsum">Sum of sequence (Sn)</option>
+                </select>
+                <br>
+            
+                <div style="display: none;" id="gpFormula">
+                    <h4>Select a formula to be used:</h4>
+                    <select name="gpFormulaDropdown" id="gpFormulaDropdown" class="form-select">
+                        <option value="select">--Select--</option>
+                        <option value="nTerms" id="gnTerms">Gn = G0*(r**(n-1)) </option>
+                        <option value="sumSequence" id="gsumSeq">Sn = a*(1-(r)**n)/(1-r) OR Sn = a*((r)**n-1)/(r-1)</option>
+                    </select>
+                </div>
+                <br>
+            
+                <div id="gpDiv" style="display: none;">
+                    <h4>Calculate <span id="gp_result_label"></span>:</h4>
+                    
+                    <div class="gridbox">
+                        <label for="g1Label" id="g1Label">First Term (G0):
+                            <br><input type="number" name="g1Label">
+                        </label>
+                        <label for="gnumLabel" id="gnumLabel">No. of terms in sequence (n):
+                            <br><input type="number" name="gnumLabel">
+                        </label>
+                        <label for="rLabel" id="rLabel">Difference (r):
+                            <br><input type="number" name="rLabel">
+                        </label>
+                        <label for="gnLabel" id="gnLabel">Nth Term (Gn):
+                            <br><input type="number" name="gnLabel">
+                        </label>
+                        <label for="gsumLabel" id="gsumLabel">Sum of Sequences (Sn):
+                            <br><input type="number" name="gsumLabel">
+                        </label>
+                    </div>
+                    <br>
+        
+                    <button type="submit" class="btn btn-primary" id="gpSubmit">Calculate Result</button>
+                    <p id="gpAns"></p>
+                </div>
+            </div>
+
+        <script>
+            function clearInputFields() {
+                $('input').val('');
+                $('p').text('');
+            }
+
+            $(document).ready(function()    {
+                clearInputFields();
+
+                //Change function logic for AP dropdown
+                $('#apDropdown').change(function()  {
+                    clearInputFields();
+                    var apDropdownValue = $('#apDropdown').val();
+                    $('#ap_result_label').text(apDropdownValue);
+                    $('#apFormulaDropdown').val('select');
+
+                    if (apDropdownValue == 'select') {
+                        $('#apDiv').hide();
+                        $('#apFormula').hide();
+                        clearInputFields();
+                    }
+                    else {
+                        if (apDropdownValue == 'nth-term' || apDropdownValue == 'sum') {
+                            $('#apDiv').show();
+                            $('#apFormula').hide();
+                            $('#anLabel').hide();
+                            $('#sumLabel').hide();
+                            $('#nLabel').show();
+                            $('#a1Label').show();
+                            $('#dLabel').show();
+                        }
+                        else {
+                            $('#apFormula').show();
+                            $('#apDiv').hide();
+
+                            $('#apFormulaDropdown').change(function () {
+                                clearInputFields();
+                                var apFormulaValue = $('#apFormulaDropdown').val();
+                                $('#nLabel').show();
+                                $('#a1Label').show();
+                                $('#dLabel').show();
+                                $('#apDiv').show();
+                                $('#anLabel').show();
+                                $('#sumLabel').show();
+
+                                if(apFormulaValue == 'select')  {
+                                    $('#apDiv').hide();
+                                }
+                                else if (apDropdownValue == 'first-term') {
+                                    $('#a1Label').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                                else if (apDropdownValue == 'difference') {
+                                    $('#dLabel').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                                else if (apDropdownValue == 'num') {
+                                    $('#nLabel').hide();
+
+                                    if (apFormulaValue == 'nTerms') {
+                                        $('#sumLabel').hide();
+                                    }
+                                    else if (apFormulaValue == 'sumSequence') {
+                                        $('#anLabel').hide();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+                //AP submit button logic
+                $('#apSubmit').click(function() {
+                    var inputs = $('#apDiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['dropdown_val'] = $('#apDropdown').val();
+                    data['formula_val'] = $('#apFormulaDropdown').val();
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "ap-api" %}',
+                        'data': data,
+                        'success': function(response)   {
+                            $('#apAns').text(response.result);
+                        }
+                    });
+                });
+
+                //Change function logic for GP dropdown
+                $('#gpDropdown').change(function () {
+                    clearInputFields();
+                    var gpDropdownValue = $('#gpDropdown').val();
+                    $('#gp_result_label').text(gpDropdownValue);
+                    $('#gpFormulaDropdown').val('select');
+                    $('#gsumSeq').show();
+
+                    if (gpDropdownValue == 'select') {
+                        $('#gpDiv').hide();
+                        $('#gpFormula').hide();
+                        clearInputFields();
+                    }
+                    else {
+                        if (gpDropdownValue == 'nth-term' || gpDropdownValue == 'sum') {
+                            $('#gpDiv').show();
+                            $('#gpFormula').hide();
+                            $('#gnLabel').hide();
+                            $('#gsumLabel').hide();
+                            $('#gnLabel').hide();
+                            $('#g1Label').show();
+                            $('#rLabel').show();
+                        }
+                        else {
+                            $('#gpFormula').show();
+                            $('#gpDiv').hide();
+
+                            $('#gpFormulaDropdown').change(function () {
+                                clearInputFields();
+                                var gpFormulaValue = $('#gpFormulaDropdown').val();
+                                $('#gnumLabel').show();
+                                $('#g1Label').show();
+                                $('#rLabel').show();
+                                $('#gpDiv').show();
+                                $('#gnLabel').show();
+                                $('#gsumLabel').show();
+
+                                if (gpFormulaValue == 'select') {
+                                    $('#gpDiv').hide();
+                                }
+                                else if (gpDropdownValue == 'first-term') {
+                                    $('#g1Label').hide();
+
+                                    if (gpFormulaValue == 'nTerms') {
+                                        $('#gsumLabel').hide();
+                                    }
+                                    else if (gpFormulaValue == 'sumSequence') {
+                                        $('#gnLabel').hide();
+                                    }
+                                }
+                                else if (gpDropdownValue == 'difference') {
+                                    $('#rLabel').hide();
+                                    $('#gsumSeq').hide();
+
+                                    if (gpFormulaValue == 'nTerms') {
+                                        $('#gsumLabel').hide();
+                                    }
+                                    else if (gpFormulaValue == 'sumSequence') {
+                                        $('#gnLabel').hide();
+                                    }
+                                }
+                                else if (gpDropdownValue == 'num') {
+                                    $('#gnumLabel').hide();
+
+                                    if (gpFormulaValue == 'nTerms') {
+                                        $('#gsumLabel').hide();
+                                    }
+                                    else if (gpFormulaValue == 'sumSequence') {
+                                        $('#gnLabel').hide();
+                                    }
+                                }
+                            });
+                        }
+                    }    
+                });
+
+                //GP submit button logic
+                $('#gpSubmit').click(function () {
+                    var inputs = $('#gpDiv').find('input[type=number]');
+                    var data = {};
+
+                    inputs.each(function () {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['g_dropdown_val'] = $('#gpDropdown').val();
+                    data['g_formula_val'] = $('#gpFormulaDropdown').val();
+
+                    console.log(data);
+
+                    $.ajax({
+                        'type': 'GET',
+                        'url': '{% url "gp-api" %}',
+                        'data': data,
+                        'success': function (response) {
+                            if(response.error)  {
+                                $('#gpAns').text(response.error);
+                                $('#gpAns').css('color', 'red');
+                            }
+                            else    {
+                                $('#gpAns').text(response.result);
+                            }
+
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

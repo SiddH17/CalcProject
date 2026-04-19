@@ -1,0 +1,289 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.contrib import messages
+import numpy as np
+import math, statistics
+
+# Create your views here.
+def mathematicsMain(request):
+    return render(request, 'mathematics.html')
+
+def trigonometry(request):
+    return render(request, 'trigonometry.html')
+
+def parabola(request):
+    return render(request, 'parabola.html')
+
+def ellipse(reqest):
+    return render(reqest, 'ellipse.html')
+
+def hyperbola(request):
+    return render(request, 'hyperbola.html')
+
+def stats(request):
+    return render(request, 'statistics.html')
+
+def quadratics(request):
+    return render(request, 'quadratics.html')
+
+def sequence_series(request):
+    return render(request, 'sequenceseries.html')
+
+# APIs
+#API call for different trigonometric identities
+def trigonometry_api(request):
+    valueSelected = request.GET.get('select_value')
+    a = float(request.GET.get('angle1'))
+    b = float(request.GET.get('angle2'))
+    s = 0
+
+    a=a*0.0174533
+    b=b*0.0174533   
+    print(valueSelected, "The value selected")
+
+    if valueSelected == 'sin(a+b)':
+        s=(math.sin(a)*math.cos(b))+(math.cos(a)*math.sin(b))
+    elif valueSelected == 'sin(a-b)':
+        s=(math.sin(a)*math.cos(b))-(math.cos(a)*math.sin(b))
+    elif valueSelected == 'cos(a+b)':
+        s=(math.cos(a)*math.cos(b))-(math.sin(a)*math.sin(b))
+    elif valueSelected == 'cos(a-b)':
+        s=(math.cos(a)*math.cos(b))+(math.sin(a)*math.sin(b))
+    elif valueSelected == 'tan(a+b)':
+        s=(math.tan(a)+math.tan(b))/(1-(math.tan(a)*math.tan(b)))
+    elif valueSelected == 'tan(a-b)':
+        s=(math.tan(a)-math.tan(b))/(1+(math.tan(a)*math.tan(b))) 
+
+    context = {
+        'result': s
+    }
+    return JsonResponse(context)
+
+#API call for finding eccentricity in ellipse
+def ellipse_api(request):
+    a = float(request.GET.get('ecc2a'))
+    b = float(request.GET.get('ecc2b'))
+    e=0
+
+    if a>b:
+        e=math.sqrt(((a*a)-(b*b))/(a**2))
+
+    elif a<b:
+        e=math.sqrt(((b*b)-(a*a))/(b**2))
+
+    context = {
+        'result': e
+    }
+
+    return JsonResponse(context)
+
+#API call for finding eccentricity in hyperbola
+def hyperbola_api(request):
+    a = float(request.GET.get('ecc2a'))
+    b = float(request.GET.get('ecc2b'))
+    e=0
+
+    e=math.sqrt(((a*a)+(b*b))/(a**2))
+
+    context = {
+        'result': e
+    }
+
+    return JsonResponse(context)
+
+#API call for mean/median/mode part of statistics
+def statistics_api(request):
+    valueSelected = request.GET.get('select_value')
+    n = int(request.GET.get('obs'))
+    numbers = request.GET.get('nums','').strip()
+    result = 0
+    print("The selected value: ", valueSelected)
+    print(n)
+
+    numbers = [float(num) for num in numbers.split()]
+    print(numbers)
+
+    if n == len(numbers):
+        if valueSelected == 'mean':
+            result = sum(numbers)/n
+        elif valueSelected == 'median':
+            numbers.sort()
+            if n%2==0:
+                result = (numbers[int((n+1)/2)]+numbers[int((n-1)/2)])/2
+            else:
+                result = numbers[int(n/2)]
+        elif valueSelected == 'mode':
+            result = statistics.mode(numbers)
+    else:
+        result = None
+
+    context = {
+        'result': result
+    }
+
+    return JsonResponse(context)
+
+#API call for Quadratic roots
+def quadratics_api(request):
+    #Defining values obtained from frontend
+    a = int(request.GET.get('a_value'))
+    b = int(request.GET.get('b_value'))
+    c = int(request.GET.get('c_value'))
+    error = ''
+
+    solution = f"{a}x^2 + {b}x + {c}"
+    print(solution)
+    
+    #Calculating both roots of the equation
+    root = (b**2 - 4*a*c)
+    root1 = root2 = None
+
+    if root>=0:
+        root1 = float((b+math.sqrt(root))/(2*a))
+        root2 = float((b-math.sqrt(root))/(2*a))
+    else:
+        error = 'Root does not exist as Discriminant < 0'
+
+    context = {
+        'root': root,
+        'root1': root1,
+        'root2': root2,
+        'solution': solution,
+        'error': error
+    }
+
+    return JsonResponse(context)
+
+#API call for measures of spread in statistics
+def spread_api(request):
+    selectedValue = request.GET.get('selectedValue')
+    numbers = request.GET.get('obsLabel', '').strip()
+    numbers = [float(num) for num in numbers.split()]
+    print(numbers)
+
+    result = None
+    print(selectedValue)
+
+    if selectedValue == 'coefficient':
+        maximum = max(numbers)
+        minimum = min(numbers)
+        result = (maximum-minimum)/(maximum+minimum)
+    else:
+        n = int(request.GET.get('numberLabel'))
+        mean = (sum(numbers))/n
+        variance = ((sum(x*x for x in numbers) / n)) - (mean)**2
+        sd = (variance)**(1/2)
+        print("The variance, ", variance, " and the SD, ", sd)
+
+        if selectedValue == 'variance':
+            result = variance
+        elif selectedValue == 'sd':
+            result = sd
+        elif selectedValue == 'coeffvar':
+            result = (sd/mean)*100
+    
+    return JsonResponse({'result': result})
+
+#API call to handle AP logic in sequence and series
+def ap_api(request):
+    dropdown_val = request.GET['dropdown_val']
+    formula_val = request.GET['formula_val']
+    an = float(request.GET['anLabel'])
+    a1 = float(request.GET['a1Label'])
+    n = float(request.GET['nLabel'])
+    d = float(request.GET['dLabel'])
+    sum = float(request.GET['sumLabel'])
+
+    result = None
+
+    if dropdown_val == 'nth-term':
+        result = a1+(n-1)*d
+    elif dropdown_val == 'sum':
+        result = (n/2)*(2*a1+(n-1)*d)
+    elif dropdown_val == 'difference':
+        if formula_val == 'nTerms':
+            result = (an-a1)/(n-1)
+        elif formula_val == 'sumSequence':
+            result = (((2*sum)/n)-(2*a1))/(n-1)
+    elif dropdown_val == 'first-term':
+        if formula_val == 'nTerms':
+            result = an-((n-1)*d)
+        elif formula_val == 'sumSequence':
+            result = ((2*sum)/n)-((n-1)*d)
+    elif dropdown_val == 'num':
+        if formula_val == 'nTerms':
+            result = ((an-a1)/d)+1
+        elif formula_val == 'sumSequence':
+            result = (-(2*a1-d)+((2*a1-d)**2+(8*d*sum))**(1/2))/(2*d)
+    
+    return JsonResponse({'result': result})
+
+#API call to handle GP logic in sequence and series
+def gp_api(request):
+    gdropdown_val = request.GET['g_dropdown_val']
+    gformula_val = request.GET['g_formula_val']
+    print(gdropdown_val, gformula_val)
+
+    gn = float(request.GET['gnLabel'])
+    g1 = float(request.GET['g1Label'])
+    gnum = float(request.GET['gnumLabel'])
+    r = float(request.GET['rLabel'])
+    gsum = float(request.GET['gsumLabel'])
+    print('gn: ',gn, 'g1: ',g1, 'gnum: ',gnum, 'r: ',r, 'gsum: ',gsum)
+
+    result = None
+    error_message = None
+
+    if r:
+        if r == 1 and (gformula_val == 'sumSequence' or gdropdown_val == 'sum'):
+            error_message = "Error! You cannot write r=1 in this case"
+
+    if gdropdown_val == 'nth-term':
+        result = g1*(r**(gnum-1))
+    elif gdropdown_val == 'sum':
+        if r>1:
+            result = g1*(((r**gnum)-1)/(r-1))
+        elif r<1:
+            result = g1((1-(r**gnum))/(1-r))
+    elif gdropdown_val == 'difference':
+        result = (gn/g1)**(1/(gnum-1))
+    elif gdropdown_val == 'first-term':
+        if gformula_val == 'nTerms':
+            result = gn/(r**(gnum-1))
+        elif gformula_val == 'sumSequence':
+            if r>1:
+                result = gsum*((r-1)/((r**gnum)-1))
+            elif r<1:
+                result = gsum*((1-r)/(1-(r**gnum)))
+    elif gdropdown_val == 'num':
+        if gformula_val == 'nTerms':
+            result = (math.log(gn/g1)/math.log(r))+1
+        elif gformula_val == 'sumSequence':
+            if r>1:
+                result = math.log(((gsum*(r-1))/g1)+1)/math.log(r)
+            elif r<1:
+                result = math.log((1-(gsum*(1-r))/g1))/math.log(r)
+
+    print(result)
+    
+    return JsonResponse({'result': result, 'error': error_message})
+
+#API call for trigonometric identities for compound angles
+def compound_angle_api(request):
+    dropdown_val = request.GET['dropdown_value']
+    x = float(request.GET['angleLabel'])
+
+    result = None
+
+    if dropdown_val == 'sin2x':
+        result = 2*math.sin(x)*math.cos(x)
+    elif dropdown_val == 'cos2x':
+        result = (math.cos(x))**2 - (math.sin(x))**2
+    elif dropdown_val == 'tan2x':
+        result = (2*math.tan(x))/(1-((math.tan(x))**2))
+    elif dropdown_val == 'sin3x':
+        result = 3*math.sin(x) - 4*((math.sin(x))**3)
+    elif dropdown_val == 'cos3x':
+        result = 4*((math.cos(x))**3) - 3*math.cos(x)
+
+    return JsonResponse({'result': result})

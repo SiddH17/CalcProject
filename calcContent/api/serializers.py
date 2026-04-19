@@ -1,0 +1,55 @@
+from rest_framework import serializers
+from .models import *
+from django.contrib.auth.hashers import make_password
+
+#Serializer for Register API call
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reg_Users
+        fields = '__all__'
+    
+    #Validation message for user registration
+    def validate(self, data):
+        if data['username']:
+            #Throw a validation error if the user already exists in the system
+            if Reg_Users.objects.filter(username = data['username']).exists():
+                raise serializers.ValidationError({'username': 'Username already exists.'})
+            
+        if data['email']:
+            #Throw a validation error if email ID already exists in the system
+            if Reg_Users.objects.filter(email = data['email']).exists():
+                raise serializers.ValidationError({'email': 'Email Address already exists.'})
+            
+        return data
+    
+    #Create the new user by saving their details
+    def create(self, validated_data):
+        #After validation, save the details
+        user = Reg_Users.objects.create(
+            name = validated_data['name'],
+            username = validated_data['username'],
+            email = validated_data['email'],
+            password = make_password(validated_data['password'])
+        )
+        user.save()
+        print(user)
+
+        return user
+    
+#Serializer for Login API call
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reg_Users
+        fields = ['username', 'password']
+
+    def validate(self, data):
+        #Basically gets the values of username and password from request.data
+        username = data.get('username', None)
+        password = data.get('password', None)
+
+        print(username, password)
+
+        if not username or not password:
+            raise serializers.ValidationError({"username": "Invalid username or password"})
+
+        return data

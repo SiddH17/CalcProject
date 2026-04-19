@@ -1,0 +1,100 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        <title>{% block title %}Thermodynamics Calculator{% endblock %}</title>
+    </head>
+    <body class="bg-dark">
+        
+        {% block content %}
+            <!-- Thermal Expansion -->
+            <div class="container-fluid content" id="thermexp">
+                <!-- Different types of expansion dropdown -->
+                <div id="expansion">
+                    <h2><u><b>Thermal Expansion:</b></u></h2>
+                    <h4>Select the value to be calculated</h4>
+                    <select class="form-select" name="coe" id="thermalexp">
+                        <option value="Select">--Select--</option>
+                        <option value="Temperature">Temperature(T)</option>
+                        <option value="Linear Expansion">Linear Expansion Co-efficient</option>
+                        <option value="Area Expansion">Area Expansion Co-efficient</option>
+                        <option value="Volume Expansion">Volume Expansion Co-efficient</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Equipartition of Energy -->
+            <div class="container-fluid content" id="epe">
+                <h2><u><b>Equipartition of Energy:</b></u></h2>
+                <br>
+
+                <div id="epeDiv">
+                    <h4>Calculate Kinetic Energy:</h4>
+                    <br>
+
+                    <label for="dof" id="degoffree">Degrees of Freedom(n):
+                        <input type="number" name="dof">
+                    </label>
+                    <label for="temperature" id="temp1">Temperature(T):
+                        <input type="number" name="temperature">
+                    </label>
+                    <select class="form-select" name="kelvin_celsius" id="kc">
+                        <option value="kelvin">Kelvin</option>
+                        <option value="celsius">Celsius</option>
+                    </select>
+                    <br>
+
+                    <button type="submit" id="epeSubmit" class="btn btn-primary">Calculate Result</button>
+                    <p id="epeAns"></p>
+                </div>
+            </div>
+
+            <script>
+                //Function to clear input fields
+                function clearInputFields() {
+                    $('#degoffree input').val('');
+                    $('#temp1 input').val('');
+                    $('#epeAns').text('');
+                }
+
+                // Thermal Expansion JS
+                $(document).ready(function()    {
+                });
+
+                //Equipartition of energy JS
+                $(document).ready(function()    {
+                    clearInputFields();
+
+                    const epeButton = $('#epeSubmit');
+                    const epeAns = $('#epeAns');
+
+                    epeButton.click(function()  {
+                        var inputs = $('#epeDiv').find('input[type=number]');
+                        var epeData = {};
+
+                        inputs.each(function()  {
+                            var name = $(this).attr('name');
+                            var value = parseFloat($(this).val());
+                            epeData[name] = value;
+                        });
+                        epeData.tempUnit = $('#kc').val();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '{% url "equipartition-of-energy" %}',
+                            data: epeData,
+                            success: function(response) {
+                                epeAns.text(response.result);
+                            },
+                            error: function(response)   {
+                                epeAns.text("Something's wrong. Please try again").css('color', 'red');
+                            }
+                        });
+                    });
+                });
+            </script>
+        {% endblock %} 
+    </body>
+</html>
