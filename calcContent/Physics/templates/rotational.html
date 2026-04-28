@@ -1,0 +1,109 @@
+{% extends "physics.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rotational Motion{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}      
+        <!-- Radius of Gyration -->
+        <div id="gyration" class="container-fluid content">
+            <div>
+                <h2><u><b>Radius of Gyration:</b></u></h2>
+                <h4>Select a value to be calculated:</h4>
+                <select name="gyrationDropdown" id="gyrationDropdown" class="form-select">
+                    <option value="select">--Select--</option>
+                    <option value="moi" id="moi">Moment of Inertia(I)</option>
+                    <option value="gyration" id="k">Radius of Gyration(k)</option>
+                    <option value="mass" id="rotmass">Mass(m)</option>
+                </select>
+                <br>
+
+                <div id="gyrationDiv" style="display: none;">
+                    <h4>Calculate <span id="gyration_result_label"></span>:</h4>
+
+                    <div class="gridbox">
+                        <label for="momentOfInertia" id="moiLabel">Moment of Inertia(I):
+                            <input type="number" name="momentOfInertia">
+                        </label>
+                        <label for="radiusOfGyration" id="kLabel">Radius of Gyration(k):
+                            <input type="number" name="radiusOfGyration">
+                        </label>
+                        <label for="rotationalMass" id="massLabel">Mass(M):
+                            <input type="number" name="rotationalMass">
+                        </label>
+                    </div>
+                    <br>
+
+                    <button type="submit" class="btn btn-primary" id="gyrationSubmit">Calculate Result</button>
+                    <p id="gyrationAns"></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <script>
+            function clearInputFields() {
+                $('p').text('');
+                $('input').val('');
+            }
+
+            $(document).ready(function()    {
+                // Logic to handle change function for gyration dropdown
+                $('#gyrationDropdown').change(function()    {
+                    clearInputFields();
+                    var gyrationValue = $('#gyrationDropdown').val();
+                    $('#gyration_result_label').text(gyrationValue);
+
+                    if(gyrationValue == 'select')   {
+                        clearInputFields();
+                        $('#gyrationDiv').hide();
+                    }
+                    else    {
+                        $('#gyrationDiv').show();
+                        $('#massLabel').show();
+                        $('#kLabel').show();
+                        $('#moiLabel').show();
+
+                        if(gyrationValue == 'moi')  {
+                            $('#moiLabel').hide();
+                        }
+                        else if(gyrationValue == 'mass')   {
+                            $('#massLabel').hide();
+                        }
+                        else if(gyrationValue == 'gyration')    {
+                            $('#kLabel').hide();
+                        }
+                    }
+                });
+
+                // Logic for handling gyration form submit button
+                $('#gyrationSubmit').click(function()   {
+                    var inputs = $('#gyrationDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['gyration_value'] = $('#gyrationDropdown').val();
+                    console.log(data);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "gyration-api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#gyrationAns').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>

@@ -54,6 +54,9 @@ def gravitation(request):
 def shm(request):
     return render(request, 'shm.html')
 
+def rotational_motion(request):
+    return render(request, 'rotational.html')
+
 # APIs
 #Kinematics API views
 def equations_of_motion_api(request):
@@ -832,5 +835,25 @@ def time_period_shm_api(request):
 
     return JsonResponse({'result': result})
 
+def gyration_api(request):
+    gyration_value = request.GET.get('gyration_value')
+    m = float(request.GET.get('rotationalMass'))
+    k = float(request.GET.get('radiusOfGyration'))
+    i = float(request.GET.get('momentOfInertia'))
+
+    print(i, m, k, "The i, m and k values respectively")
+    result = None
+
+    if gyration_value == 'gyration':
+        result = math.sqrt(i/m)
+        print(result)
+    elif gyration_value == 'mass':
+        result = i/(k**2)
+    elif gyration_value == 'moi':
+        result = m*(k**2)
+        print(result)
+
+    print(result, "This is the result")
+    return JsonResponse({'result': result})
 
 
