@@ -16,6 +16,9 @@ def gaseous(request):
 def chem_thermo(request):
     return render(request, 'chemThermo.html')
 
+def mole_concept(request):
+    return render(request, 'moleConcept.html')
+
 #API Views
 #Gaseous state API
 def gaseous_api(request):
@@ -179,6 +182,38 @@ def internal_energy(request):
     result = (m/2)*n*r*t
     result = str(result)
     result += ' J'
+
+    return JsonResponse({'result': result})
+
+#Ideal Gas Equation (Mole Concept) API
+def ideal_gas_equation_mole(request):
+    selectValue = request.GET.get('select_value')
+    tempUnit = request.GET.get('temperatureUnit')
+    pressureUnit = request.GET.get('pressureUnit')
+    p = float(request.GET.get('pressureLabel'))
+    v = float(request.GET.get('volumeLabel'))
+    n = float(request.GET.get('molesLabel'))
+    t = float(request.GET.get('temperatureLabel'))
+
+    if tempUnit == 'celsius':
+        t += 273
+        print(t, "Converted value in Kelvin")
+
+    result = None
+    r = None
+    if pressureUnit == 'atm':
+        r = 0.0821
+    elif pressureUnit == 'bar':
+        r = 0.0833
+
+    if selectValue == 'pressure':
+        result = (n*r*t)/v
+    elif selectValue == 'volume':
+        result = (n*r*t)/p
+    elif selectValue == 'moles':
+        result = (p*v)/(r*t)
+    elif selectValue == 'temperature':
+        result = (p*v)/(n*r)
 
     return JsonResponse({'result': result})
 

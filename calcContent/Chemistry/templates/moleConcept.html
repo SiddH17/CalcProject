@@ -1,0 +1,132 @@
+{% extends "chemistry.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mole Concept{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Ideal Gas Equation -->
+        <div class="container-fluid content" id="idealGas">
+            <h2><u><b>Ideal Gas Equation:</b></u></h2>
+            <br>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="idealGasDropdown" id="idealGasDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="pressure" id="idealPressure">Pressure (P)</option>
+                <option value="volume" id="idealVolume">Volume (V)</option>
+                <option value="moles" id="idealMoles">No. of moles (n)</option>
+                <option value="temperature" id="idealTemperature">Temperature (T)</option>
+            </select>
+            <br>
+
+            <div id="idealGasDiv" style="display: none;">
+                <h4>Calculate <span id="idealGas_result_label"></span>:</h4>
+
+                <div class="gridbox">
+                    <label for="pressureLabel" id="pressureLabel">Pressure (P):
+                        <input type="number" name="pressureLabel">
+                        <span>
+                            <select class="form-select" id="p_atm_bar">
+                                <option value="atm" id="p_atm">atm</option>
+                                <option value="bar" id="p_bar">bar</option>
+                            </select>
+                        </span>
+                    </label>
+                    <label for="volumeLabel" id="volumeLabel">Volume (V):
+                        <input type="number" name="volumeLabel">
+                    </label>
+                    <label for="molesLabel" id="molesLabel">No. of moles(n):
+                        <input type="number" name="molesLabel">
+                    </label>
+                    <label for="temperatureLabel" id="temperatureLabel">Temperature (T):
+                        <input type="number" name="temperatureLabel">
+                        <span>
+                            <select id="temp_kc" class="form-select">
+                                <option value="kelvin" id="temp_kelvin">Kelvin (K)</option>
+                                <option value="celsius" id="temp_celsius">Celsius (C)</option>
+                            </select>
+                        </span>
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" class="btn btn-primary" id="idealGasSubmit">Calculate Result</button>
+                <p id="idealGasAns"></p>
+            </div>
+        </div>
+        <hr>
+
+
+        <script>
+            function clearInputFields() {
+                $('input').val('');
+                $('p').text('');
+            }
+
+            $(document).ready(function()    {
+                //Logic to handle change function for ideal gas dropdown
+                $('#idealGasDropdown').change(function()    {
+                    var idealGasValue = $('#idealGasDropdown').val();
+                    $('#idealGas_result_label').text(idealGasValue);
+                    clearInputFields();
+
+                    if(idealGasValue == 'select')   {
+                        $('#idealGasDiv').hide();
+                        clearInputFields();
+                    }
+                    else    {
+                        $('#idealGasDiv').show();
+                        $('#pressureLabel').show();
+                        $('#volumeLabel').show();
+                        $('#molesLabel').show();
+                        $('#temperatureLabel').show();
+
+                        if(idealGasValue == 'pressure') {
+                            $('#pressureLabel').hide();
+                        }
+                        else if(idealGasValue == 'volume')  {
+                            $('#volumeLabel').hide();
+                        }
+                        else if(idealGasValue == 'moles')   {
+                            $('#molesLabel').hide();
+                        }
+                        else if(idealGasValue == 'temperature') {
+                            $('#temperatureLabel').hide();
+                        }
+                    }
+                });
+
+                //Logic to handle submit button logic for ideal gas equation
+                $('#idealGasSubmit').click(function()   {
+                    var inputs = $('#idealGasDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        data[name] = value;
+                    });
+                    data['select_value'] = $('#idealGasDropdown').val();
+                    data['temperatureUnit'] = $('#temp_kc').val();
+                    data['pressureUnit'] = $('#p_atm_bar').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "ideal-gas-mole" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#idealGasAns').text(response.result);
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>
