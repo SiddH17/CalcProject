@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+
 import math
 
 # Create your views here.
@@ -18,6 +22,9 @@ def chem_thermo(request):
 
 def mole_concept(request):
     return render(request, 'moleConcept.html')
+
+def atomic_structure(request):
+    return render(request, 'atom-structure.html')
 
 #API Views
 #Gaseous state API
@@ -217,4 +224,38 @@ def ideal_gas_equation_mole(request):
 
     return JsonResponse({'result': result})
 
+#Hydrogen Spectrum API
+@api_view(['GET'])
+def hydrogen_structure_api(request):
+    select_value = request.GET.get('select_value')
+    l = float(request.GET.get('wavelengthLabel'))
+    n1 = float(request.GET.get('n1Label'))
+    n2 = float(request.GET.get('n2Label') or 0)
+    print(n2, "The value of n2")
+
+    r = 1.097*(10)**7
+    result = result1 = result2 = None
+
+    if select_value == 'wavelength':
+        print("I'm atleast in the wavelength section now")
+        if n2==0:
+            print("Inside the if n2 is zero function")
+            result1 = 1/(r*((1/(n1)**2)-(1/(n1+1)**2)))
+            result2 = 1/(r*((1/(n1)**2)))
+        else:
+            print("I'm in the else section to execute the function")
+            if n2<=n1:
+                return Response({
+                    'status': '400',
+                    'message': 'Value of n2 must be greater than n1! Please try again.',
+                },
+                status=status.HTTP_400_BAD_REQUEST)
+            else:
+                result = 1/(r*((1/(n1)**2)-(1/(n2)**2)))
+    elif select_value == 'n1':
+        result = math.sqrt(1/((1/(l*r))+(1/(n2)**2)))
+    elif select_value == 'n2':
+        result = math.sqrt(1/((1/(n1)**2)-(1/(l*r))))
+
+    return JsonResponse({'result': result, 'result1': result1, 'result2': result2})
 

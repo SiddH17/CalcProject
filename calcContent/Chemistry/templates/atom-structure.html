@@ -1,0 +1,127 @@
+{% extends "chemistry.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Atomic Structure{% endblock title %}</title>
+</head>
+<body>
+    {% block content %}
+        <!-- Hydrogen Spectrum -->
+        <div class="container-fluid content" id="h_spectrum">
+            <h2><u><b>Hydrogen Spectrum:</b></u></h2>
+
+            <h4>Select a value to be calculated:</h4>
+            <select name="h_spectrumDropdown" id="h_spectrumDropdown" class="form-select">
+                <option value="select">--Select--</option>
+                <option value="wavelength" id="h_spectrum_wavelength">Wavelength</option>
+                <option value="n1" id="n1">N1</option>
+                <option value="n2" id="n2">N2</option>
+            </select>
+            <br>
+
+            <div id="h_spectrumDiv" style="display: none;">
+                <h4>Calculate <span id="h_spectrum_result_label"></span>:</h4>
+
+                <div class="gridbox">
+                    <label for="wavelengthLabel" id="wavelengthLabel">Wavelength:
+                        <input type="number" name="wavelengthLabel">
+                    </label>
+                    <label for="n1Label" id="n1Label">N1:
+                        <input type="number" name="n1Label">
+                    </label>
+                    <label for="n2Label" id="n2Label">N2:
+                        <input type="number" name="n2Label">
+                    </label>
+                </div>
+                <br>
+
+                <button type="submit" class="btn btn-primary" id="h_spectrumSubmit">Calculate Result</button>
+                <p id="h_spectrumAns"></p>
+            </div>
+        </div>
+        <hr>
+
+
+        <script>
+            function clearInputFields() {
+                $('p').text('');
+                $('input').val('');
+            }
+
+            $(document).ready(function()    {
+                // Logic to handle hydrogen spectrum dropdown change
+                $('#h_spectrumDropdown').change(function()  {
+                    clearInputFields();
+                    var h_specValue = $('#h_spectrumDropdown').val();
+                    $('#h_spectrum_result_label').text(h_specValue);
+
+                    if(h_specValue == 'select') {
+                        clearInputFields();
+                        $('#h_spectrumDiv').hide();
+                    }
+                    else    {
+                        $('#h_spectrumDiv').show();
+                        $('#wavelengthLabel').show();
+                        $('#n1Label').show();
+                        $('#n2Label').show();
+
+                        if(h_specValue == 'wavelength') {
+                            $('#wavelengthLabel').hide();
+                        }
+                        else if(h_specValue == 'n1')    {
+                            $('#n1Label').hide();
+                        }
+                        else if (h_specValue == 'n2') {
+                            $('#n2Label').hide();
+                        }
+                    }
+                });
+
+                // Logic to handle submit of hydrogen spectrum form
+                $('#h_spectrumSubmit').click(function() {
+                    var inputs = $('#h_spectrumDiv').find('input');
+                    var data = {};
+
+                    inputs.each(function()  {
+                        var name = $(this).attr('name');
+                        var value = parseFloat($(this).val());
+                        if (isNaN(value)) {
+                            value = 0;
+                        }
+
+                        data[name] = value;
+                    });
+                    data['select_value'] = $('#h_spectrumDropdown').val();
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "hydrogen-structure-api" %}',
+                        data: data,
+                        success: function(response) {
+                            $('#h_spectrumAns').css('color', 'white');
+
+                            if(response.result) {
+                                $('#h_spectrumAns').text(response.result);
+                            }
+                            else if(response.result1 && response.result2)   {
+                                $('#h_spectrumAns').text(
+                                    `Value ranges between ${response.result1} and ${response.result2}`   
+                                );
+                            }
+                        },
+                        error: function(xhr)    {
+                            let res = xhr.responseJSON;
+                            $('#h_spectrumAns').text(res.message);
+                            $('#h_spectrumAns').css('color', 'red');
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock content %}
+</body>
+</html>
