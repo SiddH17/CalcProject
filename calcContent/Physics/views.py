@@ -461,7 +461,7 @@ def equipartition_of_energy(request):
     n = float(request.GET.get('dof'))
     t = float(request.GET.get('temperature'))
     k = 1.38e-23
-    result = None
+    result = 0
 
     if tempUnit == 'celsius':
         t = 273 + t
