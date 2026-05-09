@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+
 import math
 
 # Create your views here.
@@ -448,7 +453,8 @@ def heat_and_energy_api(request):
 
     return JsonResponse(context)
 
-#Thermodynamics API Views
+#Equipartition of Energy API
+@api_view(['GET'])
 def equipartition_of_energy(request):
     tempUnit = request.GET.get('tempUnit')
 
@@ -464,11 +470,15 @@ def equipartition_of_energy(request):
     result = str(result)
     result += ' Joules'
 
-    context = {
-        'result': result
-    }
+    print(result, "The result")
+    if result == 'nan Joules':
+        return Response({
+            'status': '400',
+            'message': 'Please enter a value first.'
+        },
+        status=status.HTTP_400_BAD_REQUEST)
 
-    return JsonResponse(context)
+    return JsonResponse({'result': result})
 
 #Modern Physics API Views
 def debroglie_wavelength(request):
@@ -835,6 +845,7 @@ def time_period_shm_api(request):
 
     return JsonResponse({'result': result})
 
+#Radius of gyration API
 def gyration_api(request):
     gyration_value = request.GET.get('gyration_value')
     m = float(request.GET.get('rotationalMass'))

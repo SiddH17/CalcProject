@@ -32,18 +32,21 @@
 
                 <div id="epeDiv">
                     <h4>Calculate Kinetic Energy:</h4>
-                    <br>
 
-                    <label for="dof" id="degoffree">Degrees of Freedom(n):
-                        <input type="number" name="dof">
-                    </label>
-                    <label for="temperature" id="temp1">Temperature(T):
-                        <input type="number" name="temperature">
-                    </label>
-                    <select class="form-select" name="kelvin_celsius" id="kc">
-                        <option value="kelvin">Kelvin</option>
-                        <option value="celsius">Celsius</option>
-                    </select>
+                    <div class="gridbox">
+                        <label for="dof" id="degoffree">Degrees of Freedom(n):
+                            <input type="number" name="dof">
+                        </label>
+                        <label for="temperature" id="temp1">Temperature(T):
+                            <input type="number" name="temperature">
+                            <span>
+                                <select class="form-select" name="kelvin_celsius" id="kc">
+                                    <option value="kelvin">Kelvin</option>
+                                    <option value="celsius">Celsius</option>
+                                </select>
+                            </span>
+                        </label>
+                    </div>
                     <br>
 
                     <button type="submit" id="epeSubmit" class="btn btn-primary">Calculate Result</button>
@@ -86,10 +89,13 @@
                             url: '{% url "equipartition-of-energy" %}',
                             data: epeData,
                             success: function(response) {
+                                epeAns.css('color', 'white');
                                 epeAns.text(response.result);
                             },
-                            error: function(response)   {
-                                epeAns.text("Something's wrong. Please try again").css('color', 'red');
+                            error: function(xhr)   {
+                                let res = xhr.responseJSON;
+                                epeAns.text(res.message);
+                                epeAns.css('color', 'red');
                             }
                         });
                     });
