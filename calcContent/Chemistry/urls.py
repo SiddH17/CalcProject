@@ -16,4 +16,5 @@ urlpatterns = [
     path('internal-energy/', views.internal_energy, name='internal-energy'),   
     path('ideal-gas-mole/', views.ideal_gas_equation_mole, name='ideal-gas-mole'),
     path('hydrogen-structure-api/', views.hydrogen_structure_api, name='hydrogen-structure-api'),
+    path('bohr-model-api/', views.bohr_model_api, name='bohr-model-api'),
 ]

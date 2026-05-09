@@ -259,3 +259,39 @@ def hydrogen_structure_api(request):
 
     return JsonResponse({'result': result, 'result1': result1, 'result2': result2})
 
+#Bohr's Model API
+def bohr_model_api(request):
+    select_value = request.GET.get('select_value')
+    formula_val = request.GET.get('formula_value')
+
+    rn = float(request.GET.get('rn'))
+    vn = float(request.GET.get('vn'))
+    en = float(request.GET.get('en'))
+    z = float(request.GET.get('az'))
+    n = float(request.GET.get('qn'))
+
+    result = None
+
+    if select_value == 'radius':
+        result = (0.529*(10**-10))*((n**2)/z)
+    elif select_value == 'velocity':
+        result = (2.18*(10**6))*(z/n)
+    elif select_value == 'energy':
+        result = (-13.6)*((z**2)/(n**2))
+    elif select_value == 'atomic-number':
+        if formula_val == 'radius-formula':
+            result = (0.529*(10**-10))*((n**2)/rn)
+        elif formula_val == 'velocity-formula':
+            result = (n*vn)/(2.18*(10**6))
+        elif formula_val == 'energy-formula':
+            result = math.sqrt(((n**2)*en)/(-13.6))
+    elif select_value == 'quantum-number':
+        if formula_val == 'radius-formula':
+            result = (z*rn)/(0.529*(10**-10))
+        elif formula_val == 'velocity-formula':
+            result = (z*(2.18*(10**6)))/vn
+        elif formula_val == 'energy-formula':
+            result = math.sqrt((z**2)*(-13.6)/en)
+
+    return JsonResponse({'result': result})
+
